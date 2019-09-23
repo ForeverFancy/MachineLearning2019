@@ -1,0 +1,155 @@
+\textbf{Notice, }to get the full credits, please present your solutions step by step.
+
+\begin{exercise}[Linear regression \textnormal{20pts}]
+	Given a data set $\{ (x_i ,y_i) \}_{i=1}^{n}$, where $x_i,y_i\in \mathbb{R}$. 
+	\begin{enumerate}
+	    \item If we want to fit the data by a linear model
+	        \begin{align}\label{eqn:linear}
+	            y =  w_0 + w_1 x,
+	        \end{align}
+	        please find $\hat{w}_0$ and $\hat{w}_1$ by the least squares approach (you need to find expressions of $\hat{w}_0$ and $\hat{w}_1$ by $\{ (x_i ,y_i) \}_{i=1}^{n}$, respectively).
+	    \item \textbf{Programming Exercise} We provide you a data set $\{ (x_i ,y_i) \}_{i=1}^{30}$. Consider the model in (\ref{eqn:linear}) and the one as follows:
+	        \begin{align}\label{eqn:linear-quadratic}
+	            y =  w_0 + w_1 x+ w_2 x^2. 
+	        \end{align}
+	        Which model do you think fits better the data? Please detail your approach first and then implement it by your favorite programming language. The required output includes 
+	        \begin{enumerate}
+	            \item your detailed approach step by step; 
+	            \item your code with detailed comments according to your planned approach; 
+	            \item a plot showing the data and the fitting models; 
+	            \item the model you finally choose [$\hat{w}_0$ and $\hat{w}_1$ if you choose the model in (\ref{eqn:linear}), or $\hat{w}_0$, $\hat{w}_1$, and $\hat{w}_2$ if you choose the model in (\ref{eqn:linear})].
+	        \end{enumerate}
+	\end{enumerate}
+\end{exercise}
+\newpage
+\begin{solution}
+	\heiti
+	\ \\
+	\begin{enumerate}
+		\item 令误差函数\\$E = \sum\limits_{i=1}^n(w_0 + w_1x_i -y_i)^2$
+	
+		$(w_0^*,w_1^*) = \arg\min\limits_{(w_0,w_1)}(E)$
+	
+		$\frac{\partial E}{\partial w_0} = 2\sum\limits_{i=1}^n(w_0 + w_1x_i - y_i)$
+	
+		$\frac{\partial E}{\partial w_1} = 2\sum\limits_{i=1}^nx_i(w_0 + w_1x_i - y_i)$
+	
+		要使得 E 最小，所以令两个偏导数为 0，那么可得
+	
+		$nw_0 = \sum\limits_{i=1}^n(w_1x_i-y_i) $
+	
+		$w_0\sum\limits_{i=1}^nx_i = n\sum\limits_{i=1}^nx_i(w_1x_i-y_i)$
+		
+		联立方程解得
+	
+		$ w_0 = \frac{n\sum\limits_{i=1}^ny_ix_i - \sum\limits_{i=1}^nx_i\sum\limits_{i=1}^ny_i}{n\sum\limits_{i=1}^nx_i^2-(\sum\limits_{i=1}^nx_i)^2}$
+	
+		$ w_1 = \frac{\sum\limits_{i=1}^n(y_i-w_0x_i)}{n}$ 
+		\item \ 
+			\begin{enumerate}
+				\item 主要思路是由 1. 中已经求得的 $w0,w1$ 表达式可以通过样本直接计算出对应的 $w0,w1$ ，再重新代入误差函数 $E$ 中，求出最小误差。\\
+				同样的道理，二次拟合函数也可以通过计算其误差函数，对三个参数分别求偏导数并令其为 0，联立三个方程解得相应的三个参数，并代回到误差函数中求得最小误差。\\
+				以上两个最小误差进行比较即可看出哪个模型对数据的拟合较好。\\
+				具体到编程细节，首先读入数据并转换为 numpy array，分别进行线性拟合和二次拟合（其中二次拟合使用 numpy 求解线性方程组），求得最小误差后进行比较，并绘制图像。\\
+				参考文献：\href{https://www.bb.ustc.edu.cn/jpkc/xiaoji/szjsff/jsffkj/chapt3_2.htm}{计算方法课程} 
+				\item 代码见附件\href{./prob1.py}{prob1.py}。
+				\item 图片见附件\href{./Figure.png}{Figure.png}。
+				\item 最终比较之后选择二次拟合模型，得到 $w0 = 1.0295683746564661, w1 = 0.3861433340323225, w2 = -0.14215111308616024$。
+			\end{enumerate}
+	\end{enumerate}
+\end{solution}
+
+
+\newpage
+
+\begin{exercise}[Projection \textnormal{30pts}]
+	Let $C \subset \mathbb{R}^n$ be a closed convex set and $\mathbf{x} \in \mathbb{R}^n$. Define
+	\begin{align*}
+	    \proj{\mathbf{x}}{C} = \arg\min_{\mathbf{y} \in C}\| \mathbf{y} - \mathbf{x} \|_2.    
+	\end{align*}
+    We call $\proj{\mathbf{x}}{C}$ the projection of the point $\mathbf{x}$ onto the convex set $C$. 
+    \begin{enumerate}
+        \item Show that any finite dimensional space is convex.
+        \item Let $\mathbf{v}_i \in \mathbb{R}^n$, $i=1,\ldots,d$ with $d\leq n$, which are linearly independent.
+            \begin{enumerate}
+		        \item For any $\mathbf{w}\in \mathbb{R}^n$, please find $\proj{\mathbf{w}}{\mathbf{v}_1}$, which is the projection of $\mathbf{w}$ onto the subspace spanned by $\mathbf{v}_1$.  
+		        \item Please show $\proj{\cdot}{\mathbf{v}_1}$ is a linear map, i.e.,
+		            \begin{align*}
+		                \proj{\alpha\mathbf{u}+\beta\mathbf{w}}{\mathbf{v}_1}=\alpha\proj{\mathbf{u}}{\mathbf{v}_1} + \beta \proj{\mathbf{w}}{\mathbf{v}_1},
+		            \end{align*}
+		            where $\alpha,\beta\in\mathbb{R}$ and $\mathbf{w}\in\mathbb{R}^n$.
+		        \item Please find the projection matrix corresponding to the linear map $\proj{\cdot}{\mathbf{v}_1}$, i.e., find the matrix $\mathbf{H}_1\in\mathbb{R}^{n\times n}$ such that
+		            \begin{align*}
+		                \proj{\mathbf{w}}{\mathbf{v}_1}=\mathbf{H}_1\mathbf{w}.
+		            \end{align*}
+		        \item Let $\mathbf{V}=(\mathbf{v}_1,\ldots,\mathbf{v}_d)$. 
+		            \begin{enumerate}
+		                \item For any $\mathbf{w}\in \mathbb{R}^n$, please find              $\proj{\mathbf{w}}{\mathbf{V}}$, which is the projection of $\mathbf{w}$ onto $\mathcal{C}(\mathbf{V})$, and the corresponding projection matrix $\mathbf{H}$. 
+		                \item Please find $\mathbf{H}$ if we further assume that $\mathbf{v}_i^{\top}\mathbf{v}_j=0$, $\forall\,i\neq j$.
+		            \end{enumerate}
+	        \end{enumerate}
+	   \item A matrix $\mathbf{P}$ is called a projection matrix if $\mathbf{P}\mathbf{x}$ is the projection of $\mathbf{x}$ onto $\mathcal{C}(\mathbf{P})$ for any $\mathbf{x}$.
+	        \begin{enumerate}
+	            \item Let $\lambda$ be the eigenvalue of $\mathbf{P}$. Show that $\lambda$ is either $1$ or $0$. (\emph{Hint: you may want to figure out what are the eigenspaces corresponding to $\lambda=1$ and $\lambda=0$, respectively.})
+	            \item Show that $\mathbf{P}$ is a projection matrix if and only if $\mathbf{P}^2 = \mathbf{P}$.
+	        \end{enumerate}
+	\end{enumerate}
+\end{exercise}
+
+\begin{solution}
+
+\end{solution}
+\newpage
+
+\begin{exercise}[ \textnormal{5pts}] 
+	Let $\mathbf{x}\in \mathbf{R}^n$. Find the gradients of the following functions.
+	\begin{enumerate}
+	    \item $f(\mathbf{x}) = \mathbf{a}^{\top}\mathbf{x}$.
+	    \item $f(\mathbf{x}) = \mathbf{x}^{\top}\mathbf{x}$.
+	    \item $f(\mathbf{x})=\| \mathbf{y} - \mathbf{A}\mathbf{x} \|_2^2$, where $\mathbf{A}\in\mathbb{R}^{m\times n}$.
+	\end{enumerate}
+\end{exercise}
+
+\begin{solution}
+
+\end{solution}
+\newpage
+
+
+\begin{exercise}[Second-order sufficient optimality conditions \textnormal{10pts}]
+	Suppose that $f:\mathbb{R}^n\rightarrow\mathbb{R}$ is twice differentiable at $\mathbf{x}$. If $\nabla f(\mathbf{x})=0$ and the Hessian matrix $\mathbf{H}(\mathbf{x})$ is positive definite, then $\mathbf{x}$ is a strict local minimum.
+	\begin{enumerate}
+		\item Show the above result by contradiction.
+		\item Show the result by NOT using contradiction. [\emph{Hint: you may need eigen-decomposition.}]
+	\end{enumerate}
+\end{exercise}
+
+\begin{solution}
+
+\end{solution}
+\newpage
+
+\begin{exercise}[Identically independently distributed \textnormal{10pts}]
+	Suppose that the training samples $\{(\mathbf{x}_i,y_i)\}_{i=1}^n$ are i.i.d.. show that
+	\begin{align*}
+	    p(\mathbf{x}_1,\ldots,\mathbf{x}_n)=\prod_{i=1}^np(\mathbf{x}_i).
+	\end{align*}
+	
+\end{exercise}
+
+\begin{solution}
+\end{solution}
+\newpage
+
+
+\begin{exercise}[First-order condition \RNum{2} \textnormal{5pts}]
+	Suppose that $f$ is continuously differentiable. Prove that $f$ is convex if and only if $\dom f$ is convex and
+	\begin{align*}
+	    \langle \nabla f(\mathbf{x}) - \nabla f(\mathbf{y}) , \mathbf{x} - \mathbf{y} \rangle \geq 0.
+	\end{align*}
+	
+\end{exercise}
+
+\begin{solution}
+
+\end{solution}
