@@ -187,7 +187,8 @@ ID: \id
 	\heiti
 	\ \\
 	\begin{enumerate}
-		\item 设$ rank(A) = r$，那么存在可逆方阵 P 和 Q 使得 $A = PQ$.
+		\item 设$ rank(A) = r$，那么存在可逆方阵 P 和 Q 使得 $PAQ = \begin{pmatrix} I_r & O \\ O & O \\ \end{pmatrix}$，两边同时转置可得 $ Q^TA^TP^T = \begin{pmatrix} I_r & O\\ O & O \\ \end{pmatrix} $，于是根据定义可得 $ rank(A^T) = r = rank(A)$。
+		\item 设$ rank(A) = r, rank(B) = s$，那么根据定义可得存在可逆方阵 $ P_1, Q_1, P_2, Q_2$，使得$ A = P_1 \begin{pmatrix} I_r & O \\ O & O \\ \end{pmatrix} Q_1, B = P_2 \begin{pmatrix} I_s & O \\ O & O \\ \end{pmatrix} Q_2$，于是 $ AB = P_1 \begin{pmatrix} I_r & O \\ O & O \\ \end{pmatrix} Q_1 P_2 \begin{pmatrix} I_s & O \\ O & O \\ \end{pmatrix} Q_2$
 	\end{enumerate}
 
 \end{solution}
