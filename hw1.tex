@@ -155,31 +155,37 @@ ID: \id
 %% BODY OF HOMEWORK GOES HERE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{exercise}[Rank of matrices \textnormal{20pts}]
-	Let $\mathbf{A} \in \mathbb{R}^{m\times n}$ and $\mathbf{B}\in \mathbb{R}^{n\times p}$.
-	\begin{enumerate}
-	    \item Please show that
+\begin{exercise}[Projection \textnormal{30pts}]
+	Let $C \subset \mathbb{R}^n$ be a closed convex set and $\mathbf{x} \in \mathbb{R}^n$. Define
+	\begin{align*}
+	    \proj{\mathbf{x}}{C} = \arg\min_{\mathbf{y} \in C}\| \mathbf{y} - \mathbf{x} \|_2.    
+	\end{align*}
+    We call $\proj{\mathbf{x}}{C}$ the projection of the point $\mathbf{x}$ onto the convex set $C$. 
+    \begin{enumerate}
+        \item Show that any finite dimensional space is convex.
+        \item Let $\mathbf{v}_i \in \mathbb{R}^n$, $i=1,\ldots,d$ with $d\leq n$, which are linearly independent.
             \begin{enumerate}
-                \item $\rank{\mathbf{A}} = \rank{\mathbf{A}^{\top}}$;
-                \item $\rank{\mathbf{A}\mathbf{B}} \leq \rank{\mathbf{A}}$;
-                \item $\rank{\mathbf{A}\mathbf{B}} \leq \rank{\mathbf{B}}$;
-                \item $\rank{\mathbf{A}} = \rank{\mathbf{A}^{\top}  \mathbf{A}}$.
-            \end{enumerate}
-        \item The \emph{column space} of $\mathbf{A}$ is defined by
-                \begin{align*}
-                    \mathcal{C}(\mathbf{A} ) = \{ \mathbf{y}\in \mathbb{R}^m : \mathbf{y} = \mathbf{Ax},\,\mathbf{x}\in\mathbb{R}^n\}.
-                \end{align*}
-                The \emph{null space} of $\mathbf{A}$ is defined by
-                \begin{align*}
-                    \mathcal{N}(\mathbf{A})  = \{ \mathbf{x}\in \mathbb{R}^n : \mathbf{Ax}=0\}.
-                \end{align*}
-                Notice that, the rank of $\mathbf{A}$ is the dimension of the column space of $\mathbf{A}$.
-                
-                Please show that:
-	               \begin{enumerate}
-                	    \item $\rank{\mathbf{A}} + \dim ( \mathcal{N}( \mathbf{A} ) ) = n$;
-                	    \item let $\mathbf{y}\in \mathbb{R}^m$, show that $\mathbf{y}=0$ if and only if $\mathbf{a}_i^{\top}\mathbf{y}=0$ for $i=1,\ldots,m$, where $\{\mathbf{a}_1,\mathbf{a}_2,\ldots,\mathbf{a}_m\}$ is a basis of $\mathbb{R}^m$.
-                	\end{enumerate}    
+		        \item For any $\mathbf{w}\in \mathbb{R}^n$, please find $\proj{\mathbf{w}}{\mathbf{v}_1}$, which is the projection of $\mathbf{w}$ onto the subspace spanned by $\mathbf{v}_1$.  
+		        \item Please show $\proj{\cdot}{\mathbf{v}_1}$ is a linear map, i.e.,
+		            \begin{align*}
+		                \proj{\alpha\mathbf{u}+\beta\mathbf{w}}{\mathbf{v}_1}=\alpha\proj{\mathbf{u}}{\mathbf{v}_1} + \beta \proj{\mathbf{w}}{\mathbf{v}_1},
+		            \end{align*}
+		            where $\alpha,\beta\in\mathbb{R}$ and $\mathbf{w}\in\mathbb{R}^n$.
+		        \item Please find the projection matrix corresponding to the linear map $\proj{\cdot}{\mathbf{v}_1}$, i.e., find the matrix $\mathbf{H}_1\in\mathbb{R}^{n\times n}$ such that
+		            \begin{align*}
+		                \proj{\mathbf{w}}{\mathbf{v}_1}=\mathbf{H}_1\mathbf{w}.
+		            \end{align*}
+		        \item Let $\mathbf{V}=(\mathbf{v}_1,\ldots,\mathbf{v}_d)$. 
+		            \begin{enumerate}
+		                \item For any $\mathbf{w}\in \mathbb{R}^n$, please find              $\proj{\mathbf{w}}{\mathbf{V}}$, which is the projection of $\mathbf{w}$ onto $\mathcal{C}(\mathbf{V})$, and the corresponding projection matrix $\mathbf{H}$. 
+		                \item Please find $\mathbf{H}$ if we further assume that $\mathbf{v}_i^{\top}\mathbf{v}_j=0$, $\forall\,i\neq j$.
+		            \end{enumerate}
+	        \end{enumerate}
+	   \item A matrix $\mathbf{P}$ is called a projection matrix if $\mathbf{P}\mathbf{x}$ is the projection of $\mathbf{x}$ onto $\mathcal{C}(\mathbf{P})$ for any $\mathbf{x}$.
+	        \begin{enumerate}
+	            \item Let $\lambda$ be the eigenvalue of $\mathbf{P}$. Show that $\lambda$ is either $1$ or $0$. (\emph{Hint: you may want to figure out what are the eigenspaces corresponding to $\lambda=1$ and $\lambda=0$, respectively.})
+	            \item Show that $\mathbf{P}$ is a projection matrix if and only if $\mathbf{P}^2 = \mathbf{P}$.
+	        \end{enumerate}
 	\end{enumerate}
 \end{exercise}
 
@@ -187,64 +193,23 @@ ID: \id
 	\heiti
 	\ \\
 	\begin{enumerate}
+		\item 有限维空间一般指有限维线性空间，对空间中的任意向量 $\mathbf{x}, \mathbf{y}$，都有 $\alpha\mathbf{x} + (1-\alpha)\mathbf{y}$ 仍然在空间中（线性空间定义），所以根据定义，任意有限维空间都是凸的。
 		\item \ \\
 		\begin{enumerate}
-			\item 设$ rank(A) = r$，那么存在可逆方阵 P 和 Q 使得 $PAQ = \begin{pmatrix} I_r & O \\ O & O \\ \end{pmatrix}$，两边同时转置可得 $ Q^TA^TP^T = \begin{pmatrix} I_r & O\\ O & O \\ \end{pmatrix} $，于是根据定义可得 $ rank(A^T) = r = rank(A)$。
-			\item 设$ rank(A) = r, rank(B) = s$，那么根据定义可得存在可逆方阵 $ P_1, Q_1, P_2, Q_2$，使得$ A = P_1 \begin{pmatrix} I_r & O \\ O & O \\ \end{pmatrix} Q_1, B = P_2 \begin{pmatrix} I_s & O \\ O & O \\ \end{pmatrix} Q_2$，于是 $ AB = P_1 \begin{pmatrix} I_r & O \\ O & O \\ \end{pmatrix} Q_1 P_2 \begin{pmatrix} I_s & O \\ O & O \\ \end{pmatrix} Q_2$，我们可以设 $Q1P2 = \begin{pmatrix} R1 & R2 \\ R3 & R4 \end{pmatrix}$，则 $rank(AB) = rank(P1\begin{pmatrix} R_1 & O \\ O & O \end{pmatrix}Q2)$，其中 $R1$ 是一个大小为 ${r \times s}$ 的矩阵。于是 $rank(AB) \leq min(r, s) = min(rank(A), rank(B))$，所以 $ rank(AB) \leq rank(A), rank(AB) \leq rank(B)$。
-			\item 已在 b. 中证明。
-			\item 证明需要使用 2 中的 null space，也就是方程 $ Ax=0 $ 的解空间。考虑 
-			\begin{align*}
-			\mathcal{N}(\mathbf{A})  = \{ \mathbf{x}\in \mathbb{R}^n : \mathbf{Ax}=0\}.
-			\end{align*}
-			当 $x \in \mathcal{N}(\mathbf{A})$ 时，有
-			\begin{align*}
-				Ax = 0\\
-			A^TAx = 0\\
-			 \Rightarrow x \in \mathcal{N}(\mathbf{A^TA})\\
-			 \Rightarrow \mathcal{N}(\mathbf{A}) \in \mathcal{N}(\mathbf{A^TA})
-			\end{align*}
-			当 $x \in \mathcal{N}(\mathbf{A^TA})$ 时，有
-			\begin{align*}
-			A^TAx = 0\\
-			x^TA^TAx = 0\\
-			\Rightarrow (Ax)^TAx = 0\\
-			\Rightarrow Ax = 0\\
-			\Rightarrow x \in \mathcal{N}(\mathbf{A})\\
-			\Rightarrow \mathcal{N}(\mathbf{A^TA}) \in \mathcal{N}(\mathbf{A})
-			\end{align*}
-			所以有
-			\begin{align*}
-			\mathcal{N}(\mathbf{A^TA}) = \mathcal{N}(\mathbf{A})\\
-			\Rightarrow dim(\mathcal{N}(\mathbf{A^TA})) = dim(\mathcal{N}(\mathbf{A}))\\
-			\Rightarrow n - dim(\mathcal{N}(\mathbf{A^TA})) = n - dim(\mathcal{N}(\mathbf{A}))\\
-			\Rightarrow rank(A^TA) = rank(A)
-			\end{align*}
-			其中利用了
-			\begin{align*}
-			rank(A) = n - dim(dim(\mathcal{N}(\mathbf{A}))\\
-			rank(A^TA) = n - dim(dim(\mathcal{N}(\mathbf{A^TA})).\\
-			\end{align*}
-		\end{enumerate}
-		\item \ \\
-		\begin{enumerate}
-			\item 首先设 $rank(A) = r$，可以对线性方程组 $Ax = 0$ 做初等行变换，变为最简形式 $ Jx = 0$，并且 $rank(A) = rank(J) = r$，最后矩阵可以变为 r 个线性无关的方程组成的方程组，解可以表示为 $ t_1, t_2\dots t_{n - r} $这 $n - r$ 个自由变量的线性组合\\
-			$\left\{\begin{array}{l}{x_{1}=\alpha_{11} t_{1}+\alpha_{12} t_{2}+\cdots+\alpha_{1, n-r} t_{n-r}} \\ {x_{2}=\alpha_{21} t_{1}+\alpha_{22} t_{2}+\cdots+\alpha_{2, n-r} t_{n-r}} \\ {\ldots \ldots \ldots \ldots} \\ {x_{m}=\alpha_{m 1} t_{1}+\alpha_{m 2} t_{2}+\cdots+\alpha_{m, n-r} t_{n-r}}\end{array}\right.$\\
-			写成向量形式
-			\begin{align*}
-				\mathbf{x} = t_{1} \mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}}
-			\end{align*}	
-			下面要证明 $\mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}}$ 是线性无关的，可以注意到 $\mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}}$ 也是线性方程组的通解，因此 $\mathbf{x} = t_{1} \mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}}$ 中必定有 $ n - r$ 个分量分别为 $ t_{1} \mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}}$，所以如果
-			\begin{align*}
-				t_{1} \mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}} = \mathbf{0}
-			\end{align*}
-			那么必有 $t_{1} = \cdots = t_{n-r} = 0$，所以 $ \mathbf{\alpha_{1}} , \cdots , \mathbf{ \alpha_{n-r}} $线性无关，这说明$ \mathbf{\alpha_{1}} , \cdots , \mathbf{ \alpha_{n-r}} $是解空间，即$\mathcal{N}(\mathbf{A})$ 的一组基，而且 $ dim(\mathcal{N}(\mathbf{A})) = n - r$，所以 $\rank{\mathbf{A}} + \dim(\mathcal{N}(\mathbf{A} ) ) = n$.
-			\item 易知若 $ y = 0 $，那么对任意 $\mathbf{a}_i \in \{\mathbf{a}_1,\mathbf{a}_2,\ldots,\mathbf{a}_m\}$,，均有 $\mathbf{a}_i^{\top}\mathbf{y} = 0$. 反之，若对任意 $\mathbf{a}_i \in \{\mathbf{a}_1,\mathbf{a}_2,\ldots,\mathbf{a}_m\}$,，均有 $\mathbf{a}_i^{\top}\mathbf{y} = 0$，那么有 $\begin{pmatrix}
-				a_1 & a_2 & \dots & a_m
-			\end{pmatrix}^{\mathbf{T}} y = 0 $，假设 $ y \neq 0$，那么 $y = \begin{pmatrix}
-				y1 & y2 & \dots & y_m
-			\end{pmatrix}$，且至少存在一个分量不为 0 ，将矩阵乘法展开可知 $\mathbf{a}_1y_1 + \mathbf{a}_2y_2 + \dots + \mathbf{a}_my_m = 0$，由于 $\{\mathbf{a}_1,\mathbf{a}_2,\ldots,\mathbf{a}_m\}$ 是线性空间的一组基，根据定义一定有 $y_1 = y_2 = \dots = y_m = 0$，这与假设矛盾，所以 $ y = 0$.
+			\item 
 		\end{enumerate}
 	\end{enumerate}
+\end{solution}
+
+\begin{exercise}[First-order condition \RNum{2} \textnormal{5pts}]
+	Suppose that $f$ is continuously differentiable. Prove that $f$ is convex if and only if $\dom f$ is convex and
+	\begin{align*}
+	    \langle \nabla f(\mathbf{x}) - \nabla f(\mathbf{y}) , \mathbf{x} - \mathbf{y} \rangle \geq 0.
+	\end{align*}
+	
+\end{exercise}
+
+\begin{solution}
 
 \end{solution}
 
