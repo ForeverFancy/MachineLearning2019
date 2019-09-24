@@ -187,8 +187,63 @@ ID: \id
 	\heiti
 	\ \\
 	\begin{enumerate}
-		\item 设$ rank(A) = r$，那么存在可逆方阵 P 和 Q 使得 $PAQ = \begin{pmatrix} I_r & O \\ O & O \\ \end{pmatrix}$，两边同时转置可得 $ Q^TA^TP^T = \begin{pmatrix} I_r & O\\ O & O \\ \end{pmatrix} $，于是根据定义可得 $ rank(A^T) = r = rank(A)$。
-		\item 设$ rank(A) = r, rank(B) = s$，那么根据定义可得存在可逆方阵 $ P_1, Q_1, P_2, Q_2$，使得$ A = P_1 \begin{pmatrix} I_r & O \\ O & O \\ \end{pmatrix} Q_1, B = P_2 \begin{pmatrix} I_s & O \\ O & O \\ \end{pmatrix} Q_2$，于是 $ AB = P_1 \begin{pmatrix} I_r & O \\ O & O \\ \end{pmatrix} Q_1 P_2 \begin{pmatrix} I_s & O \\ O & O \\ \end{pmatrix} Q_2$
+		\item \ \\
+		\begin{enumerate}
+			\item 设$ rank(A) = r$，那么存在可逆方阵 P 和 Q 使得 $PAQ = \begin{pmatrix} I_r & O \\ O & O \\ \end{pmatrix}$，两边同时转置可得 $ Q^TA^TP^T = \begin{pmatrix} I_r & O\\ O & O \\ \end{pmatrix} $，于是根据定义可得 $ rank(A^T) = r = rank(A)$。
+			\item 设$ rank(A) = r, rank(B) = s$，那么根据定义可得存在可逆方阵 $ P_1, Q_1, P_2, Q_2$，使得$ A = P_1 \begin{pmatrix} I_r & O \\ O & O \\ \end{pmatrix} Q_1, B = P_2 \begin{pmatrix} I_s & O \\ O & O \\ \end{pmatrix} Q_2$，于是 $ AB = P_1 \begin{pmatrix} I_r & O \\ O & O \\ \end{pmatrix} Q_1 P_2 \begin{pmatrix} I_s & O \\ O & O \\ \end{pmatrix} Q_2$，我们可以设 $Q1P2 = \begin{pmatrix} R1 & R2 \\ R3 & R4 \end{pmatrix}$，则 $rank(AB) = rank(P1\begin{pmatrix} R_1 & O \\ O & O \end{pmatrix}Q2)$，其中 $R1$ 是一个大小为 ${r \times s}$ 的矩阵。于是 $rank(AB) \leq min(r, s) = min(rank(A), rank(B))$，所以 $ rank(AB) \leq rank(A), rank(AB) \leq rank(B)$。
+			\item 已在 b. 中证明。
+			\item 证明需要使用 2 中的 null space，也就是方程 $ Ax=0 $ 的解空间。考虑 
+			\begin{align*}
+			\mathcal{N}(\mathbf{A})  = \{ \mathbf{x}\in \mathbb{R}^n : \mathbf{Ax}=0\}.
+			\end{align*}
+			当 $x \in \mathcal{N}(\mathbf{A})$ 时，有
+			\begin{align*}
+				Ax = 0\\
+			A^TAx = 0\\
+			 \Rightarrow x \in \mathcal{N}(\mathbf{A^TA})\\
+			 \Rightarrow \mathcal{N}(\mathbf{A}) \in \mathcal{N}(\mathbf{A^TA})
+			\end{align*}
+			当 $x \in \mathcal{N}(\mathbf{A^TA})$ 时，有
+			\begin{align*}
+			A^TAx = 0\\
+			x^TA^TAx = 0\\
+			\Rightarrow (Ax)^TAx = 0\\
+			\Rightarrow Ax = 0\\
+			\Rightarrow x \in \mathcal{N}(\mathbf{A})\\
+			\Rightarrow \mathcal{N}(\mathbf{A^TA}) \in \mathcal{N}(\mathbf{A})
+			\end{align*}
+			所以有
+			\begin{align*}
+			\mathcal{N}(\mathbf{A^TA}) = \mathcal{N}(\mathbf{A})\\
+			\Rightarrow dim(\mathcal{N}(\mathbf{A^TA})) = dim(\mathcal{N}(\mathbf{A}))\\
+			\Rightarrow n - dim(\mathcal{N}(\mathbf{A^TA})) = n - dim(\mathcal{N}(\mathbf{A}))\\
+			\Rightarrow rank(A^TA) = rank(A)
+			\end{align*}
+			其中利用了
+			\begin{align*}
+			rank(A) = n - dim(dim(\mathcal{N}(\mathbf{A}))\\
+			rank(A^TA) = n - dim(dim(\mathcal{N}(\mathbf{A^TA})).\\
+			\end{align*}
+		\end{enumerate}
+		\item \ \\
+		\begin{enumerate}
+			\item 首先设 $rank(A) = r$，可以对线性方程组 $Ax = 0$ 做初等行变换，变为最简形式 $ Jx = 0$，并且 $rank(A) = rank(J) = r$，最后矩阵可以变为 r 个线性无关的方程组成的方程组，解可以表示为 $ t_1, t_2\dots t_{n - r} $这 $n - r$ 个自由变量的线性组合\\
+			$\left\{\begin{array}{l}{x_{1}=\alpha_{11} t_{1}+\alpha_{12} t_{2}+\cdots+\alpha_{1, n-r} t_{n-r}} \\ {x_{2}=\alpha_{21} t_{1}+\alpha_{22} t_{2}+\cdots+\alpha_{2, n-r} t_{n-r}} \\ {\ldots \ldots \ldots \ldots} \\ {x_{m}=\alpha_{m 1} t_{1}+\alpha_{m 2} t_{2}+\cdots+\alpha_{m, n-r} t_{n-r}}\end{array}\right.$\\
+			写成向量形式
+			\begin{align*}
+				\mathbf{x} = t_{1} \mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}}
+			\end{align*}	
+			下面要证明 $\mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}}$ 是线性无关的，可以注意到 $\mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}}$ 也是线性方程组的通解，因此 $\mathbf{x} = t_{1} \mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}}$ 中必定有 $ n - r$ 个分量分别为 $ t_{1} \mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}}$，所以如果
+			\begin{align*}
+				t_{1} \mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}} = \mathbf{0}
+			\end{align*}
+			那么必有 $t_{1} = \cdots = t_{n-r} = 0$，所以 $ \mathbf{\alpha_{1}} , \cdots , \mathbf{ \alpha_{n-r}} $线性无关，这说明$ \mathbf{\alpha_{1}} , \cdots , \mathbf{ \alpha_{n-r}} $是解空间，即$\mathcal{N}(\mathbf{A})$ 的一组基，而且 $ dim(\mathcal{N}(\mathbf{A})) = n - r$，所以 $\rank{\mathbf{A}} + \dim(\mathcal{N}(\mathbf{A} ) ) = n$.
+			\item 易知若 $ y = 0 $，那么对任意 $\mathbf{a}_i \in \{\mathbf{a}_1,\mathbf{a}_2,\ldots,\mathbf{a}_m\}$,，均有 $\mathbf{a}_i^{\top}\mathbf{y} = 0$. 反之，若对任意 $\mathbf{a}_i \in \{\mathbf{a}_1,\mathbf{a}_2,\ldots,\mathbf{a}_m\}$,，均有 $\mathbf{a}_i^{\top}\mathbf{y} = 0$，那么有 $\begin{pmatrix}
+				a_1 & a_2 & \dots & a_m
+			\end{pmatrix}^{\mathbf{T}} y = 0 $，假设 $ y \neq 0$，那么 $y = \begin{pmatrix}
+				y1 & y2 & \dots & y_m
+			\end{pmatrix}$，且至少存在一个分量不为 0 ，将矩阵乘法展开可知 $\mathbf{a}_1y_1 + \mathbf{a}_2y_2 + \dots + \mathbf{a}_my_m = 0$，由于 $\{\mathbf{a}_1,\mathbf{a}_2,\ldots,\mathbf{a}_m\}$ 是线性空间的一组基，根据定义一定有 $y_1 = y_2 = \dots = y_m = 0$，这与假设矛盾，所以 $ y = 0$.
+		\end{enumerate}
 	\end{enumerate}
 
 \end{solution}
