@@ -155,6 +155,162 @@ ID: \id
 %% BODY OF HOMEWORK GOES HERE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\textbf{Notice, }to get the full credits, please present your solutions step by step.
+
+\begin{exercise}[Linear regression \textnormal{20pts}]
+	Given a data set $\{ (x_i ,y_i) \}_{i=1}^{n}$, where $x_i,y_i\in \mathbb{R}$. 
+	\begin{enumerate}
+	    \item If we want to fit the data by a linear model
+	        \begin{align}\label{eqn:linear}
+	            y =  w_0 + w_1 x,
+	        \end{align}
+	        please find $\hat{w}_0$ and $\hat{w}_1$ by the least squares approach (you need to find expressions of $\hat{w}_0$ and $\hat{w}_1$ by $\{ (x_i ,y_i) \}_{i=1}^{n}$, respectively).
+	    \item \textbf{Programming Exercise} We provide you a data set $\{ (x_i ,y_i) \}_{i=1}^{30}$. Consider the model in (\ref{eqn:linear}) and the one as follows:
+	        \begin{align}\label{eqn:linear-quadratic}
+	            y =  w_0 + w_1 x+ w_2 x^2. 
+	        \end{align}
+	        Which model do you think fits better the data? Please detail your approach first and then implement it by your favorite programming language. The required output includes 
+	        \begin{enumerate}
+	            \item your detailed approach step by step; 
+	            \item your code with detailed comments according to your planned approach; 
+	            \item a plot showing the data and the fitting models; 
+	            \item the model you finally choose [$\hat{w}_0$ and $\hat{w}_1$ if you choose the model in (\ref{eqn:linear}), or $\hat{w}_0$, $\hat{w}_1$, and $\hat{w}_2$ if you choose the model in (\ref{eqn:linear})].
+	        \end{enumerate}
+	\end{enumerate}
+\end{exercise}
+\newpage
+\begin{solution}
+	\heiti
+	\ \\
+	\begin{enumerate}
+		\item 令误差函数\\$E = \sum\limits_{i=1}^n(w_0 + w_1x_i -y_i)^2$
+	
+		$(w_0^*,w_1^*) = \arg\min\limits_{(w_0,w_1)}(E)$
+	
+		$\frac{\partial E}{\partial w_0} = 2\sum\limits_{i=1}^n(w_0 + w_1x_i - y_i)$
+	
+		$\frac{\partial E}{\partial w_1} = 2\sum\limits_{i=1}^nx_i(w_0 + w_1x_i - y_i)$
+	
+		要使得 E 最小，所以令两个偏导数为 0，那么可得
+	
+		$nw_0 = \sum\limits_{i=1}^n(w_1x_i-y_i) $
+	
+		$w_0\sum\limits_{i=1}^nx_i = n\sum\limits_{i=1}^nx_i(w_1x_i-y_i)$
+		
+		联立方程解得
+	
+		$ w_0 = \frac{n\sum\limits_{i=1}^ny_ix_i - \sum\limits_{i=1}^nx_i\sum\limits_{i=1}^ny_i}{n\sum\limits_{i=1}^nx_i^2-(\sum\limits_{i=1}^nx_i)^2}$
+	
+		$ w_1 = \frac{\sum\limits_{i=1}^n(y_i-w_0x_i)}{n}$ 
+		\item \ 
+			\begin{enumerate}
+				\item 主要思路是由 1. 中已经求得的 $w0,w1$ 表达式可以通过样本直接计算出对应的 $w0,w1$ ，再重新代入误差函数 $E$ 中，求出最小误差。\\
+				同样的道理，二次拟合函数也可以通过计算其误差函数，对三个参数分别求偏导数并令其为 0，联立三个方程解得相应的三个参数，并代回到误差函数中求得最小误差。\\
+				以上两个最小误差进行比较即可看出哪个模型对数据的拟合较好。\\
+				具体到编程细节，首先读入数据并转换为 numpy array，分别进行线性拟合和二次拟合（其中二次拟合使用 numpy 求解线性方程组），求得最小误差后进行比较，并绘制图像。\\
+				参考文献：\href{https://www.bb.ustc.edu.cn/jpkc/xiaoji/szjsff/jsffkj/chapt3_2.htm}{计算方法课程} 
+				\item 代码见附件\href{./prob1.py}{prob1.py}。
+				\item 图片见附件\href{./Figure.png}{Figure.png}。
+				\item 最终比较之后选择二次拟合模型，得到 $w0 = 1.0295683746564661, w1 = 0.3861433340323225, w2 = -0.14215111308616024$。
+			\end{enumerate}
+	\end{enumerate}
+\end{solution}
+
+\begin{exercise}[Rank of matrices \textnormal{20pts}]
+	Let $\mathbf{A} \in \mathbb{R}^{m\times n}$ and $\mathbf{B}\in \mathbb{R}^{n\times p}$.
+	\begin{enumerate}
+	    \item Please show that
+            \begin{enumerate}
+                \item $\rank{\mathbf{A}} = \rank{\mathbf{A}^{\top}}$;
+                \item $\rank{\mathbf{A}\mathbf{B}} \leq \rank{\mathbf{A}}$;
+                \item $\rank{\mathbf{A}\mathbf{B}} \leq \rank{\mathbf{B}}$;
+                \item $\rank{\mathbf{A}} = \rank{\mathbf{A}^{\top}  \mathbf{A}}$.
+            \end{enumerate}
+        \item The \emph{column space} of $\mathbf{A}$ is defined by
+                \begin{align*}
+                    \mathcal{C}(\mathbf{A} ) = \{ \mathbf{y}\in \mathbb{R}^m : \mathbf{y} = \mathbf{Ax},\,\mathbf{x}\in\mathbb{R}^n\}.
+                \end{align*}
+                The \emph{null space} of $\mathbf{A}$ is defined by
+                \begin{align*}
+                    \mathcal{N}(\mathbf{A})  = \{ \mathbf{x}\in \mathbb{R}^n : \mathbf{Ax}=0\}.
+                \end{align*}
+                Notice that, the rank of $\mathbf{A}$ is the dimension of the column space of $\mathbf{A}$.
+                
+                Please show that:
+	               \begin{enumerate}
+                	    \item $\rank{\mathbf{A}} + \dim ( \mathcal{N}( \mathbf{A} ) ) = n$;
+                	    \item let $\mathbf{y}\in \mathbb{R}^m$, show that $\mathbf{y}=0$ if and only if $\mathbf{a}_i^{\top}\mathbf{y}=0$ for $i=1,\ldots,m$, where $\{\mathbf{a}_1,\mathbf{a}_2,\ldots,\mathbf{a}_m\}$ is a basis of $\mathbb{R}^m$.
+                	\end{enumerate}    
+	\end{enumerate}
+\end{exercise}
+
+\begin{solution}
+	\heiti
+	\ \\
+	\begin{enumerate}
+		\item \ \\
+		\begin{enumerate}
+			\item 设$ rank(A) = r$，那么存在可逆方阵 P 和 Q 使得 $PAQ = \begin{pmatrix} I_r & O \\ O & O \\ \end{pmatrix}$，两边同时转置可得 $ Q^TA^TP^T = \begin{pmatrix} I_r & O\\ O & O \\ \end{pmatrix} $，于是根据定义可得 $ rank(A^T) = r = rank(A)$。
+			\item 设$ rank(A) = r, rank(B) = s$，那么根据定义可得存在可逆方阵 $ P_1, Q_1, P_2, Q_2$，使得$ A = P_1 \begin{pmatrix} I_r & O \\ O & O \\ \end{pmatrix} Q_1, B = P_2 \begin{pmatrix} I_s & O \\ O & O \\ \end{pmatrix} Q_2$，于是 $ AB = P_1 \begin{pmatrix} I_r & O \\ O & O \\ \end{pmatrix} Q_1 P_2 \begin{pmatrix} I_s & O \\ O & O \\ \end{pmatrix} Q_2$，我们可以设 $Q1P2 = \begin{pmatrix} R1 & R2 \\ R3 & R4 \end{pmatrix}$，则 $rank(AB) = rank(P1\begin{pmatrix} R_1 & O \\ O & O \end{pmatrix}Q2)$，其中 $R1$ 是一个大小为 ${r \times s}$ 的矩阵。于是 $rank(AB) \leq min(r, s) = min(rank(A), rank(B))$，所以 $ rank(AB) \leq rank(A), rank(AB) \leq rank(B)$。
+			\item 已在 b. 中证明。
+			\item 证明需要使用 2 中的 null space，也就是方程 $ Ax=0 $ 的解空间。考虑 
+			\begin{align*}
+			\mathcal{N}(\mathbf{A})  = \{ \mathbf{x}\in \mathbb{R}^n : \mathbf{Ax}=0\}.
+			\end{align*}
+			当 $x \in \mathcal{N}(\mathbf{A})$ 时，有
+			\begin{align*}
+				Ax = 0\\
+			A^TAx = 0\\
+			 \Rightarrow x \in \mathcal{N}(\mathbf{A^TA})\\
+			 \Rightarrow \mathcal{N}(\mathbf{A}) \in \mathcal{N}(\mathbf{A^TA})
+			\end{align*}
+			当 $x \in \mathcal{N}(\mathbf{A^TA})$ 时，有
+			\begin{align*}
+			A^TAx = 0\\
+			x^TA^TAx = 0\\
+			\Rightarrow (Ax)^TAx = 0\\
+			\Rightarrow Ax = 0\\
+			\Rightarrow x \in \mathcal{N}(\mathbf{A})\\
+			\Rightarrow \mathcal{N}(\mathbf{A^TA}) \in \mathcal{N}(\mathbf{A})
+			\end{align*}
+			所以有
+			\begin{align*}
+			\mathcal{N}(\mathbf{A^TA}) = \mathcal{N}(\mathbf{A})\\
+			\Rightarrow dim(\mathcal{N}(\mathbf{A^TA})) = dim(\mathcal{N}(\mathbf{A}))\\
+			\Rightarrow n - dim(\mathcal{N}(\mathbf{A^TA})) = n - dim(\mathcal{N}(\mathbf{A}))\\
+			\Rightarrow rank(A^TA) = rank(A)
+			\end{align*}
+			其中利用了
+			\begin{align*}
+			rank(A) = n - dim(dim(\mathcal{N}(\mathbf{A}))\\
+			rank(A^TA) = n - dim(dim(\mathcal{N}(\mathbf{A^TA})).\\
+			\end{align*}
+		\end{enumerate}
+		\item \ \\
+		\begin{enumerate}
+			\item 首先设 $rank(A) = r$，可以对线性方程组 $Ax = 0$ 做初等行变换，变为最简形式 $ Jx = 0$，并且 $rank(A) = rank(J) = r$，最后矩阵可以变为 r 个线性无关的方程组成的方程组，解可以表示为 $ t_1, t_2\dots t_{n - r} $这 $n - r$ 个自由变量的线性组合\\
+			$\left\{\begin{array}{l}{x_{1}=\alpha_{11} t_{1}+\alpha_{12} t_{2}+\cdots+\alpha_{1, n-r} t_{n-r}} \\ {x_{2}=\alpha_{21} t_{1}+\alpha_{22} t_{2}+\cdots+\alpha_{2, n-r} t_{n-r}} \\ {\ldots \ldots \ldots \ldots} \\ {x_{m}=\alpha_{m 1} t_{1}+\alpha_{m 2} t_{2}+\cdots+\alpha_{m, n-r} t_{n-r}}\end{array}\right.$\\
+			写成向量形式
+			\begin{align*}
+				\mathbf{x} = t_{1} \mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}}
+			\end{align*}	
+			下面要证明 $\mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}}$ 是线性无关的，可以注意到 $\mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}}$ 也是线性方程组的通解，因此 $\mathbf{x} = t_{1} \mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}}$ 中必定有 $ n - r$ 个分量分别为 $ t_{1} \mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}}$，所以如果
+			\begin{align*}
+				t_{1} \mathbf{\alpha_{1}}+\cdots+t_{n-r} \mathbf{ \alpha_{n-r}} = \mathbf{0}
+			\end{align*}
+			那么必有 $t_{1} = \cdots = t_{n-r} = 0$，所以 $ \mathbf{\alpha_{1}} , \cdots , \mathbf{ \alpha_{n-r}} $线性无关，这说明$ \mathbf{\alpha_{1}} , \cdots , \mathbf{ \alpha_{n-r}} $是解空间，即$\mathcal{N}(\mathbf{A})$ 的一组基，而且 $ dim(\mathcal{N}(\mathbf{A})) = n - r$，所以 $\rank{\mathbf{A}} + \dim(\mathcal{N}(\mathbf{A} ) ) = n$.
+			\item 易知若 $ y = 0 $，那么对任意 $\mathbf{a}_i \in \{\mathbf{a}_1,\mathbf{a}_2,\ldots,\mathbf{a}_m\}$,，均有 $\mathbf{a}_i^{\top}\mathbf{y} = 0$. 反之，若对任意 $\mathbf{a}_i \in \{\mathbf{a}_1,\mathbf{a}_2,\ldots,\mathbf{a}_m\}$,，均有 $\mathbf{a}_i^{\top}\mathbf{y} = 0$，那么有 $\begin{pmatrix}
+				a_1 & a_2 & \dots & a_m
+			\end{pmatrix}^{\mathbf{T}} y = 0 $，假设 $ y \neq 0$，那么 $y = \begin{pmatrix}
+				y1 & y2 & \dots & y_m
+			\end{pmatrix}$，且至少存在一个分量不为 0 ，将矩阵乘法展开可知 $\mathbf{a}_1y_1 + \mathbf{a}_2y_2 + \dots + \mathbf{a}_my_m = 0$，由于 $\{\mathbf{a}_1,\mathbf{a}_2,\ldots,\mathbf{a}_m\}$ 是线性空间的一组基，根据定义一定有 $y_1 = y_2 = \dots = y_m = 0$，这与假设矛盾，所以 $ y = 0$.
+		\end{enumerate}
+	\end{enumerate}
+
+\end{solution}
+
+\newpage
+
 \begin{exercise}[Projection \textnormal{30pts}]
 	Let $C \subset \mathbb{R}^n$ be a closed convex set and $\mathbf{x} \in \mathbb{R}^n$. Define
 	\begin{align*}
@@ -196,10 +352,155 @@ ID: \id
 		\item 有限维空间一般指有限维线性空间，对空间中的任意向量 $\mathbf{x}, \mathbf{y}$，都有 $\alpha\mathbf{x} + (1-\alpha)\mathbf{y}$ 仍然在空间中（线性空间定义），所以根据定义，任意有限维空间都是凸的。
 		\item \ \\
 		\begin{enumerate}
-			\item 
+			\item $P_{v_{1}}(\mathbf{w})$ 是 $\mathbf{w}$ 在$\mathbf{v_1}$ 上的投影
+			\begin{align*}
+				P_{v_{1}}(\mathbf{w}) &=x \frac{\vec{v}_{1}}{\left|\vec{v}_{1}\right|}  \\ 
+				x \ &= \ |\vec{w}| \cdot \cos <\vec{w}, \overrightarrow{v_{1}}>\\
+				&=|\vec{w}| \cdot \frac{\vec{w} \cdot \vec{v}_{1}}{|\vec{w}| \cdot\left|\vec{v}_{1}\right|} \\ 
+				&=\frac{\vec{w} \cdot \vec{v}_{1}}{\left|\vec{v}_{1}\right|} \\ 
+				P_{v_{1}}(w) &= \frac{\vec{w} \cdot \vec{v}_{1}}{\left|\vec{v}_{1}\right|^2} \vec{v}_{1}
+			\end{align*}
+			\item \ \\
+				\begin{align*} 
+				P_{v_{1}}(\alpha \vec{u}+\beta \vec{w}) &=\frac{(\alpha \vec{u}+\beta \vec{w}) \vec{w}_{1}}{\left|\vec{w}_{1}\right|^2} \\ &=\frac{\alpha \vec{u} \cdot \vec{v}_{1}}{\left|\vec{v}_{1}\right|^2} \vec{v}_{1}+\frac{\beta \vec{w} \cdot \vec{v}_{1}}{\left|\vec{v}_{1}\right|^2} \vec{v}_{1} \\ &=\alpha P_{v_{1}}(\vec{u})+\beta P_{v_{1}}(\vec{w}) 
+				\end{align*}
+			\item 将上述结论写成矩阵形式得\\
+				\begin{align*} 
+				P_{v_{1}}(w) &=\frac{\vec{w} \cdot \vec{v}_{1}}{\left|\vec{v}_{1}\right|^{2}} \vec{v}_{1} \\ &=\frac{v_{1}^{\top} w}{v_{1}^{\top} v_{1}} v_{1} \\ &=\frac{\left.v_{1} (v_{1}^{\top} w\right)}{v_{1}^{\top} v_{1}} \\ &=\frac{v_{1} v_{1}^{\top}}{v_{1}^{\top} v_{1}} w 
+				\end{align*}
+				所以\\ 
+				\begin{align*}
+					\mathbf{H} = \frac{v_{1} v_{1}^{\top}}{v_{1}^{\top} v_{1}}
+				\end{align*}
+			\item 和上面相同的思路，设投影函数可以写成各个向量的线性组合
+				\begin{align*}
+				P_{\mathbf{v}}(\mathbf{w}) &=x_{1} \mathbf{v}_{1}+x_{2} \mathbf{v}_{2}+\cdots+x_{n} \mathbf{v}_{n} \\ &=\mathbf{V} \mathbf{x} 
+				\end{align*}
+				根据投影的定义，需要使得原来的点到投影之后的点的距离最小，那么向量 $\mathbf{w} - \mathbf{P}$ 一定垂直于 $\mathbf{V}$ 构成的子空间，也就与子空间中的每一组基垂直。于是有\\
+				\begin{align*} 
+				\mathbf{v}_{1}^{\top}(\mathbf{w}-\mathbf{P}) &=0 \\ \mathbf{v}_{2}^{\top}(\mathbf{w}-\mathbf{P}) &=0 \\ \vdots \\ \mathbf{v}_{d}^{\top}(\mathbf{w}-\mathbf{P}) &=0 \\ \Rightarrow\left(\begin{array}{c}{\mathbf{v}_{1}^{\top}}\\ \vdots \\ {\mathbf{v}_{d}^{\top}}\end{array}\right)(\mathbf{w}-\mathbf{P}) &=0 \\ \Rightarrow \quad \mathbf{V}^{\top}(\mathbf{w}-\mathbf{P})&=0 \\ 
+				\end{align*}
+				将 $\mathbf{P}$ 的表达式代入得\\
+				\begin{align*} 
+					\mathbf{V^{\top}(w-v x)=0} \\ \Rightarrow & \mathbf{V^{\top} w =V^{\top} V x} \\ \Rightarrow & \mathbf{x=\left(V^{\top} V\right)^{-1}VV^{\top} w}  \\ \Rightarrow & \mathbf{P=V\left(V^{\top} V\right)^{-1} V^{\top} w}  
+				\end{align*}
+				于是 $\mathbf{H} = \mathbf{V\left(V^{\top} V\right)^{-1} V^{\top}}$.
+				\item $$
+			v^{\top} v=\left(\begin{array}{c}{v_{1}^{\top}} \\ \vdots \\ {v_{d}^{\top}}\end{array}\right)\left(v_{1} \  v_{2} \cdots \  v_{d}\right)
+			$$
+			$\quad \begin{aligned} & \mathbf{=\left(\begin{array}{cccc}{v_{1}^{\top} v_{1}} \\ \  & {v_{2}^{\top} v_{2}} \\ \ & \ & \ddots \\ \ & & & {v_{d}^{\top} v_{d}} \\ \end{array}\right)} \\ \mathbf{\left(v^{\top} v\right)^{-1}} &=\left(\begin{array}{cccc} \frac{1}{{v_{1}^{\top} v_{1}}} \\ \  & \frac{1}{{v_{2}^{\top} v_{2}}} \\ \ & \ & \ddots \\ \ & & & \frac{1}{{v_{d}^{\top} v_{d}}} \\ \end{array}\right) \\ \mathbf{H=v\left(v^{\top} v\right)^{-1} v^{\top}} &=\left(\begin{array}{cccc} \frac{v_1v_1^{\top}}{{v_{1}^{\top} v_{1}}} \\ \  & \frac{v_2v_2^{\top}}{{v_{2}^{\top} v_{2}}} \\ \ & \ & \ddots \\ \ & & & \frac{v_dv_d^{\top}}{{v_{d}^{\top} v_{d}}} \\ \end{array}\right) \end{aligned}$
+		\end{enumerate}
+		\item 
+		\begin{enumerate}
+			\item 对于矩阵 $\mathbf{P}$，它的特征值和特征向量满足
+				\begin{align*}
+					\mathbf{P}\mathbf{x} = \lambda\mathbf{x}
+				\end{align*}
+			特征值和特征向量的几何解释为，$\mathbf{P}$ 看作一个线性变换的变换矩阵，$\mathbf{x}$ 是在变换之后保持不变的方向，这个方向上的向量只是长度伸缩了 $\lambda$ 倍。所以要求 $\mathbf{P}$ 的特征值，我们首先要寻找变换之后方向不变的特征向量。\\
+			投影变换之后方向保持不变的向量有两类，一类是与投影平面垂直的向量，它们投影之后得到的向量是 $0$ 向量，即 $\mathbf{P}\mathbf{x} = 0 \cdot \mathbf{x} $，另一类是本身就在投影空间中的向量，投影之后得到的向量是它们本身，即 $\mathbf{P}\mathbf{x} = 1 \cdot \mathbf{x}$。综上，矩阵 $\mathbf{P}$ 的特征值 $\lambda$ 只能为 0 或者 1.
+			\item \begin{enumerate}
+				\item "$\Rightarrow$" \\
+				\begin{align*}
+					\mathbf{P^2} &= \mathbf{P P}\\
+					& = \mathbf{V(V^{\top}V)^{-1}V^{\top}V(V^{\top}V)^{-1}V^{\top}}\\
+					& = \mathbf{V(V^{\top}V)^{-1}(V^{\top}V)(V^{\top}V)^{-1}V^{\top}}\\
+					& = \mathbf{V((V^{\top}V)^{-1}(V^{\top}V))(V^{\top}V)^{-1}V^{\top}}\\
+					& = \mathbf{V(V^{\top}V)^{-1}V^{\top}}\\
+					& = \mathbf{P}
+				\end{align*}
+				\item "$\Leftarrow$" \\
+				设 $\mathbf{y}$ 是 $\mathbf{x}$对于子空间的投影，那么有 
+				\begin{align*}
+					\mathbf{P(x)} & =\mathbf{y}\\
+					\mathbf{P(y)} & = \mathbf{P(P(x))}\\
+					& = \mathbf{P^2(x)} \\
+					& = \mathbf{P(x)}\\
+					& = \mathbf{y}
+				\end{align*}
+				这说明 $\mathbf{y}$ 在子空间中，而且 $P$ 是投影矩阵。
+					
+			\end{enumerate}
 		\end{enumerate}
 	\end{enumerate}
 \end{solution}
+
+\newpage
+
+\begin{exercise}[ \textnormal{5pts}] 
+	Let $\mathbf{x}\in \mathbf{R}^n$. Find the gradients of the following functions.
+	\begin{enumerate}
+	    \item $f(\mathbf{x}) = \mathbf{a}^{\top}\mathbf{x}$.
+	    \item $f(\mathbf{x}) = \mathbf{x}^{\top}\mathbf{x}$.
+	    \item $f(\mathbf{x})=\| \mathbf{y} - \mathbf{A}\mathbf{x} \|_2^2$, where $\mathbf{A}\in\mathbb{R}^{m\times n}$.
+	\end{enumerate}
+\end{exercise}
+
+\begin{solution}
+	\heiti
+	\ \\
+	\begin{enumerate}
+		\item $\frac{\mathbf{d}f(\mathbf{x})}{\mathbf{d}x} = \mathbf{a}$
+		\item $\frac{\mathbf{d}f(\mathbf{x})}{\mathbf{d}x} = 2\mathbf{x}$
+		\item $\frac{\mathbf{d}f(\mathbf{x})}{\mathbf{d}x} = \frac{\mathbf{d}f(\mathbf{x})}{\mathbf{d}(\mathbf{y} - \mathbf{A}\mathbf{x})}  \frac{\mathbf{d}(\mathbf{y} - \mathbf{A}\mathbf{x})}{\mathbf{d}x} = - 2 \mathbf{A}^\mathbf{T} (\mathbf{y} - \mathbf{A}\mathbf{x})$
+	\end{enumerate}
+\end{solution}
+\newpage
+
+
+\begin{exercise}[Second-order sufficient optimality conditions \textnormal{10pts}]
+	Suppose that $f:\mathbb{R}^n\rightarrow\mathbb{R}$ is twice differentiable at $\mathbf{x}$. If $\nabla f(\mathbf{x})=0$ and the Hessian matrix $\mathbf{H}(\mathbf{x})$ is positive definite, then $\mathbf{x}$ is a strict local minimum.
+	\begin{enumerate}
+		\item Show the above result by contradiction.
+		\item Show the result by NOT using contradiction. [\emph{Hint: you may need eigen-decomposition.}]
+	\end{enumerate}
+\end{exercise}
+
+\begin{solution}
+	\heiti
+	\ \\
+	\begin{enumerate}
+		\item 设 $\mathbf{x}$ 不是严格局部最小值，那么存在 $\mathbf{x_0}$ 使得 $f(\mathbf{x_0}) \leq f(\mathbf{x})$，对 $f(\mathbf{x_0})$ 做泰勒展开可得
+			\begin{align*}
+				f(\mathbf{x_0}) = f(\mathbf{x}) + \nabla f(\mathbf{x})(\mathbf{x} - \mathbf{x_0}) + \frac{1}{2}(\mathbf{x_0} - \mathbf{x})^\mathbf{T}\mathbf{H}(\mathbf{x})(\mathbf{x_0} - \mathbf{x}) + o((\mathbf{x_0} - \mathbf{x})^2)
+			\end{align*}
+		根据题目条件 $\mathbf{H}(\mathbf{x})$ 正定可知 $\frac{1}{2}(\mathbf{x_0} - \mathbf{x})^\mathbf{T}\mathbf{H}(\mathbf{x})(\mathbf{x_0} - \mathbf{x}) > 0$，再根据$\nabla f(\mathbf{x})=0$ 可得
+			\begin{align*}
+				f(\mathbf{x_0}) > f(\mathbf{x})
+			\end{align*}
+		与假设矛盾，所以$\mathbf{x}$ 处是 $f(\mathbf{x})$ 局部严格最小值。
+		\item 对于 $\mathbf{x}$ 附近的任意一点 $\mathbf{x}_0$，在此处对 $f(\mathbf{\mathbf{x}_0})$ 做泰勒展开可得
+			\begin{align*}
+				f(\mathbf{x_0}) = f(\mathbf{x}) + \nabla f(\mathbf{x})(\mathbf{x} - \mathbf{x_0}) + \frac{1}{2}(\mathbf{x_0} - \mathbf{x})^\mathbf{T}\mathbf{H}(\mathbf{x})(\mathbf{x_0} - \mathbf{x}) + o((\mathbf{x_0} - \mathbf{x})^2)
+			\end{align*}
+			因为 $\mathbf{H}(\mathbf{x})$ 是正定的，所以 $\frac{1}{2}(\mathbf{x_0} - \mathbf{x})^\mathbf{T}\mathbf{H}(\mathbf{x})(\mathbf{x_0} - \mathbf{x}) > 0$，又因为 $\nabla f(\mathbf{x})=0$，可以看出
+				\begin{align*}
+					f(\mathbf{x_0}) > f(\mathbf{x})
+				\end{align*}
+			故 $\mathbf{x}$ 处是 $f(\mathbf{x})$ 局部严格最小值。
+	\end{enumerate}
+
+\end{solution}
+\newpage
+
+\begin{exercise}[Identically independently distributed \textnormal{10pts}]
+	Suppose that the training samples $\{(\mathbf{x}_i,y_i)\}_{i=1}^n$ are i.i.d.. show that
+	\begin{align*}
+	    p(\mathbf{x}_1,\ldots,\mathbf{x}_n)=\prod_{i=1}^np(\mathbf{x}_i).
+	\end{align*}
+	
+\end{exercise}
+
+\begin{solution}
+	\heiti
+	\ \\
+	根据独立的定义，n 个样本相互独立，那么它们联合概率分布等于分别的概率分布乘积，即
+	\begin{align*}
+	    p(\mathbf{x}_1,\ldots,\mathbf{x}_n)=\prod_{i=1}^np(\mathbf{x}_i).
+	\end{align*}
+	于是得证。
+\end{solution}
+\newpage
+
 
 \begin{exercise}[First-order condition \RNum{2} \textnormal{5pts}]
 	Suppose that $f$ is continuously differentiable. Prove that $f$ is convex if and only if $\dom f$ is convex and
@@ -210,8 +511,38 @@ ID: \id
 \end{exercise}
 
 \begin{solution}
+	\heiti
+	\ \\
+	\begin{enumerate}
+		\item "$\Rightarrow$"\\
+			当 $f(\mathbf{x})$ 是凸函数时，有 
+			\begin{align*}
+				f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}) , \mathbf{y} - \mathbf{x} \rangle.\\
+				f(\mathbf{x}) \geq f(\mathbf{y}) + \langle \nabla f(\mathbf{y}) , \mathbf{x} - \mathbf{y} \rangle.\\
+				\Rightarrow f(\mathbf{y}) \geq f(\mathbf{y}) + \langle \nabla f(\mathbf{y}) , \mathbf{x} - \mathbf{y} \rangle + \langle \nabla f(\mathbf{x}) , \mathbf{y} - \mathbf{x} \rangle.\\
+				\Rightarrow \langle \nabla f(\mathbf{x}) , \mathbf{x} - \mathbf{y} \rangle - \langle \nabla f(\mathbf{y}) , \mathbf{x} - \mathbf{y} \rangle \geq 0.\\
+				\Rightarrow \langle \nabla f(\mathbf{x}) - \nabla f(\mathbf{y}) , \mathbf{x} - \mathbf{y} \rangle \geq 0.
+			\end{align*}
+		\item "$\Leftarrow$"\\
+		首先证明如果函数 $f(\mathbf{x})$ 的一阶导数递增，那么该函数为凸函数。\\
+		由拉格朗日中值定理，存在$\xi_1 \subset (\theta x+(1-\theta) y, y), \xi_2 \subset (x, \theta x+(1-\theta) y)$ 使得
+		$$
+		\begin{array}{l}{f(y)-f(\theta x+(1-\theta) y)=f^{\prime}\left(\xi_{1}\right)(y-(\theta x+(1-\theta) y)) \cdots (1)} \\ {f(x)-f(\theta x+(1-\theta) y)=f^{\prime}\left(\xi_{2}\right)\left(y-(\theta x+(1-y) y)) \cdots (2)\right.} \\ {\frac{(1)}{\theta}+\frac{(2)}{1-\theta} \Rightarrow} \\ {\frac{f(y)-f(\theta x+(1-\theta) y)}{\theta}+\frac{f(x)-f(\theta x+(1-\theta) y)}{1-\theta}=\left(f^{\prime}\left(\xi_{2}\right)-f^{\prime}\left(\xi_{1}\right)\right)(y - x) \cdots (3)} \\Since {f^{\prime}\left(\xi_{1}\right) \geqslant f^{\prime}\left(\xi_{2}\right)}, so (3) \geq 0 \\ {\Rightarrow f(\theta x+(1-\theta) y) \leqslant \theta f(x)+(1-\theta) f(y)}\end{array}
+		$$
+		构造函数 $  F(\lambda) = f(\mathbf{x} + \lambda(\mathbf{y}-\mathbf{x})$，则凸函数条件可以转化为：
+			\begin{align*}
+				\lambda f(\mathbf{x})+(1-\lambda) f(\mathbf{y}) \geqslant f(\lambda \mathbf{x}+(1-\lambda) \mathbf{y}) \\ \Leftrightarrow \lambda F(0)+(1-\lambda) F(1) \geqslant F(1-\lambda)
+			\end{align*}
+		只需证明 $F(\lambda)$ 在 $[0, 1]$ 上是凸函数即证明 $F^{\prime}(\lambda)$ 递增。\\
+		由于 ${\left.\quad F^{\prime}(x)=\langle\nabla f(x+\lambda ( y-x), y-x\right\rangle}$\\
+		取 $\lambda_1 > \lambda_2 $，只需证明\\
+		$\begin{array}{l} { F^{\prime}(\lambda_1) \geqslant F^{\prime}\left(\lambda_{2}\right)} \\ {\Leftrightarrow \langle \nabla f(\mathbf{x}+\lambda,(\mathbf{y}-\mathbf{x})), \quad \mathbf{y}-\mathbf{x} \rangle\geqslant\left\langle \nabla f\left(\mathbf{x}+\lambda_{2}(\mathbf{y}-\mathbf{x})\right), \mathbf{y}-\mathbf{x}\right\rangle} \\ {\Leftrightarrow \langle \nabla f(\mathbf{x}+\lambda,(\mathbf{y}-\mathbf{x})),\left(\lambda_1-\lambda_{2}\right)(\mathbf{y}-\mathbf{x}) \rangle \geqslant\left\langle\nabla f\left(\mathbf{x}+\lambda_{2}(\mathbf{y}-\mathbf{x}),(\lambda_1 - \lambda_2)(\mathbf{y} - \mathbf{x})\right \rangle \right.} \\ {Let \  \mathbf{m} = \quad \mathbf{x}+\lambda_{1}(\mathbf{y}-\mathbf{x})} \\ {Let \  \mathbf{n} = \quad \mathbf{x}+\lambda_{2}(\mathbf{y}-\mathbf{x})} \\ {\Leftrightarrow \langle\nabla f(\mathbf{m}), \mathbf{m}-\mathbf{n}\rangle \geqslant\langle\nabla f(\mathbf{n}), \mathbf{m}-\mathbf{n}\rangle} \\ {\Leftrightarrow \langle\nabla f(\mathbf{m}) - \nabla f(\mathbf{n}), \mathbf{m}-\mathbf{n}\rangle \geqslant 0} \end{array}$\\
+		所以得证。
+			
+	\end{enumerate}
 
 \end{solution}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
