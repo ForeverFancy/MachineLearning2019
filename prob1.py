@@ -19,12 +19,14 @@ class Regression(object):
         # print(self.data)
 
     def linear_regression(self):
+        # Calculate parameters in linear_regression.
         sum_x, sum_y = self.x.sum(), self.y.sum()
         sum_x_square, sum_x_mutiply_y = ((self.x) ** 2).sum(), ((self.x) * (self.y)).sum()
         self.w1 = (self.length * sum_x_mutiply_y - sum_x * sum_y) / \
             (self.length * sum_x_square - sum_x ** 2)
         temp = (self.y-self.w1*self.x).sum()
         self.w0 = temp / self.length
+        # Use the parameters to calculate the min error.
         self.E_linear_regression = ((self.w0 + self.w1 * self.x - self.y)**2).sum()
         # print(self.w0, self.w1, self.E_linear_regression)
 
@@ -38,9 +40,9 @@ class Regression(object):
                       [sum_x, sum_x_square, sum_x_cube],
                       [sum_x_square, sum_x_cube, sum_x_power_four]])
         B = np.array([[sum_y], [sum_x_y], [sum_x_square_y]])
-
+        # Claculate the parameters by solving a linear equation.
         w = np.linalg.solve(A, B)
-        # print(w)
+        # Use the parameters to calculate the min error.
         self.E_square_regression = (
             (w[0] + w[1] * self.x + w[2] * self.x ** 2 - self.y) ** 2).sum()
         self.w = w
@@ -60,6 +62,7 @@ class Regression(object):
         self.read_data()
         self.linear_regression()
         self.square_regression()
+        # Choose the min error and output the parameters.
         if self.E_linear_regression < self.E_square_regression:
             print("Linear is better: w0 = %f, w1 = %f" % {self.w0, self.w1})
         else:
