@@ -442,7 +442,7 @@ ID: \id
 	\begin{enumerate}
 		\item $\frac{\mathbf{d}f(\mathbf{x})}{\mathbf{d}x} = \mathbf{a}$
 		\item $\frac{\mathbf{d}f(\mathbf{x})}{\mathbf{d}x} = 2\mathbf{x}$
-		\item $\frac{\mathbf{d}f(\mathbf{x})}{\mathbf{d}x} = \frac{\mathbf{d}f(\mathbf{x})}{\mathbf{d}(\mathbf{y} - \mathbf{A}\mathbf{x})}  \frac{\mathbf{d}(\mathbf{y} - \mathbf{A}\mathbf{x})}{\mathbf{d}x} = - 2 \mathbf{A}^\mathbf{T} (\mathbf{y} - \mathbf{A}\mathbf{x})$
+		\item $\frac{\mathbf{d}f(\mathbf{x})}{\mathbf{d}x} =   \frac{\mathbf{d}(\mathbf{y} - \mathbf{A}\mathbf{x})}{\mathbf{d}x} \frac{\mathbf{d}f(\mathbf{x})}{\mathbf{d}(\mathbf{y} - \mathbf{A}\mathbf{x})} = - 2 \mathbf{A}^\mathbf{T} (\mathbf{y} - \mathbf{A}\mathbf{x})$
 	\end{enumerate}
 \end{solution}
 \newpage
@@ -494,7 +494,7 @@ ID: \id
 \begin{solution}
 	\heiti
 	\ \\
-	根据独立的定义，n 个样本相互独立，那么它们联合概率分布等于分别的概率分布乘积，即
+	根据独立的定义，n 个样本相互独立，那么每个采样点的 $\mathbf{x}$ 分布必然独立，（如果它们不是独立分布，由于 $y_i$ 和 $\mathbf{x_i}$ 之间可以建立映射关系，那么 $y_i$ 之间也必然不独立，整个样本的采样也不是独立的），那么它们联合概率分布等于分别的概率分布乘积，即
 	\begin{align*}
 	    p(\mathbf{x}_1,\ldots,\mathbf{x}_n)=\prod_{i=1}^np(\mathbf{x}_i).
 	\end{align*}
