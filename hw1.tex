@@ -388,7 +388,8 @@ ID: \id
 				\item $$
 			v^{\top} v=\left(\begin{array}{c}{v_{1}^{\top}} \\ \vdots \\ {v_{d}^{\top}}\end{array}\right)\left(v_{1} \  v_{2} \cdots \  v_{d}\right)
 			$$
-			$\quad \begin{aligned} & \mathbf{=\left(\begin{array}{cccc}{v_{1}^{\top} v_{1}} \\ \  & {v_{2}^{\top} v_{2}} \\ \ & \ & \ddots \\ \ & & & {v_{d}^{\top} v_{d}} \\ \end{array}\right)} \\ \mathbf{\left(v^{\top} v\right)^{-1}} &=\left(\begin{array}{cccc} \frac{1}{{v_{1}^{\top} v_{1}}} \\ \  & \frac{1}{{v_{2}^{\top} v_{2}}} \\ \ & \ & \ddots \\ \ & & & \frac{1}{{v_{d}^{\top} v_{d}}} \\ \end{array}\right) \\ \mathbf{H=v\left(v^{\top} v\right)^{-1} v^{\top}} &=\left(\begin{array}{cccc} \frac{v_1v_1^{\top}}{{v_{1}^{\top} v_{1}}} \\ \  & \frac{v_2v_2^{\top}}{{v_{2}^{\top} v_{2}}} \\ \ & \ & \ddots \\ \ & & & \frac{v_dv_d^{\top}}{{v_{d}^{\top} v_{d}}} \\ \end{array}\right) \end{aligned}$
+			$\quad \begin{aligned} & \mathbf{=\left(\begin{array}{cccc}{v_{1}^{\top} v_{1}} \\ \  & {v_{2}^{\top} v_{2}} \\ \ & \ & \ddots \\ \ & & & {v_{d}^{\top} v_{d}} \\ \end{array}\right)} \\ \mathbf{\left(v^{\top} v\right)^{-1}} &=\left(\begin{array}{cccc} \frac{1}{{v_{1}^{\top} v_{1}}} \\ \  & \frac{1}{{v_{2}^{\top} v_{2}}} \\ \ & \ & \ddots \\ \ & & & \frac{1}{{v_{d}^{\top} v_{d}}} \\ \end{array}\right) \\ \mathbf{H=v\left(v^{\top} v\right)^{-1} v^{\top}} &= \sum\limits_{i=1}^d \mathbf{\frac{v_iv_i^{\top}}{v_i^{\top}v_i}} 
+			\end{aligned}$
 		\end{enumerate}
 		\item 
 		\begin{enumerate}
@@ -461,7 +462,7 @@ ID: \id
 	\begin{enumerate}
 		\item 设 $\mathbf{x}$ 不是严格局部最小值，那么存在 $\mathbf{x_0}$ 使得 $f(\mathbf{x_0}) \leq f(\mathbf{x})$，对 $f(\mathbf{x_0})$ 做泰勒展开可得
 			\begin{align*}
-				f(\mathbf{x_0}) = f(\mathbf{x}) + \nabla f(\mathbf{x})(\mathbf{x} - \mathbf{x_0}) + \frac{1}{2}(\mathbf{x_0} - \mathbf{x})^\mathbf{T}\mathbf{H}(\mathbf{x})(\mathbf{x_0} - \mathbf{x}) + o((\mathbf{x_0} - \mathbf{x})^2)
+				f(\mathbf{x_0}) = f(\mathbf{x}) + \nabla f(\mathbf{x})(\mathbf{x_0} - \mathbf{x}) + \frac{1}{2}(\mathbf{x_0} - \mathbf{x})^\mathbf{T}\mathbf{H}(\mathbf{x})(\mathbf{x_0} - \mathbf{x}) + o((\mathbf{x_0} - \mathbf{x})^2)
 			\end{align*}
 		根据题目条件 $\mathbf{H}(\mathbf{x})$ 正定可知 $\frac{1}{2}(\mathbf{x_0} - \mathbf{x})^\mathbf{T}\mathbf{H}(\mathbf{x})(\mathbf{x_0} - \mathbf{x}) > 0$，再根据$\nabla f(\mathbf{x})=0$ 可得
 			\begin{align*}
@@ -470,7 +471,7 @@ ID: \id
 		与假设矛盾，所以$\mathbf{x}$ 处是 $f(\mathbf{x})$ 局部严格最小值。
 		\item 对于 $\mathbf{x}$ 附近的任意一点 $\mathbf{x}_0$，在此处对 $f(\mathbf{\mathbf{x}_0})$ 做泰勒展开可得
 			\begin{align*}
-				f(\mathbf{x_0}) = f(\mathbf{x}) + \nabla f(\mathbf{x})(\mathbf{x} - \mathbf{x_0}) + \frac{1}{2}(\mathbf{x_0} - \mathbf{x})^\mathbf{T}\mathbf{H}(\mathbf{x})(\mathbf{x_0} - \mathbf{x}) + o((\mathbf{x_0} - \mathbf{x})^2)
+				f(\mathbf{x_0}) = f(\mathbf{x}) + \nabla f(\mathbf{x})(\mathbf{x_0} - \mathbf{x}) + \frac{1}{2}(\mathbf{x_0} - \mathbf{x})^\mathbf{T}\mathbf{H}(\mathbf{x})(\mathbf{x_0} - \mathbf{x}) + o((\mathbf{x_0} - \mathbf{x})^2)
 			\end{align*}
 			因为 $\mathbf{H}(\mathbf{x})$ 是正定的，所以 $\frac{1}{2}(\mathbf{x_0} - \mathbf{x})^\mathbf{T}\mathbf{H}(\mathbf{x})(\mathbf{x_0} - \mathbf{x}) > 0$，又因为 $\nabla f(\mathbf{x})=0$，可以看出
 				\begin{align*}
