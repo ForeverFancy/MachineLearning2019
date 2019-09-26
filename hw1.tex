@@ -530,12 +530,12 @@ ID: \id
 		$$
 		\begin{array}{l}{f(y)-f(\theta x+(1-\theta) y)=f^{\prime}\left(\xi_{1}\right)(y-(\theta x+(1-\theta) y)) \cdots (1)} \\ {f(x)-f(\theta x+(1-\theta) y)=f^{\prime}\left(\xi_{2}\right)\left(y-(\theta x+(1-y) y)) \cdots (2)\right.} \\ {\frac{(1)}{\theta}+\frac{(2)}{1-\theta} \Rightarrow} \\ {\frac{f(y)-f(\theta x+(1-\theta) y)}{\theta}+\frac{f(x)-f(\theta x+(1-\theta) y)}{1-\theta}=\left(f^{\prime}\left(\xi_{2}\right)-f^{\prime}\left(\xi_{1}\right)\right)(y - x) \cdots (3)} \\Since {f^{\prime}\left(\xi_{1}\right) \geqslant f^{\prime}\left(\xi_{2}\right)}, so (3) \geq 0 \\ {\Rightarrow f(\theta x+(1-\theta) y) \leqslant \theta f(x)+(1-\theta) f(y)}\end{array}
 		$$
-		构造函数 $  F(\lambda) = f(\mathbf{x} + \lambda(\mathbf{y}-\mathbf{x})$，则凸函数条件可以转化为：
+		构造函数 $  F(\lambda) = f(\mathbf{x} + \lambda(\mathbf{y}-\mathbf{x}))$，则凸函数条件可以转化为：
 			\begin{align*}
 				\lambda f(\mathbf{x})+(1-\lambda) f(\mathbf{y}) \geqslant f(\lambda \mathbf{x}+(1-\lambda) \mathbf{y}) \\ \Leftrightarrow \lambda F(0)+(1-\lambda) F(1) \geqslant F(1-\lambda)
 			\end{align*}
 		只需证明 $F(\lambda)$ 在 $[0, 1]$ 上是凸函数即证明 $F^{\prime}(\lambda)$ 递增。\\
-		由于 ${\left.\quad F^{\prime}(x)=\langle\nabla f(x+\lambda ( y-x), y-x\right\rangle}$\\
+		由于 ${\left.\quad F^{\prime}(\lambda)=\langle\nabla f(\mathbf{x}+\lambda (\mathbf{y - x}), \mathbf{y - x}\right\rangle}$\\
 		取 $\lambda_1 > \lambda_2 $，只需证明\\
 		$\begin{array}{l} { F^{\prime}(\lambda_1) \geqslant F^{\prime}\left(\lambda_{2}\right)} \\ {\Leftrightarrow \langle \nabla f(\mathbf{x}+\lambda,(\mathbf{y}-\mathbf{x})), \quad \mathbf{y}-\mathbf{x} \rangle\geqslant\left\langle \nabla f\left(\mathbf{x}+\lambda_{2}(\mathbf{y}-\mathbf{x})\right), \mathbf{y}-\mathbf{x}\right\rangle} \\ {\Leftrightarrow \langle \nabla f(\mathbf{x}+\lambda,(\mathbf{y}-\mathbf{x})),\left(\lambda_1-\lambda_{2}\right)(\mathbf{y}-\mathbf{x}) \rangle \geqslant\left\langle\nabla f\left(\mathbf{x}+\lambda_{2}(\mathbf{y}-\mathbf{x}),(\lambda_1 - \lambda_2)(\mathbf{y} - \mathbf{x})\right \rangle \right.} \\ {Let \  \mathbf{m} = \quad \mathbf{x}+\lambda_{1}(\mathbf{y}-\mathbf{x})} \\ {Let \  \mathbf{n} = \quad \mathbf{x}+\lambda_{2}(\mathbf{y}-\mathbf{x})} \\ {\Leftrightarrow \langle\nabla f(\mathbf{m}), \mathbf{m}-\mathbf{n}\rangle \geqslant\langle\nabla f(\mathbf{n}), \mathbf{m}-\mathbf{n}\rangle} \\ {\Leftrightarrow \langle\nabla f(\mathbf{m}) - \nabla f(\mathbf{n}), \mathbf{m}-\mathbf{n}\rangle \geqslant 0} \end{array}$\\
 		所以得证。
