@@ -525,10 +525,10 @@ ID: \id
 				\Rightarrow \langle \nabla f(\mathbf{x}) - \nabla f(\mathbf{y}) , \mathbf{x} - \mathbf{y} \rangle \geq 0.
 			\end{align*}
 		\item "$\Leftarrow$"\\
-		首先证明如果单变量函数 $f(x)$ 的一阶导数递增，那么该函数为凸函数。\\
+		首先证明如果单变量函数 $g(x)$ 的一阶导数递增，那么该函数为凸函数。\\
 		由拉格朗日中值定理，存在$\xi_1 \subset (\theta x+(1-\theta) y, y), \xi_2 \subset (x, \theta x+(1-\theta) y)$ 使得
 		$$
-		\begin{array}{l}{f(y)-f(\theta x+(1-\theta) y)=f^{\prime}\left(\xi_{1}\right)(y-(\theta x+(1-\theta) y)) \cdots (1)} \\ {f(x)-f(\theta x+(1-\theta) y)=f^{\prime}\left(\xi_{2}\right)\left(y-(\theta x+(1-y) y)) \cdots (2)\right.} \\ {\frac{(1)}{\theta}+\frac{(2)}{1-\theta} \Rightarrow} \\ {\frac{f(y)-f(\theta x+(1-\theta) y)}{\theta}+\frac{f(x)-f(\theta x+(1-\theta) y)}{1-\theta}=\left(f^{\prime}\left(\xi_{2}\right)-f^{\prime}\left(\xi_{1}\right)\right)(y - x) \cdots (3)} \\Since {f^{\prime}\left(\xi_{1}\right) \geqslant f^{\prime}\left(\xi_{2}\right)}, so (3) \geq 0 \\ {\Rightarrow f(\theta x+(1-\theta) y) \leqslant \theta f(x)+(1-\theta) f(y)}\end{array}
+		\begin{array}{l}{g(y)-g(\theta x+(1-\theta) y)=g^{\prime}\left(\xi_{1}\right)(y-(\theta x+(1-\theta) y)) \cdots (1)} \\ {g(x)-g(\theta x+(1-\theta) y)=g^{\prime}\left(\xi_{2}\right)\left(y-(\theta x+(1-y) y)) \cdots (2)\right.} \\ {\frac{(1)}{\theta}+\frac{(2)}{1-\theta} \Rightarrow} \\ {\frac{g(y)-g(\theta x+(1-\theta) y)}{\theta}+\frac{g(x)-g(\theta x+(1-\theta) y)}{1-\theta}=\left(g^{\prime}\left(\xi_{2}\right)-g^{\prime}\left(\xi_{1}\right)\right)(y - x) \cdots (3)} \\Since {g^{\prime}\left(\xi_{1}\right) \geqslant g^{\prime}\left(\xi_{2}\right)}, so (3) \geq 0 \\ {\Rightarrow g(\theta x+(1-\theta) y) \leqslant \theta g(x)+(1-\theta) g(y)}\end{array}
 		$$
 		构造函数 $  F(\lambda) = f(\mathbf{x} + \lambda(\mathbf{y}-\mathbf{x}))$，则凸函数条件可以转化为：
 			\begin{align*}
