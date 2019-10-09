@@ -16,6 +16,7 @@
 \usepackage{graphicx}
 \usepackage{pdfpages} 
 \usepackage{enumitem}
+\usepackage[UTF8]{ctex}
 \renewcommand{\headrulewidth}{1.5pt}
 \renewcommand{\footrulewidth}{1.5pt}
 \pagestyle{fancy}
@@ -163,7 +164,17 @@ Suppose that $f:\mathbb{R}^n\rightarrow\mathbb{R}$ is twice continuously differe
 where $L>0$ is the Lipschitz constant. Please find the relation between $L$ and the largest eigenvalue of $\nabla^2 f(x)$.
 \end{exercise}
 \begin{solution}
-
+    \heiti \ \\
+    构造函数 $g(t)= f(x+c t y)$，其中 $c$ 是常数。\\
+    那么存在 $\xi \subset (0,1)$ ，使得：\\
+    $\begin{array}{l}{\qquad \begin{aligned}  \nabla f(x+c y)-\nabla f(x) &=g(1)-g(0) \\ &=g^{\prime}\left(\xi \right)(1-0) \\ &=\nabla^{2} f(x+c y)c y \end{aligned}} \\  \end{array}$\\
+    两边同时取模得：\\
+    $ \Rightarrow \left\|\nabla^{2} f(x+c \xi y) c y\right\|=\|\nabla f(x+c y)-\nabla f(x)\|$\\
+    由题目条件得：\\
+    ${\Rightarrow\left\|\nabla^{2} f(x+c \xi y) y\right\| \leqslant L\|y\|}$\\
+    令 ${c \rightarrow 0}$ 得：\\
+    ${\Rightarrow\left\|\nabla^{2} f(x) y\right\| \leqslant L\|y\|}$\\
+    这说明对 $\nabla^{2}f(x)$ 的任何特征值的绝对值都小于等于 $L$，所以其最大特征值也小于等于 $L$.
 \end{solution}
 \newpage
 
@@ -216,6 +227,18 @@ where $f$ is strongly convex with convexity parameter $\mu>0$ and its gradient i
 \end{enumerate}
 \end{exercise}
 \begin{solution}
+    \heiti
+    \ \\
+    \begin{enumerate}
+        \item \ \\
+        "$\Rightarrow$"\\
+        由已知可得 $f(x)-\frac{\mu}{2}\|x\|_{2}^{2}$ 是凸函数，那么对$ \forall\, x,y\in\mathbb{R}^n $，由凸函数的一阶性质有：\ \\
+        $\begin{array}{l}{\left. f(y)-\frac{\mu}{2}\|y\|_{2}^{2} \geqslant f(x)-\frac{\mu}{2}\|x\|_{2}^{2}+\langle \nabla (f(x)-\frac{\mu}{2}\|x\|_{2}^{2}\right), y-x\rangle} \\ {\Rightarrow f(y) \geqslant f(x)+\frac{\mu}{2}\left(\|y\|_{2}^{2}-\|x\|_{2}^{2}\right)+\langle\nabla f(x)-\mu x, y-x\rangle} \\ {\Rightarrow f(y) \geqslant f(x)+\langle\nabla f(x), y-x\rangle+\frac{\mu}{2}\left(\|y\|_{2}^{2}+\|x\|_{2}^{2} - \|x\|_{2}\left\|y\right\|_{2}\right)} \\ {\Rightarrow f(y) \geqslant f(x)+\langle \nabla f(x), y-x \rangle+\frac{\mu}{2} \| y - x \|_{2}^{2}}\end{array}$\\ \ \\
+        "$\Leftarrow$"\\
+        由已知，对$ \forall\, x,y\in\mathbb{R}^n $可得：\\
+        $\begin{aligned} & f(y) \geqslant f(x)+\langle\nabla f(x), y-x\rangle+\frac{\mu}{2}\|y-x\|_{2}^{2} \\ \Rightarrow & f(y) \geqslant f(x)+\langle\nabla f(x), y-x\rangle+\frac{\mu}{2}\|y\|_{2}^{2}-\mu\|y\|_{2}\|x\|_{2}+\frac{\mu}{2}\|x\|_{2}^{2} \\ \Rightarrow & f(y)-\frac{\mu}{2}\|y\|_{2}^{2} \geqslant f(x)-\frac{\mu}{2}\|x\|_{2}^{2}+\langle\nabla f(x), y-x\rangle+\langle{-\mu x} , y-x\rangle\\ \Rightarrow &\left.f(y)-\frac{\mu}{2}\|y\|_{2}^{2} \geqslant f(x)-\frac{\mu}{2}\|x\|_{2}^{2}+\langle\nabla (f(x)-\frac{\mu}{2}\|x\|_{2}^{2}\right), y-x\rangle\end{aligned}$\\ \ \\
+        而这说明 $f(x)-\frac{\mu}{2}\|x\|_2^2$ 是凸函数。
+    \end{enumerate}
 
 \end{solution}
 \newpage
