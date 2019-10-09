@@ -169,11 +169,11 @@ where $L>0$ is the Lipschitz constant. Please find the relation between $L$ and 
     那么存在 $\xi \subset (0,1)$ ，使得：\\
     $\begin{array}{l}{\qquad \begin{aligned}  \nabla f(x+c y)-\nabla f(x) &=g(1)-g(0) \\ &=g^{\prime}\left(\xi \right)(1-0) \\ &=\nabla^{2} f(x+c y)c y \end{aligned}} \\  \end{array}$\\
     两边同时取模得：\\
-    $ \Rightarrow \left\|\nabla^{2} f(x+c \xi y) c y\right\|=\|\nabla f(x+c y)-\nabla f(x)\|$\\
+    $ \Rightarrow \left\|\nabla^{2} f(x+c \xi y) c y\right\|_2 =\|\nabla f(x+c y)-\nabla f(x)\|_2$\\
     由题目条件得：\\
-    ${\Rightarrow\left\|\nabla^{2} f(x+c \xi y) y\right\| \leqslant L\|y\|}$\\
+    ${\Rightarrow\left\|\nabla^{2} f(x+c \xi y) y\right\|_2 \leqslant L\|y\|_2}$\\
     令 ${c \rightarrow 0}$ 得：\\
-    ${\Rightarrow\left\|\nabla^{2} f(x) y\right\| \leqslant L\|y\|}$\\
+    ${\Rightarrow\left\|\nabla^{2} f(x) y\right\|_2 \leqslant L\|y\|_2}$\\
     这说明对 $\nabla^{2}f(x)$ 的任何特征值的绝对值都小于等于 $L$，所以其最大特征值也小于等于 $L$.
 \end{solution}
 \newpage
@@ -192,7 +192,40 @@ where $f$ is convex and its gradient is Lipschitz continuous with constant $L>0$
 \end{enumerate}
 \end{exercise}
 \begin{solution}
-
+    \ \\
+    \heiti
+    \begin{enumerate}
+        \item \ \\
+        取 $y_1, y_2 \in \mathcal{C}$，满足
+        \begin{align*}
+            f(y_1) = \min_{x}f(x);\\
+            f(y_2) = \min_{x}f(x).
+        \end{align*}
+        考察 $\theta y_1 + (1-\theta) y_2$，由 $f(x)$ 是凸函数可知：
+        \begin{align*}
+            f(\theta y_1+(1-\theta) y_2) &\leq \theta f(y_1) + (1 - \theta) f(y_2) \\
+            & = \min_{x}f(x)
+        \end{align*}
+        由上可知 $\mathcal{C}$ 是凸集。
+    \item \ \\
+        取 $x^* \in \mathcal{C}$，考察:\\
+        $\begin{aligned} &\left\|x_{k+1}-x^*\right\|^{2}-\left\|x_{k}-x^*\right\|^{2}-\left\|x_{k+1}-x_{k}\right\|^{2} \\=&-2 x^*\left(x_{k+1}-x_{k}\right)-2 x_{k}\left(x_{k}-x_{k+1}\right) \\=&-2\left(x^*-x_{k}\right)\left(x_{k+1}-x_{k}\right) \\=& 2 \alpha<\nabla f\left(x_{k}\right), x^*-x_{k}>\end{aligned}$ \\
+        其中，用到了 $x_{k+1} = x_k - \alpha \nabla f(x_k)$ . \\
+        结合 $f(x)$ 为凸函数的一阶性质：\\
+        \begin{align*}
+            f(x^*) \geqslant f\left(x_{k}\right)+\left\langle\nabla f\left(x_{k}\right), x^*-x_{k}\right\rangle
+        \end{align*}
+        $\Rightarrow$ 原式
+        $\leq 2 \alpha\left(f(z)-f\left(x_{k}\right)\right)$
+        $\leqslant 0$.\\
+        课上已经求得：
+        \begin{align*}
+            \sum\limits_{i=1}^{\infty} \| x_{i+1} - x_{i} \| ^2 \leq \frac{2L}{2-L\alpha} \| f(x_0) - f^*\|^2   \dots (1)
+        \end{align*}
+        现在取 ${x_k}$ 的一个趋向 $z$ 子列，其中 $z \in \mathcal{C}$，记为${x_{l_k}}$。任取$\delta > 0$，那么必定存在 $l_{k_0}$ 使得 $\| x_{l_{k_0}} - z \|^2 \leq \frac{\delta}{2}$，根据 (1) 存在 $l_{k_1}$ 使得 $\sum\limits_{i=l_{k_1}}^{\infty} \| x_{i+1} - x_{i} \| ^2 \leq \frac{\delta}{2}$. 那么对于 $k > max(k_0, k_1)$ \\
+        $\begin{aligned}\left\|x_{k}-z\right\|^{2} & \leqslant\left\|x_{l_k}-z\right\|^{2}+\sum_{j=l_k}^{k-1}\left\|x_{j+1}-x_{j}\right\|^{2} \\ & \leqslant \frac{\delta}{2}+\sum_{j=l_k}^{\infty}\left\|x_{j+1}-x_{j}\right\|^{2} \\ & \leqslant \frac{\delta}{2}+\frac{\delta}{2}=\delta \end{aligned}$.\\
+        令 $k\rightarrow\infty, \delta \rightarrow 0$ 即得 $x_k$ 收敛于$z$，而 $z \in \mathcal{C}$，所以 $d(x_k,\mathcal{C})\rightarrow 0$.
+    \end{enumerate}
 \end{solution}
 \newpage
 
