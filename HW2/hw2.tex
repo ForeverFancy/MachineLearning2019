@@ -165,7 +165,7 @@ where $L>0$ is the Lipschitz constant. Please find the relation between $L$ and 
 \end{exercise}
 \begin{solution}
     \heiti \ \\
-    构造函数 $g(t)= \nabla f(x+c t y)$，其中 $c$ 是常数。\\
+    构造函数 $g(t)= \nabla f(x+c t y),$\  $\forall\,x,y\in\mathbb{R}^n,$，其中 $c$ 是常数。\\
     那么存在 $\xi \subset (0,1)$ ，使得：\\
     $\begin{array}{l}{\qquad \begin{aligned}  \nabla f(x+c y)-\nabla f(x) &=g(1)-g(0) \\ &=g^{\prime}\left(\xi \right)(1-0) \\ &=\nabla^{2} f(x+c\xi y)c y \end{aligned}} \\  \end{array}$\\
     两边同时取模得：\\
@@ -174,7 +174,8 @@ where $L>0$ is the Lipschitz constant. Please find the relation between $L$ and 
     ${\Rightarrow\left\|\nabla^{2} f(x+c \xi y) y\right\|_2 \leqslant L\|y\|_2}$\\
     令 ${c \rightarrow 0}$ 得：\\
     ${\Rightarrow\left\|\nabla^{2} f(x) y\right\|_2 \leqslant L\|y\|_2}$\\
-    这说明对 $\nabla^{2}f(x)$ 的任何特征值的绝对值都小于等于 $L$，所以其最大特征值也小于等于 $L$.
+    由于对 $\nabla^{2}f(x) $ 的最大特征值 $\lambda_{max}$ 和对应的特征向量 $y_m$ 有：$ \nabla^{2}f(x)y_m = \lambda_{max} y_m$，
+    综上说明对 $\nabla^{2}f(x)$ 的最大特征值小于等于 $L$.
 \end{solution}
 \newpage
 
