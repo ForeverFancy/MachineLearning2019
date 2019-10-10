@@ -345,14 +345,28 @@ where $f$ is strongly convex with convexity parameter $\mu>0$ and its gradient i
         \arg\min_{\textbf{w}} \frac{1}{n}\|\textbf{y}-\bar{\textbf{X}}\textbf{w}\|_2^2,
     \end{align}
     where $\bar{\textbf{X}}=(\textbf{1},\textbf{X})\in\mathbb{R}^{n\times(d+1)}$ and $\textbf{w}=(w_0,w_1,\dots,w_n)^\top\in\mathbb{R}^{d+1}$.
-    Finish the following exercise by programming. You can use your favorite programming language.
+    Finish the following exercises by programming. You can use your favorite programming language.
     \begin{enumerate}
-        \item Use the closed form solution to solve the problem (\ref{prob:lsm}), and get the solution $x_1^*$.
-        \item Use the gradient descent algorithm to solve the problem (\ref{prob:lsm}). Stop the iteration when $\|x_k-x_1^*\|_2<10^{-8}$. Plot the function values $f(x_k)$ versus the iteration step $k$. 
+        \item Normalize the columns $\textbf{x}_i$ of $\bar{\textbf{X}}$ ($2\le i\le d+1$) as follows:
+        \begin{align*}
+            \textbf{x}_{ij}\leftarrow\frac{\textbf{x}_{ij}-\min (\textbf{x}_i)}{\max (\textbf{x}_i)-\min (\textbf{x}_i)},
+        \end{align*}
+        where $\textbf{x}_{ij}$ denote thes $j$th entry of $\textbf{x}_i$. Use the normalized $\bar{\textbf{X}}$ in the following exercises.
+        \item Use the closed form solution to solve the problem (\ref{prob:lsm}), and get the solution $\textbf{w}_0^*$.
+        \item Use the gradient descent algorithm to solve the problem (\ref{prob:lsm}). Stop the iteration until $|f(\textbf{w}_k)-f(\textbf{w}_0^*)|<0.1$, where $f(\textbf{w}) = \frac{1}{n}\|\textbf{y}-\bar{\textbf{X}}\textbf{w} \|_2^2$. Plot $f(\textbf{w}_k)$ versus the iteration step $k$. 
     \end{enumerate}
-    Compare the time cost of the above two approaches.
+    Compare the time cost of the two approaches in 2 and 3.
     
 \end{exercise}
+\begin{solution}
+    \heiti
+    \ \\
+    第二问和第三问的代码分别附在 $prob4\_2.m$ 和 $prob4\_3.m$ 中，数据归一化操作在每段代码开始计算之前进行。\\
+    运行环境：128 G 内存，64核 Intel(R) Xeon(R) Platinum 8153 CPU @ 2.00GHz\\
+    用时：\\闭式解方法：35.072 s \\
+    梯度下降法(学习率 0.6)：1min 53.533 s\\ 
+    梯度下降文件中将残差保存在 $cost\_history.txt$ 文件中，使用 $plot.py$ 进行画图，保存为$Cost-Iteration step.png$。
+\end{solution}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
