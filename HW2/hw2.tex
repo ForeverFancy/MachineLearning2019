@@ -286,7 +286,7 @@ where $f$ is strongly convex with convexity parameter $\mu>0$ and its gradient i
         $ \left\|\nabla^{2} f(x+c \xi y) \|y\|_{2}^{2}\right\|_2 \geq \mu \| \|y \|_{2}^{2} \|_2$\\
         令 $c \rightarrow 0$ 可得：\\
         $ \left\|\nabla^{2} f(x) \|y\|_{2}^{2}\right\|_2 \geq \mu\|y\|_{2}^{2}$\\
-        这说明对 $\nabla^{2}f(x)$ 的任何特征值的绝对值都大于等于 $\mu$，所以其最小特征值也大于等于 $\mu$.
+        这说明对 $\nabla^{2}f(x)$ 的任何特征值的绝对值都大于等于 $\mu$，所以其最小特征值的绝对值也大于等于 $\mu$.
         \item \ \\
         假设存在$x_1, x_2$ 满足:\\
         \begin{align*}
@@ -329,10 +329,28 @@ where $f$ is strongly convex with convexity parameter $\mu>0$ and its gradient i
             f\left(x_{k}\right)-f\left(x^{*}\right) & \leqslant(1-\mu \alpha(2-L\alpha ))^{k}\left(f\left(x_{0}\right)-f\left(x^{*}\right)\right)
         \end{align*}
         \item \ \\
-        根据线性收敛的定义，存在实数$0 < q < 1$，使得$\lim _{k \rightarrow \infty} \frac{\left\|f(x_{k+1})-f(x^{*})\right\|}{\left\|f(x_{k})-f(x^{*})\right\|}=q$ 则有：\\
-        \begin{align*} 
-            \frac{f\left(x_{k+1}\right)-f\left(x^{*}\right)}{f\left(x_{k}\right)-f\left(x^{*}\right)} &\leqslant 1-\mu \alpha(2-L \alpha) < 1 \\ \Rightarrow & \alpha(2-L \alpha) < 1 \\ \Rightarrow & 0<\alpha<\frac{2}{L}
+        由于要保证收敛，所以将 $x_{k+1} = x_{k} - \alpha \nabla f(x_k)$ 代入 1. 中的不等式得
+        \begin{align*}
+        \begin{array}{c}{f\left(x_{k+1}\right) \geqslant f\left(x_{k}\right)+\langle \nabla f\left(x_{k}\right), x_{k+1}-x_{k}\rangle+\frac{\mu}{2} \| x_{k+1} -x_k }\|_2^2 \\ {f\left(x_{k+1}\right) \geqslant f\left(x_{k}\right)+\left(\frac{\mu}{2} \alpha^{2}-\alpha\right)\left\|\nabla f\left(x_{k}\right)\right\|_{2}^{2}}\\{0\geqslant f\left(x_{k+1}\right) - f(x_k) \geqslant \left(\frac{\mu}{2} \alpha^{2}-\alpha\right)\left\|\nabla f\left(x_{k}\right)\right\|_{2}^{2}} \\ {\frac{\mu}{2} \alpha^{2}-\alpha \leqslant 0} \\ {\alpha \leqslant \frac{2}{\mu}}\end{array}
         \end{align*}
+        根据线性收敛的定义，存在实数$0 < q < 1$，使得$\lim _{k \rightarrow \infty} \frac{\left\|f(x_{k+1})-f(x^{*})\right\|}{\left\|f(x_{k})-f(x^{*})\right\|}=q$ 则当：\\
+        \begin{align*} 
+            0<\frac{f\left(x_{k+1}\right)-f\left(x^{*}\right)}{f\left(x_{k}\right)-f\left(x^{*}\right)} \leqslant 1-\mu \alpha(2-L \alpha) < 1
+        \end{align*}
+        可以保证线性收敛。
+        \begin{align*}
+            0 < 1-\mu \alpha(2-L \alpha) < 1
+        \end{align*}
+        右侧不等式解得：
+        \begin{align*}
+            &\alpha(2-L \alpha) < 1 \\ \Rightarrow & 0<\alpha<\frac{2}{L}
+        \end{align*}
+        左侧不等式对应的二次函数恒大于0，故不等式自然成立。\\
+        由 exercise1 和 2. 可知 $L \geqslant |\lambda_{max} | \geqslant |\lambda_{min} | \geqslant \mu$，故综上可得：
+        \begin{align*}
+            0<\alpha<\frac{2}{L}
+        \end{align*}
+        时，可以保证线性收敛。
     \end{enumerate}
 
 \end{solution}
