@@ -26,6 +26,14 @@
 \usepackage{amssymb,amsmath}
 \usepackage{amsthm}
 \usepackage{thmtools}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,      
+    urlcolor=blue,
+    citecolor=cyan,
+}
 
 \setlength{\topmargin}{0pt}
 \setlength{\textheight}{9in}
@@ -386,6 +394,11 @@ where $f$ is strongly convex with convexity parameter $\mu>0$ and its gradient i
     梯度下降法(学习率 0.6)：1min 53.533 s\\ 
     梯度下降文件中将残差保存在 $cost\_history.txt$ 文件中，使用 $plot.py$ 进行画图，保存为$Cost-Iteration step.png$。
 \end{solution}
+
+\heiti
+参考文献：\\
+\href{http://w3.impa.br/~benar/docs/fcsd.pdf}{1. FULL CONVERGENCE OF THE STEEPEST DESCENT METHOD WITH INEXACT LINE SEARCHES}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
