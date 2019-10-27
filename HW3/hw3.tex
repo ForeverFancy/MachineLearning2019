@@ -14,6 +14,7 @@
 \usepackage{fancyhdr}
 \usepackage{fancybox}
 \usepackage{graphicx}
+\usepackage{ctex}
 \usepackage{pdfpages} 
 \usepackage{enumitem}
 \usepackage{algorithm}
@@ -243,7 +244,7 @@ Finish the following exercises by programming. You can use your favorite program
 \STATE $\mathcal{V}\leftarrow$ the set of distinct words and other tokens found in $\mathcal{D}$\\
 \FOR{each target value $c$ in the lables set $\mathcal{C}$} 
 \STATE $\mathcal{V}_c\leftarrow$ the training samples whose labels are $c$\\
-\STATE $P(c)\leftarrow\frac{|\mathcal{V}_c|}{|\mathcal{V}|}$\\
+\STATE $P(c)\leftarrow\frac{|\mathcal{V}_c|}{|\mathcal{D}|}$\\
 \STATE $T_c\leftarrow$ a single document by concaatenating all training samples in $\mathcal{V}_c$\\
 \STATE $n_c\leftarrow |T_c|$
 \FOR{each word $w_k$ in the vocabulary $\mathcal{V}$}
@@ -253,6 +254,18 @@ Finish the following exercises by programming. You can use your favorite program
 \ENDFOR
 \end{algorithmic}
 \end{algorithm}
+
+\begin{solution}
+	\heiti
+	tp: 47
+	fp: 1
+	fn: 2
+	tn: 241
+	
+	P: 0.9791666666666666
+	R: 0.9591836734693877
+	F1 score: 0.9690721649484536
+\end{solution}
 
 \begin{algorithm}
 \caption{Testing Naive Bayes Classifier }
