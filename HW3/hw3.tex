@@ -1,0 +1,290 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Template for homework of Introduction to Machine Learning.
+%
+%  Fill in your name, lecture number, lecture date and body
+%  of homework as indicated below.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass[11pt,letter,notitlepage]{article}
+%Mise en page
+\usepackage[left=2cm, right=2cm, lines=45, top=0.8in, bottom=0.7in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{pdfpages} 
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1.5pt}
+\newcommand\Loadedframemethod{TikZ}
+\usepackage[framemethod=\Loadedframemethod]{mdframed}
+
+\usepackage{amssymb,amsmath}
+\usepackage{amsthm}
+\usepackage{thmtools}
+
+\setlength{\topmargin}{0pt}
+\setlength{\textheight}{9in}
+\setlength{\headheight}{0pt}
+
+\setlength{\oddsidemargin}{0.25in}
+\setlength{\textwidth}{6in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Define math operator %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareMathOperator*{\argmin}{\bf argmin}
+\DeclareMathOperator*{\relint}{\bf relint\,}
+\DeclareMathOperator*{\dom}{\bf dom\,}
+\DeclareMathOperator*{\intp}{\bf int\,}
+%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\setlength{\topmargin}{0pt}
+\setlength{\textheight}{9in}
+\setlength{\headheight}{0pt}
+
+\setlength{\oddsidemargin}{0.25in}
+\setlength{\textwidth}{6in}
+\pagestyle{fancy}
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Exercise environment %%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\mdtheorem[
+topline=false,
+rightline=false,
+leftline=false,
+bottomline=false,
+leftmargin=-10,
+rightmargin=-10
+]{exercise}{\textbf{Exercise}}
+%%%%%%%%%%%%%%%%%%%%%%%
+%% End of the Exercise environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Problem environment %%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\mdtheorem[
+topline=false,
+rightline=false,
+leftline=false,
+bottomline=false,
+leftmargin=-10,
+rightmargin=-10
+]{problem}{\textbf{Problem}}
+%%%%%%%%%%%%%%%%%%%%%%%
+%% End of the Exercise environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Solution Environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+\declaretheoremstyle
+[
+spaceabove=0pt, 
+spacebelow=0pt, 
+headfont=\normalfont\bfseries,
+notefont=\mdseries, 
+notebraces={(}{)}, 
+headpunct={:\quad}, 
+headindent={},
+postheadspace={ }, 
+postheadspace=4pt, 
+bodyfont=\normalfont, 
+qed=$\blacksquare$,
+preheadhook={\begin{mdframed}[style=myframedstyle]},
+	postfoothook=\end{mdframed},
+]{mystyle}
+
+\declaretheorem[style=mystyle,title=Solution,numbered=no]{solution}
+\mdfdefinestyle{myframedstyle}{%
+	topline=false,
+	rightline=false,
+	leftline=false,
+	bottomline=false,
+	skipabove=-6ex,
+	leftmargin=-10,
+	rightmargin=-10}
+%%%%%%%%%%%%%%%%%%%%%%%
+%% End of the Solution environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Homework info.
+\newcommand{\posted}{\text{Oct. 21, 2019}}       			%%% FILL IN POST DATE HERE
+\newcommand{\due}{\text{Oct. 30, 2019}} 			%%% FILL IN Due DATE HERE
+\newcommand{\hwno}{\text{3}} 		           			%%% FILL IN LECTURE NUMBER HERE
+
+
+%%%%%%%%%%%%%%%%%%%%
+%% Put your information here %%
+%%%%%%%%%%%%%%%%%%%
+\newcommand{\name}{\text{Bowen Zhang}}  	          			%%% FILL IN YOUR NAME HERE
+\newcommand{\id}{\text{PB17000215}}		       			%%% FILL IN YOUR ID HERE
+%%%%%%%%%%%%%%%%%%%%
+%% End of the student's info %%
+%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\proj}[2]{\textbf{P}_{#2} (#1)}
+\newcommand{\lspan}[1]{\textbf{span}  (#1)  }
+\newcommand{\rank}[1]{ \textbf{rank}  (#1)  }
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+
+\lhead{
+	\textbf{\name}
+}
+\rhead{
+	\textbf{\id}
+}
+\chead{\textbf{
+		Homework \hwno
+}}
+
+
+\begin{document}
+\vspace*{-4\baselineskip}
+\thispagestyle{empty}
+
+
+\begin{center}
+{\bf\large Introduction to Machine Learning}\\
+{Fall 2019}\\
+University of Science and Technology of China
+\end{center}
+
+\noindent
+Lecturer: Jie Wang  			 %%% FILL IN LECTURER HERE
+\hfill
+Homework \hwno             			
+\\
+Posted: \posted
+\hfill
+Due: \due
+\\
+Name: \name             			
+\hfill
+ID: \id						
+\hfill
+
+\noindent
+\rule{\textwidth}{2pt}
+
+\medskip
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BODY OF HOMEWORK GOES HERE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textbf{Notice, }to get the full credits, please present your solutions step by step.
+
+\begin{exercise}[Logistic Regression \textnormal{40pts}]
+Given the training data $\mathcal{D}=\{ (\textbf{x}_i,y_i) \}_{i=1}^n$, where $\textbf{x}_i \in \mathbb{R}^d$ and $y_i \in \{ 0,1 \}$. Let
+\begin{align*}
+    \mathcal{I}^+=&\{i:i\in[n],y_i=1\},\\
+    \mathcal{I}^-=&\{i:i\in[n],y_i=0\},
+\end{align*}
+where $[n]=\{1,2,\ldots,n\}$. We assume that $\mathcal{I}^+$ and $\mathcal{I}^-$ are not empty.
+
+Then, we can formulate the logistic regression as:
+	\begin{equation}\label{prob:logistic}
+	\min_{\textbf{w}}\,\,L(\textbf{w})=-\frac{1}{n}\sum_{i=1}^n \left( y_i \log ( \frac{\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)}{1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle) } ) + (1-y_i)\log ( \frac{1}{1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)} ) \right),
+	\end{equation}
+	where $\mathbf{w} \in \mathbb{R}^{d+1}$ is the model parameter to be estimated and $ \overline{\mathbf{x}}_i^{\top} = (1,\mathbf{x}_i^{\top}) $.
+
+\begin{enumerate}
+	\item Find the gradient and the Hessian of $L(\textbf{w})$.
+	\item Suppose that $\overline{\textbf{X}}=(\overline{\mathbf{x}}_1,\overline{\mathbf{x}}_2,\dots,\overline{\mathbf{x}}_n)^\top\in\mathbb{R}^{n \times (d+1)}$ and $\rank{\overline{\mathbf{X}}}=d+1$. Show that $L(\textbf{w})$ is strictly convex, i.e., for all $\textbf{w}_1\neq \textbf{w}_2$,
+	\begin{align*}
+	    L(t\textbf{w}_1 + (1-t)\textbf{w}_2) < t L(\textbf{w}_1)+(1-t)L(\textbf{w}_2),\forall\, t \in (0,1).
+	\end{align*}
+	\item Suppose that the training data is linearly separable, that is, there exists $\hat{\mathbf{w}}\in\mathbb{R}^{d+1}$ such that
+	\begin{align*}
+	    &\langle \hat{\mathbf{w}}, \mathbf{\bar{x}}_i\rangle>0,\,\forall\,i\in\mathcal{I}^+,\\
+	    &\langle \hat{\mathbf{w}}, \mathbf{\bar{x}}_i\rangle<0,\,\forall\,i\in\mathcal{I}^-.
+	\end{align*}
+	Show that problem (\ref{prob:logistic}) has no solution.
+	\item (\textbf{Bonus} 20pts) Suppose that the training data is NOT linearly separable. Show that problem (\ref{prob:logistic}) always admits a solution. Moreover, show that the solution is unique.
+\end{enumerate}
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+
+\newpage
+\begin{exercise}[Programming Exercise: Naive Bayes  \textnormal{30pts}]
+We provide you with a data set that contains spam and non-spam emails (``hw3\_nb.zip"). Please use the Naive Bayes Classifier to detect the spam emails.
+Finish the following exercises by programming. You can use your favorite programming language.
+\begin{enumerate}
+\item Remove all the tokens that contain non-alphabetic characters.
+\item Train the Naive Bayes Classifier on the training set according to Algorithm \ref{alg:train_bayes}.
+\item Test the Naive Bayes Classifier on the test set according to Algorithm \ref{alg:test_bayes}.
+\item Compute the confusion matrix, precision, recall and F1 score and then write down them in this file.
+\end{enumerate}
+
+\end{exercise}
+
+\begin{algorithm}
+\caption{Training Naive Bayes Classifier}
+\label{alg:train_bayes}
+\textbf{Input:} The training set with the labels $\mathcal{D}=\{(\textbf{x}_i,y_i)\}.$
+\begin{algorithmic}[1]
+\STATE $\mathcal{V}\leftarrow$ the set of distinct words and other tokens found in $\mathcal{D}$\\
+\FOR{each target value $c$ in the lables set $\mathcal{C}$} 
+\STATE $\mathcal{V}_c\leftarrow$ the training samples whose labels are $c$\\
+\STATE $P(c)\leftarrow\frac{|\mathcal{V}_c|}{|\mathcal{V}|}$\\
+\STATE $T_c\leftarrow$ a single document by concaatenating all training samples in $\mathcal{V}_c$\\
+\STATE $n_c\leftarrow |T_c|$
+\FOR{each word $w_k$ in the vocabulary $\mathcal{V}$}
+\STATE $n_{c,k}\leftarrow$ the number of times the word $w_k$ occurs in $T_c$\\
+\STATE $P(w_k|c)=\frac{n_{c,k}+1}{n_c+|\mathcal{V}|}$
+\ENDFOR
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Testing Naive Bayes Classifier }
+\label{alg:test_bayes}
+\textbf{Input:} An email $\textbf{x}$. Let $x_i$ be the $i^{th}$ token in $\textbf{x}$ . $\mathcal{I}=\emptyset.$
+\begin{algorithmic}[1]
+\FOR{$i=1,\dots,|\textbf{x}|$} 
+\IF{$\exists\, w_{ki}\in\mathcal{V}$ such that $w_{ki}=x_i$}
+\STATE $\mathcal{I}\leftarrow\mathcal{I}\cup k_i$
+\ENDIF
+\ENDFOR
+\STATE predict the label of $\textbf{x}$ by 
+\begin{align*}
+    \hat{y}=\arg\max_{c\in\mathcal{C}} P(c)\prod_{i\in\mathcal{I}}P(w_{ki}|c)
+\end{align*}
+\end{algorithmic}
+\end{algorithm}
+
+\newpage
+\begin{exercise}[Programming Exercise: Logistic Regression \textnormal{30pts}]
+We provide you with a data set that contains images fall into two classes (``hw3\_lr.zip''). Please use the Logistic Regression to classify them.
+Finish the following exercises by programming. You can use your favorite programming language.
+\begin{enumerate}
+\item Choose a proper normalization method to process the data matrix.
+\item Train the Logistic Regression Classifier on the training set.
+\item Test the Logistic Regression Classifier on the test set. Compute the confusion matrix, precision, recall and F1 score and then write down them in this file.
+\end{enumerate}
+\end{exercise}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
