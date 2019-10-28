@@ -14,7 +14,7 @@
 \usepackage{fancyhdr}
 \usepackage{fancybox}
 \usepackage{graphicx}
-\usepackage{ctex}
+\usepackage[UTF8]{ctex}
 \usepackage{pdfpages} 
 \usepackage{enumitem}
 \usepackage{algorithm}
@@ -255,18 +255,6 @@ Finish the following exercises by programming. You can use your favorite program
 \end{algorithmic}
 \end{algorithm}
 
-\begin{solution}
-	\heiti
-	tp: 47
-	fp: 1
-	fn: 2
-	tn: 241
-	
-	P: 0.9791666666666666
-	R: 0.9591836734693877
-	F1 score: 0.9690721649484536
-\end{solution}
-
 \begin{algorithm}
 \caption{Testing Naive Bayes Classifier }
 \label{alg:test_bayes}
@@ -284,6 +272,20 @@ Finish the following exercises by programming. You can use your favorite program
 \end{algorithmic}
 \end{algorithm}
 
+
+\begin{solution}
+	\heiti
+	\ \\
+	预测的结果如下：\\
+	TP: 47\\
+	FP: 1\\
+	FN: 2\\
+	TN: 241\\
+	Precision: 0.9791666666666666\\
+	Recall: 0.9591836734693877\\
+	F1 score: 0.9690721649484536\\
+\end{solution}
+
 \newpage
 \begin{exercise}[Programming Exercise: Logistic Regression \textnormal{30pts}]
 We provide you with a data set that contains images fall into two classes (``hw3\_lr.zip''). Please use the Logistic Regression to classify them.
@@ -294,6 +296,26 @@ Finish the following exercises by programming. You can use your favorite program
 \item Test the Logistic Regression Classifier on the test set. Compute the confusion matrix, precision, recall and F1 score and then write down them in this file.
 \end{enumerate}
 \end{exercise}
+
+\begin{solution}
+	\heiti
+	\ \\
+	预测的结果如下：\\
+	TP: 1022\\
+	FP: 7\\
+	FN: 10\\
+	TN: 1128\\
+	Precision: 0.9931972789115646\\
+	Recall: 0.9903100775193798\\
+	F1 score: 0.9917515769044154\\
+	注：训练时使用的损失函数公式为：
+	\begin{align*}
+		J(\theta) = \frac{1}{m}\sum\limits_{i=1}^{m}(-y^{(i)}log(sigmoid(\theta^Tx^{(i)})) -(1 - y^{(i)})log(1 - sigmoid(\theta^Tx^{(i)})))
+	\end{align*}
+	因为写之前没有注意，所以使用了吴恩达机器学习课程中的损失函数公式，不过效果和老师上课所讲的公式一致。
+
+\end{solution}
+
 
 
 
