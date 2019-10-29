@@ -219,7 +219,52 @@ Then, we can formulate the logistic regression as:
 \end{enumerate}
 \end{exercise}
 \begin{solution}
-
+	\heiti
+	\ \\
+	\begin{enumerate}
+		\item \ \\
+		\begin{align*}
+			L(w)=&-\frac{1}{n} \sum\limits_{i=1}^{n}\left(y_{i} \log \left(\exp \left<w, \overline{\mathbf{x}}_i\right>\right)-y_{i} \log \left(1+\log \left(1+\exp \left<w, \overline{\mathbf{x}}_i\right>\right)\right.\right.\\ &-\left(1-y_{i}\right) \log \left(1+\exp \left<w,\overline{\mathbf{x}}_i\right>)\right.\\=&-\frac{1}{n} \sum_{i=1}^{n}\left(y_{i}\left<w,\overline{\mathbf{x}}_i\right>-\log \left(1+\exp \left(\left<w, \overline{\mathbf{x}}_i\right>\right)\right)\right) \\ \nabla L(w)=&-\frac{1}{n} \sum_{i=1}^{n}\left(y_{i}-\frac{\exp \left(\left<w, \overline{\mathbf{x}}_i\right>\right)}{1+\exp \left(\left<w, \overline{\mathbf{x}}_i\right>\right)}\right) \overline{\mathbf{x}}_i\\
+			\nabla^{2} L(w)=&\frac{1}{n} \sum_{i=1}^{n} \frac{\exp \left(\left<w, \overline{\mathbf{x}}_i\right>\right) \overline{\mathbf{x}}_i\overline{\mathbf{x}}_i^{\top}}{\left(1+\exp \left(\left<w, \overline{\mathbf{x}}_i\right>\right)\right)^{2}}
+		\end{align*}
+	\item \ \\
+	任取非零向量 $y \in\mathbb{R}^{d+1}$ 考察 $ {y}^{\top}\nabla^{2} L(w) y$，记 $c_i = \frac{\exp \left(\left<w, \overline{\mathbf{x}}_i\right>\right)}{\left(1+\exp \left(\left<w, \overline{\mathbf{x}}_i\right>\right)\right)^{2}}$，容易看出 $c_i > 0$:
+	\begin{align*}
+		{y}^{\top}\nabla^{2} L(w) y &= \frac{1}{n}\sum\limits_{i=1}^{n}c_i y^{\top}\overline{x_i}\overline{x_i}^{\top}y\\
+		&=\frac{1}{n}\sum\limits_{i=1}^{n}c_i(\overline{x_i}y)^{\top}(\overline{x_i}y)\\
+		&=\frac{1}{n}\sum\limits_{i=1}^{n}c_i\|\overline{x_i}y \|^2
+	\end{align*}
+	由于 $\rank{\overline{\mathbf{X}}}=d+1$ 所以 方程 $\overline{x}y=0$ 只有零解，所以有$\sum\limits_{i=1}^{n}c_i\|\overline{x_i}y \|^2 > 0$,即：
+	\begin{align*}
+		{y}^{\top}\nabla^{2} L(w) y =\frac{1}{n}\sum\limits_{i=1}^{n}c_i\|\overline{x_i}y \|^2 > 0
+	\end{align*}
+	可以看出 Hassian 矩阵正定，所以 $L(\textbf{w})$ 是严格凸函数。
+	\item \ \\
+	容易看出 $L(\textbf{w}) \geq 0$，考虑对任意常数 $c$，$c\hat{\mathbf{w}}$依然满足：
+	\begin{align*}
+	    &\langle c\hat{\mathbf{w}}, \mathbf{\bar{x}}_i\rangle>0,\,\forall\,i\in\mathcal{I}^+,\\
+	    &\langle c\hat{\mathbf{w}}, \mathbf{\bar{x}}_i\rangle<0,\,\forall\,i\in\mathcal{I}^-.
+	\end{align*}
+	损失函数可以写为：
+	\begin{align*}
+		L(\textbf{w})&=-\frac{1}{n}\sum_{i=1}^n \left( y_i \log ( \frac{\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)}{1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle) } ) + (1-y_i)\log ( \frac{1}{1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)} ) \right)\\
+		&=-\frac{1}{n}\sum_{i\in\mathcal{I}^+}\log ( \frac{\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)}{1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle) } ) -\frac{1}{n}\sum_{i\in\mathcal{I}^-}\log ( \frac{1}{1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)} )
+	\end{align*}
+	将 $c\hat{\mathbf{w}}$ 代入可得:
+	\begin{align*}
+		L = -\frac{1}{n}\sum_{i\in\mathcal{I}^+}\log ( \frac{\exp(\langle c\hat{\textbf{w}},  \overline{\mathbf{x}}_i \rangle)}{1+\exp(\langle c\hat{\textbf{w}},  \overline{\mathbf{x}}_i \rangle) } ) -\frac{1}{n}\sum_{i\in\mathcal{I}^-}\log ( \frac{1}{1+\exp(\langle c\hat{\textbf{w}},  \overline{\mathbf{x}}_i \rangle)} )
+	\end{align*}
+	令$c\rightarrow +\infty$，那么有：
+	\begin{align*}
+	    &\langle c\hat{\mathbf{w}}, \mathbf{\bar{x}}_i\rangle \rightarrow +\infty,\,\forall\,i\in\mathcal{I}^+,\\
+	    &\langle c\hat{\mathbf{w}}, \mathbf{\bar{x}}_i\rangle \rightarrow -\infty,\,\forall\,i\in\mathcal{I}^-.
+	\end{align*}
+	则有:
+	\begin{align*}
+		L \rightarrow 0.
+	\end{align*}
+	所以可以看出$\mathbf{w} = c\hat{\mathbf{w}}, c \rightarrow +\infty$时，$L$取到最小值，所以原问题无解。
+	\end{enumerate}
 \end{solution}
 
 
@@ -308,11 +353,7 @@ Finish the following exercises by programming. You can use your favorite program
 	Precision: 0.9931972789115646\\
 	Recall: 0.9903100775193798\\
 	F1 score: 0.9917515769044154\\
-	注：训练时使用的损失函数公式为：
-	\begin{align*}
-		J(\theta) = \frac{1}{m}\sum\limits_{i=1}^{m}(-y^{(i)}log(sigmoid(\theta^Tx^{(i)})) -(1 - y^{(i)})log(1 - sigmoid(\theta^Tx^{(i)})))
-	\end{align*}
-	因为写之前没有注意，所以使用了吴恩达机器学习课程中的损失函数公式，不过效果和老师上课所讲的公式一致。
+	
 
 \end{solution}
 
