@@ -77,7 +77,7 @@ def test(vocabulary: list, P_w_spam: list, P_w_not_spam: list, P_spam: float, P_
             for token in text:
                 if token in vocabulary:
                     index = vocabulary.index(token)
-                    P_pred_is_spam += math.log(P_w_spam[index])
+                    P_pred_is_spam += math.log(P_w_spam[index])                # Use "+" instead of "*" to make more precise
                     P_pred_not_spam += math.log(P_w_not_spam[index])
             P_pred_is_spam += math.log(P_spam)
             P_pred_not_spam += math.log(P_not_spam)

@@ -264,6 +264,30 @@ Then, we can formulate the logistic regression as:
 		L \rightarrow 0.
 	\end{align*}
 	所以可以看出$\mathbf{w} = c\hat{\mathbf{w}}, c \rightarrow +\infty$时，$L$取到最小值，所以原问题无解。
+	\item \ \\
+	如果数据有如下性质：
+	\begin{align*}
+		&\langle \hat{\mathbf{w}}, \mathbf{\bar{x}}_i\rangle \geq 0,\,\forall\,i\in\mathcal{I}^+,\\
+	    &\langle \hat{\mathbf{w}}, \mathbf{\bar{x}}_i\rangle \leq 0,\,\forall\,i\in\mathcal{I}^-.
+	\end{align*}
+	那么类似第三问，可以证出解不存在，所以考虑如下条件，对于任意的 $\mathbf{w}$ 都有：
+	\begin{align*}
+		\langle \mathbf{w}, \mathbf{\bar{x}}_i\rangle < 0,\,\exists\,i\in\mathcal{I}^+
+	\end{align*}
+	或者
+	\begin{align*}
+	    \langle \mathbf{w}, \mathbf{\bar{x}}_i\rangle > 0,\,\exists\,i\in\mathcal{I}^-
+	\end{align*}
+	现在考虑对于任意取定的 $\mathbf{w}$，取$\mathbf{w'} = c\mathbf{w}$，则当 $c \rightarrow \infty$ 时，有：
+	\begin{align*}
+		\langle \mathbf{w'}, \mathbf{\bar{x}}_i\rangle \rightarrow -\infty,\,\exists\,i\in\mathcal{I}^+
+	\end{align*}
+	或者
+	\begin{align*}
+		\langle \mathbf{w'}, \mathbf{\bar{x}}_i\rangle \rightarrow +\infty,\,\exists\,i\in\mathcal{I}^-
+	\end{align*}
+	则可以看出 $L(\mathbf{w'}) \rightarrow -\infty$，由于 $L$ 是解析函数，那么可得最小值一定只能在闭区间内取到，而显然 $ L > 0$ 有下界，闭区间内一定可以取到函数最小值，所以解存在。\\
+	当 $\rank{\overline{\mathbf{X}}}=d+1$ 时，由 2. 知 $L(\mathbf{w})$ 是严格凸函数，故解唯一。
 	\end{enumerate}
 \end{solution}
 
