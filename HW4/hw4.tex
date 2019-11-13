@@ -231,7 +231,7 @@ We denote the feasible set of the problem in (\ref{prob:SVM}) by $$\mathcal{F}=\
 		\ \\
 		\item
 			由样本线性可分可知存在 $w_{0} \in \mathbb{R}^d$ 使得：\\
-			$\begin{aligned} {\langle w_{0}, x_{i}\rangle \quad x_{i} \in D^{+}}  \\ {\langle w_{0}, x_{i}\rangle  \quad x_{i} \in D^{-}} \end{aligned}$\\
+			$\begin{aligned} {\langle w_{0}, x_{i}\rangle > 0 \quad x_{i} \in D^{+}}  \\ {\langle w_{0}, x_{i}\rangle < 0   \quad x_{i} \in D^{-}} \end{aligned}$\\
 			所以存在 $\varepsilon, k > 0$ 使得：\\
 			\begin{align*}
 				y_{i} \langle w_{0}, x_{i}\rangle &\geqslant \varepsilon \\ y_{i}\langle w_{0}, x_{i}\rangle &\geqslant \varepsilon \\  \Rightarrow \quad y_{i}\langle \frac{w_{0}}{\varepsilon}, x_{i}\rangle &\geqslant 1
@@ -245,15 +245,34 @@ We denote the feasible set of the problem in (\ref{prob:SVM}) by $$\mathcal{F}=\
 				y_i b \geqslant 1, i = 1,\ldots,n.
 			\end{align*}
 			对 $ y_i = 1$ 有 $b \geqslant 1$，对 $y_i = -1$ 有 $b \leqslant -1$矛盾，故 $\mathbf{w}^* \neq 0$.
-		\item 如果两个问题等价，那么当目标函数取到最小值时，$\exists i$ 使得 $y_{i} ( \langle \textbf{w}, \textbf{x}_i \rangle + b ) = 1$.假设问题不等价，那么设问题 2 的最优解为 $w^*$，满足：
+		\item 如果两个问题等价，那么当目标函数取到最小值时，$\exists i$ 使得 $y_{i} ( \langle \textbf{w}, \textbf{x}_i \rangle + b ) = 1$.假设问题不等价，那么设问题 2 的最优解为 $(w^*, b^*)$，满足：
 		\begin{align*}
-			y_{i} ( \langle \textbf{w}^{*}, \textbf{x}_i \rangle + b ) \geqslant k > 1, for i = 1,\ldots,n
+			y_{i} ( \langle \textbf{w}^{*}, \textbf{x}_i \rangle + b^{*} ) \geqslant k > 1, i = 1,\ldots,n
 		\end{align*}
 		那么有：
 		\begin{align*}
-			y_{i} ( \langle \frac{\textbf{w}^{*}}{k}, \textbf{x}_i \rangle + \frac{b}{k} ) \geqslant 1, for i = 1,\ldots,n
+			y_{i} ( \langle \frac{\textbf{w}^{*}}{k}, \textbf{x}_i \rangle + \frac{b^*}{k} ) \geqslant 1, i = 1,\ldots,n
 		\end{align*}
 		此时目标函数的值为 $\frac{1}{2}\|\frac{\mathbf{w}^{*}}{k}\|^{2}$，这与 $w^*$ 是最优解矛盾，即问题 2 取到最优解时两个问题的约束条件相同，故两个问题等价。
+		\item 由 4 可知必 $\exists i, y_{i} ( \langle \textbf{w}^{*}, \textbf{x}_i \rangle + b^{*} ) = 1$，不妨设这个样本是负样本（正样本证明过程类似，所以只选负样本证明）。如果对所有的正样本都有：
+		\begin{align*}
+			\langle \textbf{w}^{*}, \textbf{x}_i \rangle + b^{*}  \geqslant k > 1, \textbf{x}_i \in \mathcal{D}^+
+		\end{align*}
+		对所有的负样本有：
+		\begin{align*}
+			\langle \textbf{w}^{*}, \textbf{x}_i \rangle + b^{*}  \leqslant -1, \textbf{x}_i \in \mathcal{D}^-
+		\end{align*}
+		取 $0 < t < k - 1$，稍作变换得：
+		\begin{align*}
+			\langle \textbf{w}^{*}, \textbf{x}_i \rangle + b^{*} - t  \geqslant k - t > 1, \textbf{x}_i \in \mathcal{D}^+\\
+			\langle \textbf{w}^{*}, \textbf{x}_i \rangle + b^{*} - t  \leqslant -1 - t, \textbf{x}_i \in \mathcal{D}^-
+		\end{align*}
+		即：
+		\begin{align*}
+			b_0 &= b^{*} - t\\
+			y_{i} ( \langle \textbf{w}^{*}, \textbf{x}_i \rangle + b_0 ) &> 1, i = 1,\ldots,n
+		\end{align*}
+		那么同 4 可证存在更小的 $w$ 使得目标函数取得最小值，这与 $w^*$ 使得目标函数最小矛盾，故命题成立。
 	\end{enumerate}
 \end{solution}
 
