@@ -14,7 +14,8 @@
 \usepackage{fancyhdr}
 \usepackage{fancybox}
 \usepackage{graphicx}
-\usepackage{pdfpages} 
+\usepackage{pdfpages}
+\usepackage[UTF8]{ctex}
 \usepackage{enumitem}
 \usepackage{algorithm}
 \usepackage{algorithmic}
@@ -225,7 +226,35 @@ We denote the feasible set of the problem in (\ref{prob:SVM}) by $$\mathcal{F}=\
 
 \end{exercise}
 \begin{solution}
-
+	\heiti
+	\begin{enumerate}
+		\ \\
+		\item
+			由样本线性可分可知存在 $w_{0} \in \mathbb{R}^d$ 使得：\\
+			$\begin{aligned} {\langle w_{0}, x_{i}\rangle \quad x_{i} \in D^{+}}  \\ {\langle w_{0}, x_{i}\rangle  \quad x_{i} \in D^{-}} \end{aligned}$\\
+			所以存在 $\varepsilon, k > 0$ 使得：\\
+			\begin{align*}
+				y_{i} \langle w_{0}, x_{i}\rangle &\geqslant \varepsilon \\ y_{i}\langle w_{0}, x_{i}\rangle &\geqslant \varepsilon \\  \Rightarrow \quad y_{i}\langle \frac{w_{0}}{\varepsilon}, x_{i}\rangle &\geqslant 1
+			\end{align*}
+			所以令 $w = \frac{w_{0}}{\varepsilon}, b = 0$ 可知 $\mathcal{F}$ 非空。
+		\item 
+			目标函数只能在有限区间内取到最小值（$\mathbf{w} \rightarrow \infty$ 时，目标函数也趋于无穷），而解集非空，故一定存在满足约束条件的最优解。
+		\item
+			假如 $\mathbf{w}^* = 0$ ，那么有：
+			\begin{align*}
+				y_i b \geqslant 1, i = 1,\ldots,n.
+			\end{align*}
+			对 $ y_i = 1$ 有 $b \geqslant 1$，对 $y_i = -1$ 有 $b \leqslant -1$矛盾，故 $\mathbf{w}^* \neq 0$.
+		\item 如果两个问题等价，那么当目标函数取到最小值时，$\exists i$ 使得 $y_{i} ( \langle \textbf{w}, \textbf{x}_i \rangle + b ) = 1$.假设问题不等价，那么设问题 2 的最优解为 $w^*$，满足：
+		\begin{align*}
+			y_{i} ( \langle \textbf{w}^{*}, \textbf{x}_i \rangle + b ) \geqslant k > 1, for i = 1,\ldots,n
+		\end{align*}
+		那么有：
+		\begin{align*}
+			y_{i} ( \langle \frac{\textbf{w}^{*}}{k}, \textbf{x}_i \rangle + \frac{b}{k} ) \geqslant 1, for i = 1,\ldots,n
+		\end{align*}
+		此时目标函数的值为 $\frac{1}{2}\|\frac{\mathbf{w}^{*}}{k}\|^{2}$，这与 $w^*$ 是最优解矛盾，即问题 2 取到最优解时两个问题的约束条件相同，故两个问题等价。
+	\end{enumerate}
 \end{solution}
 
 \newpage
