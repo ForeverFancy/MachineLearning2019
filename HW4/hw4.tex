@@ -273,6 +273,34 @@ We denote the feasible set of the problem in (\ref{prob:SVM}) by $$\mathcal{F}=\
 			y_{i} ( \langle \textbf{w}^{*}, \textbf{x}_i \rangle + b_0 ) &> 1, i = 1,\ldots,n
 		\end{align*}
 		那么同 4 可证存在更小的 $w$ 使得目标函数取得最小值，这与 $w^*$ 使得目标函数最小矛盾，故命题成立。
+		\item 假设存在 $(w_1^*,b_1^*), (w_2^*, b_2^*)$ 两组不同的最优解。假设 $w_1^* \neq w_2^*$，那么有：
+		\begin{align*}
+			y_{i} ( \langle \textbf{w}_1^{*}, \textbf{x}_i \rangle + b_1^* ) &\geqslant 1, i = 1,\ldots,n\\
+			y_{i} ( \langle \textbf{w}_2^{*}, \textbf{x}_i \rangle + b_2^* ) &\geqslant 1, i = 1,\ldots,n\\
+			\Rightarrow y_{i} ( \langle \textbf{w}_1^{*} + \textbf{w}_2^{*}, \textbf{x}_i \rangle + b_1^* + b_2^* ) &\geqslant 2, i = 1,\ldots,n\\
+			\Rightarrow y_{i} ( \langle \frac{\textbf{w}_1^{*} + \textbf{w}_2^{*}}{2}, \textbf{x}_i \rangle + \frac{b_1^* + b_2^*}{2} ) &\geqslant 1, i = 1,\ldots,n
+		\end{align*}
+		而
+		\begin{align*}
+			\| \frac{\textbf{w}_1^{*} + \textbf{w}_2^{*}}{2} \|^2 \leqslant \frac{\| \textbf{w}_1^*\|^2 + \|\textbf{w}_2^* \|^2}{2} =  \|\textbf{w}_1^* \|^2 = \|\textbf{w}_2^* \|^2
+		\end{align*}
+		因为假设 $w_1^* \neq w_2^*$，所以上式为严格小于。取 $w = \frac{{w}_1^{*} + {w}_2^{*}}{2}$，这说明 $w_1^*, w_2^*$ 不是让目标函数最小的 $w$，所以与 $(w_1^*,b_1^*), (w_2^*, b_2^*)$ 是两组最优解矛盾，故必有 $w_1^* = w_2^*$ 成立。\\
+		若 $b_1^* \neq b_2^*$，不妨设 $b_1^* > b_2^*$，由 5 可知存在 $i \in \{1, 2,\dots, n\}$：
+		\begin{align*}
+			1=y_i &= \langle \textbf{w}^*, \textbf{x}_i \rangle + b_1^*, y_i \in \mathcal{D}^+\\
+			&> \langle \textbf{w}^*, \textbf{x}_i \rangle + b_2^*
+		\end{align*}
+		这与约束条件矛盾，故必有 $b_1^* = b_2^*$。综上最优解唯一。
+		\item 引入拉格朗日乘子对偶问题为：
+		\begin{align*}
+			{ L ( w , b , \alpha ) = \frac { 1 } { 2 } \| w \| ^ { 2 } + \sum _ { i = 1 } ^ { N } \alpha _ { i } \left[ - y _ { i } \left( w \cdot x _ { i } + b \right) + 1 \right] } \\ { = \frac { 1 } { 2 } \| w \| ^ { 2 } - \sum _ { i = 1 } ^ { N } \alpha _ { i } y _ { i } \left(\langle w, x\rangle _ { i } + b \right) + \sum _ { i = 1 } ^ { N } \alpha _ { i } }
+		\end{align*}
+		要求解的最优问题为：
+		\begin{align*}
+			\max_{\alpha} \min_{w, b} L ( w , b , \alpha )
+		\end{align*}
+
+		
 	\end{enumerate}
 \end{solution}
 
