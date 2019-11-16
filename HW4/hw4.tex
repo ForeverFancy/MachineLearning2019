@@ -429,7 +429,13 @@ Let $(\lambda^*,\mu^*)$ be a geometric multiplier. Show that $\mathbf{x}^*$ is a
 	\begin{align*}
 		L(\mathbf{x}^*,\lambda^*,\mu^*) = \min_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*)
 	\end{align*}
-	所以 $\mathbf{x}^*\in\argmin_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*)$ 并且 $\lambda^* \mathbf{g}(\mathbf{x}) = 0$。
+	所以 $\mathbf{x}^*\in\argmin_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*)$ 并且 $\lambda^* \mathbf{g}(\mathbf{x}^*) = 0$。\\
+	反之如果题中的条件成立，那么
+	\begin{align*}
+		L(\mathbf{x}^*,\lambda^*,\mu^*) = f(\mathbf{x}^*) + \lambda^*\mathbf{g}(\mathbf{x}^*) + \mu^*\mathbf{h}(\mathbf{x}^*) = f(\mathbf{x}^*)\\
+		\Rightarrow f(\mathbf{x}^*) = L(\mathbf{x}^*,\lambda^*,\mu^*) = \min L(\mathbf{x},\lambda^*,\mu^*) = \min f(\mathbf{x}) = f^*
+	\end{align*}
+	所以 $\mathbf{x}^*$ 是全局最小值，综上命题成立。
 \end{solution}
 
 \newpage
@@ -541,6 +547,25 @@ Duality gap is defined by
 	\end{align}
 \end{exercise}
 
+\begin{solution}
+	\heiti
+	\ \\
+	如果 $\mathbf{x}^*, (\lambda^*,\mu^*)$ 是一对最优解和 geometric multiplier，那么首先要满足约束条件：
+	\begin{align*}
+		\mathbf{x}^*\in X,\,\mathbf{g}(\mathbf{x}^*)\leq0,\mathbf{h}(\mathbf{x}^*)=& 0\\
+		\lambda^*\geq& 0
+	\end{align*}
+	根据 Exercise 3，还要满足
+	\begin{align*}
+		\mathbf{x}^*\in\argmin_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*)\\
+		\lambda^*_ig_i(\mathbf{x}^*)=0,\,i=1,\ldots,m
+	\end{align*}
+	相反，如果满足题目中的四个条件，那么有
+	\begin{align*}
+		f^* \leqslant f(\mathbf{x}^*) = L(\mathbf{x}^*,\lambda^*,\mu^*) \leqslant L(\mathbf{x},\lambda^*,\mu^*) = q(\lambda^*,\mu^*) \leqslant q^*
+	\end{align*}
+	由 Exercise 5 中 $q^* \leqslant f^*$ 可知等号成立，所以 $\mathbf{x}^*, (\lambda^*,\mu^*)$ 是一对最优解和 geometric multiplier。
+\end{solution}
 
 \newpage
 \begin{exercise}[Saddle Point Interpretation]
@@ -550,6 +575,24 @@ Duality gap is defined by
 	\end{align}
 \end{exercise}
 
+\begin{solution}
+	\heiti
+	\ \\
+	由 Exercise 6 知 $\mathbf{x}^*\in\argmin_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*)$，故
+	\begin{align*}
+		L(\mathbf{x}^*,\lambda^*,\mu^*) \leqslant L(\mathbf{x},\lambda^*,\mu^*)
+	\end{align*}
+	由 Exercise 5 可得：
+	\begin{align*}
+		\sup q(\lambda,\mu) = q^* = q(\lambda^*,\mu^*)\\
+		q(\lambda,\mu) = \inf_{\mathbf{x}\in X}\, L(\mathbf{x},\lambda,\mu) \leqslant \sup q(\lambda,\mu) = q(\lambda^*,\mu^*)
+	\end{align*}
+	因为 $x^*$ 是最优解，所以进一步有：
+	\begin{align*}
+		L(\mathbf{x}^*,\lambda,\mu) \leqslant L(\mathbf{x}^*,\lambda^*,\mu^*)
+	\end{align*}
+	综上命题成立。
+\end{solution}
 
 \newpage
 \begin{exercise}
