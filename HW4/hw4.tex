@@ -453,7 +453,29 @@ The dual problem is
 \end{enumerate}
 \end{exercise}
 
-
+\begin{solution}
+	\heiti
+	\ \\
+	\begin{enumerate}
+		\item 任取 $(\lambda_1, \mu_1), (\lambda_2, \mu_2) \in \dom(q)$，对于 $\forall \theta \in (0,1)$，考虑 $\theta(\lambda_1, \mu_1) + (1-\theta)(\lambda_2, \mu_2) = (\theta \lambda_1 + (1-\theta)\lambda_2, \theta \mu_1 + (1-\theta)\mu_2)$，有：
+		\begin{align*}
+			q(\theta \lambda_1 + (1-\theta)\lambda_2, \theta \mu_1 + (1-\theta)\mu_2) &=\inf_{\mathbf{x}\in X}\,L(\mathbf{x},\theta \lambda_1 + (1-\theta)\lambda_2, \theta \mu_1 + (1-\theta)\mu_2)\\
+			&=\inf_{\mathbf{x}\in X}\,f(\mathbf{x})+(\theta \lambda_1 + (1-\theta)\lambda_2)g(\mathbf{x}) + (\theta \mu_1 + (1-\theta)\mu_2)h(\mathbf{x})\\
+			&=\inf_{\mathbf{x}\in X}\,\theta L(\mathbf{x},\lambda_1, \mu_1) + (1-\theta)L(\mathbf{x}, \lambda_2, \mu_2)
+		\end{align*}
+		由于 $\inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda_1,\mu_1) > -\infty, \inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda_2,\mu_2) > -\infty$，故 $L(\mathbf{x},\lambda_1,\mu_1) > -\infty, L(\mathbf{x},\lambda_2,\mu_2) > -\infty$，所以 $\inf_{\mathbf{x}\in X}\,\theta L(\mathbf{x},\lambda_1, \mu_1) + (1-\theta)L(\mathbf{x}, \lambda_2, \mu_2) > -\infty$。由此可知 $\theta(\lambda_1, \mu_1) + (1-\theta)(\lambda_2, \mu_2) \in \dom(q)$，故是凸集。
+		\item 任取 $(\lambda_1, \mu_1), (\lambda_2, \mu_2) \in \dom(q)$，对于 $\forall \theta \in (0,1)$，需要证明：
+		\begin{align*}
+			-q(\theta \lambda_1 + (1-\theta)\lambda_2, \theta \mu_1 + (1-\theta)\mu_2) \leqslant -\theta q(\lambda_1,\mu_1) - (1-\theta)q(\lambda_2,\mu_2)\\
+			\Leftrightarrow \inf_{\mathbf{x}\in X}\,\theta L(\mathbf{x},\lambda_1, \mu_1) + (1-\theta)L(\mathbf{x}, \lambda_2, \mu_2) \geqslant \theta \inf_{\mathbf{x}\in X}\,  L(\mathbf{x},\lambda_1, \mu_1) + (1-\theta) \inf_{\mathbf{x}\in X}\, L(\mathbf{x}, \lambda_2, \mu_2)\\
+		\end{align*}
+		利用 $\theta \inf_{\mathbf{x}\in X}\,  L(\mathbf{x},\lambda_1, \mu_1) = \inf_{\mathbf{x}\in X}\, \theta L(\mathbf{x},\lambda_1, \mu_1), (1-\theta) \inf_{\mathbf{x}\in X}\, L(\mathbf{x}, \lambda_2, \mu_2) =  \inf_{\mathbf{x}\in X}\, (1-\theta) L(\mathbf{x}, \lambda_2, \mu_2)$，以及对于任意函数 $P,Q$ 有 $\inf(P+Q) \geqslant \inf P\,+ \inf Q$ 得：
+		\begin{align*}
+			\inf_{\mathbf{x}\in X}\,\theta L(\mathbf{x},\lambda_1, \mu_1) + (1-\theta)L(\mathbf{x}, \lambda_2, \mu_2) \geqslant  \inf_{\mathbf{x}\in X}\, \theta L(\mathbf{x},\lambda_1, \mu_1) +  \inf_{\mathbf{x}\in X}\,(1-\theta) L(\mathbf{x}, \lambda_2, \mu_2)
+		\end{align*}
+		成立，所以原命题成立。
+	\end{enumerate}
+\end{solution}
 
 
 
