@@ -466,8 +466,8 @@ The dual problem is
 		由于 $\inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda_1,\mu_1) > -\infty, \inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda_2,\mu_2) > -\infty$，故 $L(\mathbf{x},\lambda_1,\mu_1) > -\infty, L(\mathbf{x},\lambda_2,\mu_2) > -\infty$，所以 $\inf_{\mathbf{x}\in X}\,\theta L(\mathbf{x},\lambda_1, \mu_1) + (1-\theta)L(\mathbf{x}, \lambda_2, \mu_2) > -\infty$。由此可知 $\theta(\lambda_1, \mu_1) + (1-\theta)(\lambda_2, \mu_2) \in \dom(q)$，故是凸集。
 		\item 任取 $(\lambda_1, \mu_1), (\lambda_2, \mu_2) \in \dom(q)$，对于 $\forall \theta \in (0,1)$，需要证明：
 		\begin{align*}
-			-q(\theta \lambda_1 + (1-\theta)\lambda_2, \theta \mu_1 + (1-\theta)\mu_2) \leqslant -\theta q(\lambda_1,\mu_1) - (1-\theta)q(\lambda_2,\mu_2)\\
-			\Leftrightarrow \inf_{\mathbf{x}\in X}\,\theta L(\mathbf{x},\lambda_1, \mu_1) + (1-\theta)L(\mathbf{x}, \lambda_2, \mu_2) \geqslant \theta \inf_{\mathbf{x}\in X}\,  L(\mathbf{x},\lambda_1, \mu_1) + (1-\theta) \inf_{\mathbf{x}\in X}\, L(\mathbf{x}, \lambda_2, \mu_2)\\
+			-q(\theta \lambda_1 + (1-\theta)\lambda_2, \theta \mu_1 + (1-\theta)\mu_2) &\leqslant -\theta q(\lambda_1,\mu_1) - (1-\theta)q(\lambda_2,\mu_2)\\
+			\Leftrightarrow \inf_{\mathbf{x}\in X}\,\theta L(\mathbf{x},\lambda_1, \mu_1) + (1-\theta)L(\mathbf{x}, \lambda_2, \mu_2) &\geqslant \theta \inf_{\mathbf{x}\in X}\,  L(\mathbf{x},\lambda_1, \mu_1) + (1-\theta) \inf_{\mathbf{x}\in X}\, L(\mathbf{x}, \lambda_2, \mu_2)\\
 		\end{align*}
 		利用 $\theta \inf_{\mathbf{x}\in X}\,  L(\mathbf{x},\lambda_1, \mu_1) = \inf_{\mathbf{x}\in X}\, \theta L(\mathbf{x},\lambda_1, \mu_1), (1-\theta) \inf_{\mathbf{x}\in X}\, L(\mathbf{x}, \lambda_2, \mu_2) =  \inf_{\mathbf{x}\in X}\, (1-\theta) L(\mathbf{x}, \lambda_2, \mu_2)$，以及对于任意函数 $P,Q$ 有 $\inf(P+Q) \geqslant \inf P\,+ \inf Q$ 得：
 		\begin{align*}
@@ -491,6 +491,44 @@ Duality gap is defined by
 		\item If there is duality gap, the set of geometric multipliers is empty.
 	\end{enumerate}
 \end{exercise}
+
+\begin{solution}
+	\heiti
+	\ \\
+	\begin{enumerate}
+		\item 由题，$f^* = q^*$，考虑 $q^*$:
+		\begin{align*}
+			q^* = \sup q(\lambda^*,\mu^*),\\
+			s.t. \lambda^* \geq 0
+		\end{align*}
+		对于
+		\begin{align*}
+			q(\lambda,\mu) &= \inf_{\mathbf{x}\in X}\, L(\mathbf{x},\lambda,\mu)\\
+			&= \inf_{\mathbf{x}\in X}\, \{f(\mathbf{x}) + \lambda \mathbf{g}(\mathbf{x}) + \mu \mathbf{h}(\mathbf{x})\}\\
+			&\leqslant f(\mathbf{x}) + \lambda \mathbf{g}(\mathbf{x}) + \mu \mathbf{h}(\mathbf{x})
+		\end{align*}
+		对于 $\mathbf{x} \in X$，有 $\mathbf{h}(\mathbf{x}) = 0, \mathbf{g}(\mathbf{x}) \leqslant 0$，那么有 $\lambda\mathbf{g}(\mathbf{x}) \leqslant 0$，所以
+		\begin{align*}
+			q(\lambda,\mu) &\leqslant  f(\mathbf{x})\\
+			\Rightarrow q^* =  \sup q(\lambda,\mu) &\leqslant \min f(\mathbf{x}) = f^*
+		\end{align*}
+		根据定义，如果 $(\lambda^*,\mu^*)$ 是 geometric multiplier，那么
+		\begin{align*}
+			q(\lambda^*,\mu^*) = f^*
+		\end{align*}
+		根据上面的推导
+		\begin{align*}
+			q(\lambda^*,\mu^*) \leqslant \sup q(\lambda,\mu) &= q^* \leqslant \min f(\mathbf{x})  \leqslant f^*\\
+			\Rightarrow q(\lambda^*,\mu^*) &= q^* = f^*
+		\end{align*}
+		故综上，所有最优解 $(\lambda^*,\mu^*)$ 都满足 geometric multiplier 的定义，满足 geometric multiplier 定义的 $(\lambda^*,\mu^*)$ 同样是最优解，故命题成立。
+		\item 假设 geometric multipliers 的集合不是空集，根据其定义
+		\begin{align*}
+			q(\lambda^*,\mu^*) = f^*
+		\end{align*}
+		由 1 的推导可推出 $q^* = q(\lambda^*,\mu^*) = f^*$，但这与 $f^* - q^* \neq 0$ 矛盾，故集合为空。
+	\end{enumerate}
+\end{solution}
 
 \newpage
 \begin{exercise}[Optimality Conditions]
