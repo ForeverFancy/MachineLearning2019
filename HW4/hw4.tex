@@ -393,15 +393,15 @@ ${}$
 			w = \inf_{\mathbf{x}\in X}\, \lambda \mathbf{g}(\mathbf{x}) + \mu \mathbf{h}(\mathbf{x}) + f(\mathbf{x}) = \inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda,\mu)
 		\end{align*}
 		当超平面与 $S$ 有切点时取到等号。
-		\item 要求 $\max\inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*)$，由于 $\mathbf{x} \in X$，所以有 $\mathbf{g}(\mathbf{x}) \leqslant 0, \mathbf{h}(\mathbf{x}) = 0$，则有
+		\item $\lambda^*, \mu^*$ 使得 $\inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*) = f^*$，由于 $\mathbf{x} \in X$，所以有 $\mathbf{g}(\mathbf{x}) \leqslant 0, \mathbf{h}(\mathbf{x}) = 0$，则有
 		\begin{align*}
 			&\inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*)\\
-			= &\inf_{\mathbf{x}\in X}\,\{f(\mathbf{x})+\lambda \mathbf{g}(\mathbf{x})+\mu \mathbf{h}(\mathbf{x})\} = f^*\\
-			= &\inf_{\mathbf{x}\in X}\,\{f(\mathbf{x})+\lambda \mathbf{g}(\mathbf{x})\}
+			= &\inf_{\mathbf{x}\in X}\,\{f(\mathbf{x})+\lambda^* \mathbf{g}(\mathbf{x})+\mu^* \mathbf{h}(\mathbf{x})\} = f^*\\
+			= &\inf_{\mathbf{x}\in X}\,\{f(\mathbf{x})+\lambda^* \mathbf{g}(\mathbf{x})\}
 		\end{align*}
-		因为 $\lambda^* \geqslant 0$，所以 $\lambda \mathbf{g}(\mathbf{x}) \leqslant 0$，所以如果要使得上式最大，那么只能 $\lambda \mathbf{g}(\mathbf{x}) = 0$，则
+		因为 $\lambda^* \geqslant 0$，所以 $\lambda^* \mathbf{g}(\mathbf{x}) \leqslant 0$，可以取 $\lambda^* \mathbf{g}(\mathbf{x}) = 0$，则
 		\begin{align*}
-			&\inf_{\mathbf{x}\in X}\,\{f(\mathbf{x})+\lambda \mathbf{g}(\mathbf{x})\} \\
+			&\inf_{\mathbf{x}\in X}\,\{f(\mathbf{x})+\lambda^* \mathbf{g}(\mathbf{x})\} \\
 			= &\inf_{\mathbf{x}\in X}\,\{f(\mathbf{x})\}\\
 			= &\min\{f(\mathbf{x}):\mathbf{g}(\mathbf{x})\leq0,\mathbf{h}(\mathbf{x})=0,\mathbf{x}\in X)\}
 		\end{align*}
@@ -416,6 +416,21 @@ Let $(\lambda^*,\mu^*)$ be a geometric multiplier. Show that $\mathbf{x}^*$ is a
 	&\lambda_i^*g_i(\mathbf{x}^*)=0,\,i=1,\ldots,m.
 \end{align*}
 \end{exercise}
+
+\begin{solution}
+	\heiti
+	\ \\
+	$\mathbf{x}^* \in X$ 说明 $\mathbf{g}(\mathbf{x^*}) \leqslant 0, \mathbf{h}(\mathbf{x^*}) = 0$，$\mathbf{x}^*$ 是问题 3 的最小值，则 $f^* = f(\mathbf{x}^*) = \min\{f(\mathbf{x}):\mathbf{g}(\mathbf{x})\leq0,\mathbf{h}(\mathbf{x})=0,\mathbf{x}\in X)\}$，根据 $(\lambda^*,\mu^*)$ 是 geometric multiplier 可得：
+	\begin{align*}
+		\min\{f(\mathbf{x}):\mathbf{g}(\mathbf{x})\leq0,\mathbf{h}(\mathbf{x})=0,\mathbf{x}\in X)\} = f^* = & \inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*)\\
+		= & \inf_{\mathbf{x}\in X}\,\{f(\mathbf{x})+\lambda^* \mathbf{g}(\mathbf{x})\}
+	\end{align*}
+	因为 $\lambda^* \geqslant 0$，所以 $\lambda^* \mathbf{g}(\mathbf{x}) \leqslant 0$，要使上式成立，那么 $\lambda^* \mathbf{g}(\mathbf{x}) = 0$，得：
+	\begin{align*}
+		L(\mathbf{x}^*,\lambda^*,\mu^*) = \min_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*)
+	\end{align*}
+	所以 $\mathbf{x}^*\in\argmin_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*)$ 并且 $\lambda^* \mathbf{g}(\mathbf{x}) = 0$。
+\end{solution}
 
 \newpage
 \begin{exercise}[Lagrange Dual Problem]
