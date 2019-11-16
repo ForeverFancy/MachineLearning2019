@@ -293,14 +293,23 @@ We denote the feasible set of the problem in (\ref{prob:SVM}) by $$\mathcal{F}=\
 		这与约束条件矛盾，故必有 $b_1^* = b_2^*$。综上最优解唯一。
 		\item 引入拉格朗日乘子对偶问题为：
 		\begin{align*}
-			{ L ( w , b , \alpha ) = \frac { 1 } { 2 } \| w \| ^ { 2 } + \sum _ { i = 1 } ^ { N } \alpha _ { i } \left[ - y _ { i } \left( w \cdot x _ { i } + b \right) + 1 \right] } \\ { = \frac { 1 } { 2 } \| w \| ^ { 2 } - \sum _ { i = 1 } ^ { N } \alpha _ { i } y _ { i } \left(\langle w, x\rangle _ { i } + b \right) + \sum _ { i = 1 } ^ { N } \alpha _ { i } }
+			{ L ( w , b , \alpha ) = \frac { 1 } { 2 } \| w \| ^ { 2 } + \sum _ { i = 1 } ^ { N } \alpha _ { i } \left[ - y _ { i } \left( \langle w \cdot x _ { i } \rangle + b \right) + 1 \right] } \\ { = \frac { 1 } { 2 } \| w \| ^ { 2 } - \sum _ { i = 1 } ^ { N } \alpha _ { i } y _ { i } \left(\langle w, x_i\rangle + b \right) + \sum _ { i = 1 } ^ { N } \alpha _ { i } }
 		\end{align*}
 		要求解的最优问题为：
 		\begin{align*}
 			\max_{\alpha} \min_{w, b} L ( w , b , \alpha )
 		\end{align*}
-
-		
+		令 $L(w, b, \alpha)$ 对 $w, b$ 的偏导为 0 得：
+		\begin{align*}
+			w = \sum\limits_{i=1}^{N}\alpha_iy_ix_i,\\
+			0 = \sum\limits_{i=1}^{N}\alpha_iy_i.
+		\end{align*} 
+		代入得到对偶问题为：
+		\begin{align*}
+			\max_{\alpha} \sum\limits_{i=1}^{N} \alpha_i - \frac{1}{2}\sum\limits_{i=1}^{N}\sum\limits_{j=1}^{N}\alpha_i\alpha_jy_iy_j\langle x_i, x_j \rangle\\
+			s.t. \sum\limits_{i=1}^{N}\alpha_iy_i = 0,\\
+			\alpha_i \geqslant 0, i= 1,\ldots,n
+		\end{align*}
 	\end{enumerate}
 \end{solution}
 
@@ -358,6 +367,47 @@ Show that the results as follows (hint: see Fig. \ref{fig:visualization-lemma}).
 
 \newpage
 ${}$
+\begin{solution}
+	\heiti
+	\begin{enumerate}
+		\ \\
+		\item 设空间的坐标为 $(\textbf{u}, \textbf{v}, w)$ ，其中 $\textbf{u} \in \mathbb{R}^m, \textbf{v} \in \mathbb{R}^p, w \in \mathbb{R}$，超平面的方程可以写为
+		\begin{align*}
+			F = \lambda \textbf{u} + \mu \textbf{v} + w
+		\end{align*}
+		因为超平面过 $(\mathbf{g}(\mathbf{x}),\mathbf{h}(\mathbf{x}),f(\mathbf{x}))$ ，则有：
+		\begin{align*}
+			\lambda \textbf{u} + \mu \textbf{v} + w = \lambda \mathbf{g}(\mathbf{x}) + \mu \mathbf{h}(\mathbf{x}) + f(\mathbf{x})
+		\end{align*}
+		可以看出当 $\textbf{u} = \textbf{v} = \textbf{0}$ 时，超平面交坐标轴于 $\lambda \mathbf{g}(\mathbf{x}) + \mu \mathbf{h}(\mathbf{x}) + f(\mathbf{x})$，此即为 $L(\mathbf{x},\lambda,\mu)$。
+		\item 根据题目要求，超平面方程必须满足：
+		\begin{align*}
+			\lambda \textbf{u} + \mu \textbf{v} + w \leqslant \lambda \mathbf{g}(\mathbf{x}) + \mu \mathbf{h}(\mathbf{x}) + f(\mathbf{x})
+		\end{align*}
+		所以与坐标轴的交点满足：
+		\begin{align*}
+			w \leqslant \lambda \mathbf{g}(\mathbf{x}) + \mu \mathbf{h}(\mathbf{x}) + f(\mathbf{x})
+		\end{align*}
+		所能取到的最大值满足：
+		\begin{align*}
+			w = \inf_{\mathbf{x}\in X}\, \lambda \mathbf{g}(\mathbf{x}) + \mu \mathbf{h}(\mathbf{x}) + f(\mathbf{x}) = \inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda,\mu)
+		\end{align*}
+		当超平面与 $S$ 有切点时取到等号。
+		\item 要求 $\max\inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*)$，由于 $\mathbf{x} \in X$，所以有 $\mathbf{g}(\mathbf{x}) \leqslant 0, \mathbf{h}(\mathbf{x}) = 0$，则有
+		\begin{align*}
+			&\inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*)\\
+			= &\inf_{\mathbf{x}\in X}\,\{f(\mathbf{x})+\lambda \mathbf{g}(\mathbf{x})+\mu \mathbf{h}(\mathbf{x})\} = f^*\\
+			= &\inf_{\mathbf{x}\in X}\,\{f(\mathbf{x})+\lambda \mathbf{g}(\mathbf{x})\}
+		\end{align*}
+		因为 $\lambda^* \geqslant 0$，所以 $\lambda \mathbf{g}(\mathbf{x}) \leqslant 0$，所以如果要使得上式最大，那么只能 $\lambda \mathbf{g}(\mathbf{x}) = 0$，则
+		\begin{align*}
+			&\inf_{\mathbf{x}\in X}\,\{f(\mathbf{x})+\lambda \mathbf{g}(\mathbf{x})\} \\
+			= &\inf_{\mathbf{x}\in X}\,\{f(\mathbf{x})\}\\
+			= &\min\{f(\mathbf{x}):\mathbf{g}(\mathbf{x})\leq0,\mathbf{h}(\mathbf{x})=0,\mathbf{x}\in X)\}
+		\end{align*}
+	\end{enumerate}
+\end{solution}
+
 \newpage
 \begin{exercise}[Geometric Multiplier]
 Let $(\lambda^*,\mu^*)$ be a geometric multiplier. Show that $\mathbf{x}^*$ is a global minimum of the primal problem (\ref{prob:primal-vec}) if and only if $\mathbf{x}^*$ is feasible and 
