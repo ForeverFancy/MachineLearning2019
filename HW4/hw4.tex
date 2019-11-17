@@ -393,18 +393,8 @@ ${}$
 			w = \inf_{\mathbf{x}\in X}\, \lambda \mathbf{g}(\mathbf{x}) + \mu \mathbf{h}(\mathbf{x}) + f(\mathbf{x}) = \inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda,\mu)
 		\end{align*}
 		当超平面与 $S$ 有切点时取到等号。
-		\item $\lambda^*, \mu^*$ 使得 $\inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*) = f^*$，由于 $\mathbf{x} \in X$，所以有 $\mathbf{g}(\mathbf{x}) \leqslant 0, \mathbf{h}(\mathbf{x}) = 0$，则有
-		\begin{align*}
-			&\inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*)\\
-			= &\inf_{\mathbf{x}\in X}\,\{f(\mathbf{x})+\lambda^* \mathbf{g}(\mathbf{x})+\mu^* \mathbf{h}(\mathbf{x})\} = f^*\\
-			= &\inf_{\mathbf{x}\in X}\,\{f(\mathbf{x})+\lambda^* \mathbf{g}(\mathbf{x})\}
-		\end{align*}
-		因为 $\lambda^* \geqslant 0$，所以 $\lambda^* \mathbf{g}(\mathbf{x}) \leqslant 0$，可以取 $\lambda^* \mathbf{g}(\mathbf{x}) = 0$，则
-		\begin{align*}
-			&\inf_{\mathbf{x}\in X}\,\{f(\mathbf{x})+\lambda^* \mathbf{g}(\mathbf{x})\} \\
-			= &\inf_{\mathbf{x}\in X}\,\{f(\mathbf{x})\}\\
-			= &\min\{f(\mathbf{x}):\mathbf{g}(\mathbf{x})\leq0,\mathbf{h}(\mathbf{x})=0,\mathbf{x}\in X)\}
-		\end{align*}
+		\item 根据定义如果 $\lambda^*, \mu^*$ 是 geometric multiplier，那么 $\lambda^* \geqslant 0, f^* = \inf L(\mathbf{x}, \lambda^*, \mu^*)$，所以超平面与纵轴的交点最高为 $\inf L(\mathbf{x}, \lambda^*,\mu^*) = f^*$。
+		相反，如果满足 $\lambda^* \geqslant 0$，超平面与纵轴的交点最高为 $f^*$，这蕴含 $\inf L(\mathbf{x}, \lambda^*, \mu^*) = f^*$，根据 geometric multiplier 的定义，$(\lambda^*,\mu^*)$ 是 geometric multiplier。综上命题成立。
 	\end{enumerate}
 \end{solution}
 
