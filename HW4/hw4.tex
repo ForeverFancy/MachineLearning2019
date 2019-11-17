@@ -232,9 +232,9 @@ We denote the feasible set of the problem in (\ref{prob:SVM}) by $$\mathcal{F}=\
 		\item
 			由样本线性可分可知存在 $w_{0} \in \mathbb{R}^d$ 使得：\\
 			$\begin{aligned} {\langle w_{0}, x_{i}\rangle > 0 \quad x_{i} \in D^{+}}  \\ {\langle w_{0}, x_{i}\rangle < 0   \quad x_{i} \in D^{-}} \end{aligned}$\\
-			所以存在 $\varepsilon, k > 0$ 使得：\\
+			所以存在 $\varepsilon, k > 0$ 使得：
 			\begin{align*}
-				y_{i} \langle w_{0}, x_{i}\rangle &\geqslant \varepsilon \\ y_{i}\langle w_{0}, x_{i}\rangle &\geqslant \varepsilon \\  \Rightarrow \quad y_{i}\langle \frac{w_{0}}{\varepsilon}, x_{i}\rangle &\geqslant 1
+				y_{i} \langle w_{0}, x_{i}\rangle &\geqslant \varepsilon \\  \Rightarrow \quad y_{i}\langle \frac{w_{0}}{\varepsilon}, x_{i}\rangle &\geqslant 1
 			\end{align*}
 			所以令 $w = \frac{w_{0}}{\varepsilon}, b = 0$ 可知 $\mathcal{F}$ 非空。
 		\item 
@@ -306,7 +306,7 @@ We denote the feasible set of the problem in (\ref{prob:SVM}) by $$\mathcal{F}=\
 		\end{align*} 
 		代入得到对偶问题为：
 		\begin{align*}
-			\max_{\alpha} \sum\limits_{i=1}^{N} \alpha_i - \frac{1}{2}\sum\limits_{i=1}^{N}\sum\limits_{j=1}^{N}\alpha_i\alpha_jy_iy_j\langle x_i, x_j \rangle\\
+			\min_{\alpha} \frac{1}{2}\sum\limits_{i=1}^{N}\sum\limits_{j=1}^{N}\alpha_i\alpha_jy_iy_j\langle x_i, x_j \rangle - \sum\limits_{i=1}^{N} \alpha_i \\
 			s.t. \sum\limits_{i=1}^{N}\alpha_iy_i = 0,\\
 			\alpha_i \geqslant 0, i= 1,\ldots,n
 		\end{align*}
@@ -435,7 +435,7 @@ Let $(\lambda^*,\mu^*)$ be a geometric multiplier. Show that $\mathbf{x}^*$ is a
 		L(\mathbf{x}^*,\lambda^*,\mu^*) = f(\mathbf{x}^*) + \lambda^*\mathbf{g}(\mathbf{x}^*) + \mu^*\mathbf{h}(\mathbf{x}^*) = f(\mathbf{x}^*)\\
 		\Rightarrow f(\mathbf{x}^*) = L(\mathbf{x}^*,\lambda^*,\mu^*) = \min L(\mathbf{x},\lambda^*,\mu^*) = \min f(\mathbf{x}) = f^*
 	\end{align*}
-	所以 $\mathbf{x}^*$ 是全局最小值，综上命题成立。
+	所以 $\mathbf{x}^*$ 可以取到全局最小值，综上命题成立。
 \end{solution}
 
 \newpage
@@ -591,7 +591,8 @@ Duality gap is defined by
 	\begin{align*}
 		L(\mathbf{x}^*,\lambda,\mu) \leqslant L(\mathbf{x}^*,\lambda^*,\mu^*)
 	\end{align*}
-	综上命题成立。
+	相反，如果满足题中的不等式，右侧的不等式说明 $L(\mathbf{x}^*,\lambda^*,\mu^*) = \min{L(\mathbf{x},\lambda^*,\mu^*)}$，所以 $\mathbf{x}^* \in \argmin_{\mathbf{x}\in X}\,L(\mathbf{x}, \lambda^*,\mu^*)$。左侧的不等式说明 $\sup q(\lambda,\mu) = q^* = q(\lambda^*,\mu^*)$，即 $\lambda^*\mathbf{g}(\mathbf{x}^*) = 0$，综上并由 Exercise 6 知 $x^*, (\lambda^*, \mu^*)$ 是一对最优解和 geometric multiplier。\\
+	故综上命题成立。
 \end{solution}
 
 \newpage
@@ -622,6 +623,55 @@ The corresponding dual problem is
 \end{enumerate}
 Notice that, for the last two parts, you need to find all the primal and dual optimal solutions if they are not unique.
 \end{exercise}
+
+\begin{solution}
+	\heiti
+	\ \\
+	\begin{enumerate}
+		\item 对于问题 11，不妨取 $\mathbf{w} = \mathbf{0}, b = 0$，那么有：
+		\begin{align*}
+			0 &\geqslant 1 - \xi_i\\
+			\Rightarrow \xi_i &\geqslant 1
+		\end{align*}
+		可以取 $\xi_i = 2$，于是得到一组解（必定有解），此时目标函数的值为 $2nC$。目标函数要取到最小值，那么 $\mathbf{w}, \xi_i$，必为有限值，故只能在闭集内取到最小值，解集非空，所以一定有最优解。\\
+		对于问题 12，容易看出 $\alpha_i = 0, i= 1,\dots, n$ 就是满足约束条件的一组 $\alpha$，所以解必定存在。当 $\alpha_i \rightarrow \infty$ 时，目标函数也趋于无穷，故一定在有限区间上取到最优解，解集非空，所以一定有最优解。
+		\item \ \\
+		\begin{enumerate}
+			\item 可以看出 $(\mathbf{w}, b) = (0, 1)$ 时，目标函数可以取到最小值，又因为问题 2 有唯一解，故 $(0, 1)$ 为原问题最优解。对偶问题可以写为
+			\begin{align*}
+				\max_{\alpha} &\sum\limits_{i=1}^{2} \alpha_i - \frac{1}{2}(\alpha_1^2y_1^2\langle x_1, x_1 \rangle + \alpha_2^2y_2^2\langle x_2, x_2 \rangle +2\alpha_1\alpha_2y_1y_2\langle x_1, x_2 \rangle)\\
+				&= \alpha_1 + \alpha_2 - \frac{1}{2}(\alpha_1^2 + \alpha_2^2 + 2\alpha_1\alpha_2)\\
+				&= \alpha_1 + \alpha_2 - \frac{1}{2} (\alpha_1 + \alpha_2)^2\\
+				&s.t. \alpha_1-\alpha_2 = 0,\\
+				&\alpha_i \geqslant 0, i= 1, 2
+			\end{align*}
+			代入下面的条件得:
+			\begin{align*}
+				\max_{\alpha} 2\alpha_1(1-\alpha_1)
+			\end{align*}
+			所以 $\alpha_1 = \alpha_2 = \frac{1}{2}$ 是对偶问题的解，进一步可得 $w = b = 0$。
+			\item 可以看出 $\xi = 0, w = 0, b = 1$ 时目标函数取到最小值 0，对于对偶问题，同上一题类似可以得到
+			\begin{align*}
+				\min_{\alpha} 2\alpha_1(\alpha_1 - 1)
+			\end{align*}
+			根据 $\alpha_i \in [0, C]$ 可得，$\alpha_1 = \alpha_2 = C$ 是对偶问题的解。
+		\end{enumerate}
+		\item 使用二次规划的方法求解，将问题转化为如下形式
+		\begin{align*}
+			\min_{\alpha} &\frac{1}{2} \alpha^{\top}\mathbf{P}\alpha + \mathbf{q}^{\top}\alpha,\\
+			s.t. &\sum\limits_{i=1}^n \alpha_iy_i = 0,\\
+			&-\alpha_i \leqslant 0, i= 1,\dots, n,\\
+			&\alpha_i \leqslant 10, i= 1,\dots, n.
+		\end{align*}
+		其中 $\mathbf{P}_{ij} = y_iy_j\langle\mathbf{x}_i,\mathbf{x}_j\rangle, \mathbf{q}^{\top} = (-1, -1, -1, -1)$，约束条件也写成矩阵形式可得：
+		\begin{align*}
+			\min_{\alpha} &\frac{1}{2} \alpha^{\top}\mathbf{P}\alpha + \mathbf{q}^{\top}\alpha,\\
+			s.t. &\mathbf{G}\alpha \leqslant \mathbf{h}\\
+			&\mathbf{A}\alpha = \mathbf{b}
+		\end{align*}
+		用 Python 调用 cvxopt 求解此问题得 $\alpha = (10, 10, 10, 10)$（程序代码见 solve.py）。
+	\end{enumerate}
+\end{solution}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
