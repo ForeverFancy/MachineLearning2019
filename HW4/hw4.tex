@@ -627,7 +627,14 @@ Notice that, for the last two parts, you need to find all the primal and dual op
 		对于问题 12，容易看出 $\alpha_i = 0, i= 1,\dots, n$ 就是满足约束条件的一组 $\alpha$，所以解必定存在。当 $\alpha_i \rightarrow \infty$ 时，目标函数也趋于无穷，故一定在有限区间上取到最优解，解集非空，所以一定有最优解。
 		\item \ \\
 		\begin{enumerate}
-			\item 可以看出 $(\mathbf{w}, b) = (0, 1)$ 时，目标函数可以取到最小值，又因为问题 2 有唯一解，故 $(0, 1)$ 为原问题最优解。对偶问题可以写为
+			\item 根据约束条件有：
+			\begin{align*}
+				1(w+b) \geqslant 1\\
+				-1(-w + b) \geqslant 1\\
+				\Rightarrow w \geqslant 1 + b
+			\end{align*}
+			所以 $b = 0$ 时，$w = 1$ 取到最小值，这时目标函数最小值为 $\frac{1}{2}$。\\
+			对偶问题可以写为
 			\begin{align*}
 				\max_{\alpha} &\sum\limits_{i=1}^{2} \alpha_i - \frac{1}{2}(\alpha_1^2y_1^2\langle x_1, x_1 \rangle + \alpha_2^2y_2^2\langle x_2, x_2 \rangle +2\alpha_1\alpha_2y_1y_2\langle x_1, x_2 \rangle)\\
 				&= \alpha_1 + \alpha_2 - \frac{1}{2}(\alpha_1^2 + \alpha_2^2 + 2\alpha_1\alpha_2)\\
@@ -639,8 +646,27 @@ Notice that, for the last two parts, you need to find all the primal and dual op
 			\begin{align*}
 				\max_{\alpha} 2\alpha_1(1-\alpha_1)
 			\end{align*}
-			所以 $\alpha_1 = \alpha_2 = \frac{1}{2}$ 是对偶问题的解，进一步可得 $w = b = 0$。
-			\item 可以看出 $\xi = 0, w = 0, b = 1$ 时目标函数取到最小值 0，对于对偶问题，同上一题类似可以得到
+			所以 $\alpha_1 = \alpha_2 = \frac{1}{2}$ 是对偶问题的解，进一步可得 $w = 1, b = 0$。
+			\item 根据约束条件有：
+			\begin{align*}
+				w + b \geqslant 1 - \xi_1\\
+				w - b \geqslant 1 - \xi_2\\
+				\Rightarrow w \geqslant 1 - \frac{\xi_1}{2} - \frac{\xi_2}{2}
+			\end{align*}
+			代入目标函数得：
+			\begin{align*}
+				\frac{1}{2}\| 1-\frac{\xi_1}{2}-\frac{\xi_2} \|^2 +C\xi_1 + C\xi_2
+			\end{align*}
+			函数分别对$\xi_1, \xi_2$求偏导数并令其等于 0，可得：
+			\begin{align*}
+				\frac{\xi_1}{4} + \frac{\xi_2}{4} = \frac{ 1 }{ 2} - C
+			\end{align*}
+			代入上面的式子可得：
+			\begin{align*}
+				w \geqslant 2C
+			\end{align*}
+			故 $w = 2C, \xi_1 + \xi_2 = 2-4C$ 时，函数取到最小值 $2C(1-C)$。\\
+			对于对偶问题，同上一题类似可以得到
 			\begin{align*}
 				\min_{\alpha} 2\alpha_1(\alpha_1 - 1)
 			\end{align*}
