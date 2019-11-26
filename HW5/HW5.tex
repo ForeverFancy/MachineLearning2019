@@ -1,0 +1,323 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Template for homework of Introduction to Machine Learning.
+%
+%  Fill in your name, lecture number, lecture date and body
+%  of homework as indicated below.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass[11pt,letter,notitlepage]{article}
+%Mise en page
+\usepackage[left=2cm, right=2cm, lines=45, top=0.8in, bottom=0.7in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{pdfpages} 
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1.5pt}
+\newcommand\Loadedframemethod{TikZ}
+\usepackage[framemethod=\Loadedframemethod]{mdframed}
+
+\usepackage{amssymb,amsmath}
+\usepackage{amsthm}
+\usepackage{thmtools}
+\newtheorem{lemma}{Lemma}
+
+\setlength{\topmargin}{0pt}
+\setlength{\textheight}{9in}
+\setlength{\headheight}{0pt}
+
+\setlength{\oddsidemargin}{0.25in}
+\setlength{\textwidth}{6in}
+
+\usepackage{graphicx} % more modern
+\usepackage{subfigure}
+\usepackage{threeparttable}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Define math operator %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareMathOperator*{\argmin}{\bf argmin}
+\DeclareMathOperator*{\relint}{\bf relint\,}
+\DeclareMathOperator*{\dom}{\bf dom\,}
+\DeclareMathOperator*{\intp}{\bf int\,}
+%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\setlength{\topmargin}{0pt}
+\setlength{\textheight}{9in}
+\setlength{\headheight}{0pt}
+
+\setlength{\oddsidemargin}{0.25in}
+\setlength{\textwidth}{6in}
+\pagestyle{fancy}
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Exercise environment %%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\mdtheorem[
+topline=false,
+rightline=false,
+leftline=false,
+bottomline=false,
+leftmargin=-10,
+rightmargin=-10
+]{exercise}{\textbf{Exercise}}
+%%%%%%%%%%%%%%%%%%%%%%%
+%% End of the Exercise environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Problem environment %%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\mdtheorem[
+topline=false,
+rightline=false,
+leftline=false,
+bottomline=false,
+leftmargin=-10,
+rightmargin=-10
+]{problem}{\textbf{Problem}}
+%%%%%%%%%%%%%%%%%%%%%%%
+%% End of the Exercise environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Solution Environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+\declaretheoremstyle
+[
+spaceabove=0pt, 
+spacebelow=0pt, 
+headfont=\normalfont\bfseries,
+notefont=\mdseries, 
+notebraces={(}{)}, 
+headpunct={:\quad}, 
+headindent={},
+postheadspace={ }, 
+postheadspace=4pt, 
+bodyfont=\normalfont, 
+qed=$\blacksquare$,
+preheadhook={\begin{mdframed}[style=myframedstyle]},
+	postfoothook=\end{mdframed},
+]{mystyle}
+
+\declaretheorem[style=mystyle,title=Solution,numbered=no]{solution}
+\mdfdefinestyle{myframedstyle}{%
+	topline=false,
+	rightline=false,
+	leftline=false,
+	bottomline=false,
+	skipabove=-6ex,
+	leftmargin=-10,
+	rightmargin=-10}
+%%%%%%%%%%%%%%%%%%%%%%%
+%% End of the Solution environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Homework info.
+\newcommand{\posted}{\text{Nov. 20, 2019}}       			%%% FILL IN POST DATE HERE
+\newcommand{\due}{\text{Nov. 27, 2019}} 			%%% FILL IN Due DATE HERE
+\newcommand{\hwno}{\text{5}} 		           			%%% FILL IN LECTURE NUMBER HERE
+
+
+%%%%%%%%%%%%%%%%%%%%
+%% Put your information here %%
+%%%%%%%%%%%%%%%%%%%
+\newcommand{\name}{\text{Bowen Zhang}}  	          			%%% FILL IN YOUR NAME HERE
+\newcommand{\id}{\text{PB17000215}}		       			%%% FILL IN YOUR ID HERE
+%%%%%%%%%%%%%%%%%%%%
+%% End of the student's info %%
+%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\proj}[2]{\textbf{P}_{#2} (#1)}
+\newcommand{\lspan}[1]{\textbf{span}  (#1)  }
+\newcommand{\rank}[1]{ \textbf{rank}  (#1)  }
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+
+\lhead{
+	\textbf{\name}
+}
+\rhead{
+	\textbf{\id}
+}
+\chead{\textbf{
+		Homework \hwno
+}}
+
+
+\begin{document}
+\vspace*{-4\baselineskip}
+\thispagestyle{empty}
+
+
+\begin{center}
+{\bf\large Introduction to Machine Learning}\\
+{Fall 2019}\\
+University of Science and Technology of China
+\end{center}
+
+\noindent
+Lecturer: Jie Wang  			 %%% FILL IN LECTURER HERE
+\hfill
+Homework \hwno             			
+\\
+Posted: \posted
+\hfill
+Due: \due
+\\
+Name: \name             			
+\hfill
+ID: \id						
+\hfill
+
+\noindent
+\rule{\textwidth}{2pt}
+
+\medskip
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BODY OF HOMEWORK GOES HERE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textbf{Notice, }to get the full credits, please show your solutions step by step.
+
+\begin{exercise}[Decision Tree  \textnormal{10pts}]
+    Please build a decision tree based on the information gain to classify the following dataset (you need to show the calculation steps in detail).
+\end{exercise}
+\begin{table}[h]
+    	\centering
+    	\begin{tabular}{|c|c|c|c|c|c|}
+    		\hline
+    		Sample & $A_1$& $A_2$& $A_3$& Response\\
+    		\hline
+    		$x_1$ & 1 & 0 & 0 & 0\\
+    		$x_2$ & 1 & 0 & 1 & 0\\
+    		$x_3$ & 0 & 1 & 0 & 0\\
+    		$x_4$ & 1 & 1 & 1 & 1\\
+    		$x_5$ & 1 & 1 & 0 & 1\\
+    		\hline
+    	\end{tabular}
+    	\caption{Dataset} \label{tab:sample}
+    	{\raggedright The dataset consists of five samples $x_1,x_2,x_3,x_4,x_5$. For each sample, we can observe the features $A_1,A_2,A_3$ and the corresponding response. \par}
+    \end{table}
+\begin{solution}
+	
+\end{solution}
+\newpage
+
+\begin{exercise}[Softmax and Cross Entropy  \textnormal{30pts}]
+	The softmax function $f:\mathbb{R}^n\rightarrow\mathbb{R}^n$ is defined by:
+	$$f_i(x)=\frac{\exp(x_i)}{\sum_{k=1}^{n}\exp(x_k)}, i=1,\ldots,n,$$
+	where $x_i$ is the $i^{th}$ component of $x\in\mathbb{R}^n$. The function  $f(x)=(f_1(x),f_2(x),\ldots,f_n(x))^{\top}$ converts each input $x$ into a probability (stochastic) vector in which all entries are nonnegative and add up to one.
+	\begin{itemize}
+		\item[1.] Please find the gradient and Jacobian of $f(x)$, i.e., $\nabla f(x)$ and $Df(x)$. 
+		
+		\item[2.] Show that $f(x)=f(x-c)$, where $c=\max\{x_1,x_2,...,x_n\}$. When could we need this transformation?
+		
+		\item[3.] Please find the gradient of cross entropy function:
+		$$g(x)=-\sum_{i=1}^{n}H_i\log(f_i(x)),$$
+		where $H\in\mathbb{R}^n$ is a one-hot vector.
+	\end{itemize}
+\end{exercise}
+
+\begin{solution}
+
+\end{solution}
+
+\newpage
+
+
+\begin{exercise}[Convolutional Neural Network \textnormal{40pts}]
+\begin{enumerate}
+    \item The average pooling in convolutional neural network can be formulated as 
+    $$f_1(x)= \frac{\sum_{i=1}^n x_i}{n},$$
+    where $x_i$ is the $i^{th}$ component of $x\in\mathbb{R}^n$. Please derive the gradient of $f_1(x)$.
+    \item The max pooling in convolutional neural network can be formulated as 
+    $$f_2(x)= \max\{x_1,\dots,x_n\},$$
+    where $x_i$ is the $i^{th}$ component of $x\in\mathbb{R}^n$.
+    \begin{enumerate}
+        \item Find the set containing all differentiable points of of $f_2$.
+        \item We call $d(x)$ is a subgradient at $x$ $f_2$ if
+        \begin{align*}
+            f_2(y) \geq f_2(x) + \langle d(x),y-x \rangle, \forall x,y .
+        \end{align*}
+        Find a subgradient $d(x)$ of $f_2$ at $x$.
+    \end{enumerate}
+    \item Suppose that we have a convolutional neural network as shown in Table \ref{tab:cnn}. 
+	\begin{enumerate}
+		\item The convolutinal layer parameters are denoted as ``conv$\langle$filter size$\rangle$-$\langle$number of filters$\rangle$".
+		\item  The fully connected layer parameters are denoted as ``FC$\langle$number of neurons$\rangle$".
+		\item The window size of pooling layers is $3$. 
+		\item The stride of convolutinal layers is $1$. 
+		\item The stride of pooling layers is $3$. 
+		\item There is no padding in both convolutional and pooling layers.
+		\item For convenience, we assume that there is no activation function and bias.
+	\end{enumerate} 
+	
+	Suppose that the input is a $\mathbf{386\times 386}$ \textbf{RGB} image. Please derive the size of all feature maps and the number of parameters.
+\end{enumerate}
+	
+	
+\end{exercise}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+		\hline
+		conv3-64& max pool& conv3-256& conv1-512& max pool&FC-2048& FC-1000\\
+		\hline
+	\end{tabular}
+	\caption{The architecture of convolutional neural network} \label{tab:cnn}
+\end{table}
+\begin{solution}
+
+\end{solution}
+
+\newpage
+
+\begin{exercise}[Matrix Calculus \textnormal{20pts}]
+	
+	\indent Let $L = f(h(Ax+b))$, where $A \in \mathbb{R}^{m \times n}$, $x \in \mathbb{R}^n$, $b \in \mathbb{R}^m$, and $f: \mathbb{R}^m \rightarrow \mathbb{R}$. Define $z =  Ax + b \in \mathbb{R}^m$ and $w =  h(z)  = ( \sigma(z_1),\ldots,\sigma(z_n) )^{\top}$, where $z_i$ is the $i^{th}$ component of $z$ and
+	\begin{align*}
+	   \sigma(z_i) = \frac{1}{1+\exp(-z_i)}. 
+	\end{align*}
+	Assume $\nabla_w f$ is known.
+	\begin{enumerate}
+		\item Please derive $\nabla_{x}L$.
+		\item Please derive
+		\begin{align*}
+		    \nabla_{A}L = \left[
+		    \begin{matrix}
+		        &\frac{\partial L}{\partial A_{11}} &\, \dots \, &\frac{\partial L}{\partial A_{1j}} &\, \dots \, &\frac{\partial L}{\partial A_{1n}}\\
+		        &\dots &\, \dots \, &\dots &\, \dots \, &\dots \\
+		        &\frac{\partial L}{\partial A_{i1}} &\, \dots \, &\frac{\partial L}{\partial A_{ij}} &\, \dots \, &\frac{\partial L}{\partial A_{in}}\\
+		        &\dots &\, \dots \, &\dots &\, \dots \, &\dots \\
+		        &\frac{\partial L}{\partial A_{m1}} &\, \dots \, &\frac{\partial L}{\partial A_{mj}} &\, \dots \, &\frac{\partial L}{\partial A_{mn}}
+		    \end{matrix}
+		    \right],
+		\end{align*}
+		where $A_{i,j}$ is the entry in the $i^{th}$ row, $j^{th}$ column of the matrix $A$.
+	\end{enumerate} 
+	
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
