@@ -1,0 +1,419 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Template for homework of Introduction to Machine Learning.
+%
+%  Fill in your name, lecture number, lecture date and body
+%  of homework as indicated below.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass[11pt,letter,notitlepage]{article}
+%Mise en page
+\usepackage[left=2cm, right=2cm, lines=45, top=0.8in, bottom=0.7in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{pdfpages} 
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1.5pt}
+\newcommand\Loadedframemethod{TikZ}
+\usepackage[framemethod=\Loadedframemethod]{mdframed}
+
+\usepackage{amssymb,amsmath}
+\usepackage{amsthm}
+\usepackage{thmtools}
+\newtheorem{lemma}{Lemma}
+
+\setlength{\topmargin}{0pt}
+\setlength{\textheight}{9in}
+\setlength{\headheight}{0pt}
+
+\setlength{\oddsidemargin}{0.25in}
+\setlength{\textwidth}{6in}
+
+\usepackage{graphicx} % more modern
+\usepackage{subfigure}
+\usepackage{threeparttable}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Define math operator %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareMathOperator*{\argmin}{\bf argmin}
+\DeclareMathOperator*{\argmax}{\bf argmax}
+\DeclareMathOperator*{\relint}{\bf relint\,}
+\DeclareMathOperator*{\dom}{\bf dom\,}
+\DeclareMathOperator*{\intp}{\bf int\,}
+\DeclareMathOperator*{\tr}{\bf tr\,}
+%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\setlength{\topmargin}{0pt}
+\setlength{\textheight}{9in}
+\setlength{\headheight}{0pt}
+
+\setlength{\oddsidemargin}{0.25in}
+\setlength{\textwidth}{6in}
+\pagestyle{fancy}
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Exercise environment %%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\mdtheorem[
+topline=false,
+rightline=false,
+leftline=false,
+bottomline=false,
+leftmargin=-10,
+rightmargin=-10
+]{exercise}{\textbf{Exercise}}
+%%%%%%%%%%%%%%%%%%%%%%%
+%% End of the Exercise environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Problem environment %%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\mdtheorem[
+topline=false,
+rightline=false,
+leftline=false,
+bottomline=false,
+leftmargin=-10,
+rightmargin=-10
+]{problem}{\textbf{Problem}}
+%%%%%%%%%%%%%%%%%%%%%%%
+%% End of the Exercise environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Solution Environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+\declaretheoremstyle
+[
+spaceabove=0pt, 
+spacebelow=0pt, 
+headfont=\normalfont\bfseries,
+notefont=\mdseries, 
+notebraces={(}{)}, 
+headpunct={:\quad}, 
+headindent={},
+postheadspace={ }, 
+postheadspace=4pt, 
+bodyfont=\normalfont, 
+qed=$\blacksquare$,
+preheadhook={\begin{mdframed}[style=myframedstyle]},
+	postfoothook=\end{mdframed},
+]{mystyle}
+
+\declaretheorem[style=mystyle,title=Solution,numbered=no]{solution}
+\mdfdefinestyle{myframedstyle}{%
+	topline=false,
+	rightline=false,
+	leftline=false,
+	bottomline=false,
+	skipabove=-6ex,
+	leftmargin=-10,
+	rightmargin=-10}
+%%%%%%%%%%%%%%%%%%%%%%%
+%% End of the Solution environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Homework info.
+\newcommand{\posted}{\text{Nov. 27, 2019}}       			%%% FILL IN POST DATE HERE
+\newcommand{\due}{\text{Dec. 11, 2019}} 			%%% FILL IN Due DATE HERE
+\newcommand{\hwno}{\text{6}} 		           			%%% FILL IN LECTURE NUMBER HERE
+
+
+%%%%%%%%%%%%%%%%%%%%
+%% Put your information here %%
+%%%%%%%%%%%%%%%%%%%
+\newcommand{\name}{\text{Bowen Zhang}}  	          			%%% FILL IN YOUR NAME HERE
+\newcommand{\id}{\text{PB17000215}}		       			%%% FILL IN YOUR ID HERE
+%%%%%%%%%%%%%%%%%%%%
+%% End of the student's info %%
+%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\proj}[2]{\textbf{P}_{#2} (#1)}
+\newcommand{\lspan}[1]{\textbf{span}  (#1)  }
+\newcommand{\rank}[1]{ \textbf{rank}  (#1)  }
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+
+\lhead{
+	\textbf{\name}
+}
+\rhead{
+	\textbf{\id}
+}
+\chead{\textbf{
+		Homework \hwno
+}}
+
+
+\begin{document}
+\vspace*{-4\baselineskip}
+\thispagestyle{empty}
+
+
+\begin{center}
+{\bf\large Introduction to Machine Learning}\\
+{Fall 2019}\\
+University of Science and Technology of China
+\end{center}
+
+\noindent
+Lecturer: Jie Wang  			 %%% FILL IN LECTURER HERE
+\hfill
+Homework \hwno             			
+\\
+Posted: \posted
+\hfill
+Due: \due
+\\
+Name: \name             			
+\hfill
+ID: \id						
+\hfill
+
+\noindent
+\rule{\textwidth}{2pt}
+
+\medskip
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BODY OF HOMEWORK GOES HERE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textbf{Notice, }to get the full credits, please show your solutions step by step.
+
+\begin{exercise}[\textnormal{10pts}]
+	Show that $(1-\epsilon)^m\leq e^{-m\epsilon}$, where $m\in \mathbb{N}^+$ and $0\le \epsilon<1$.
+\end{exercise}
+
+\begin{solution}
+
+\end{solution}
+
+\newpage
+
+
+\begin{exercise}[Markov inequality \textnormal{10pts}]
+	Let $X$ be a nonnegative random variable on $\mathbb{R}$. Then, for all $t>0$, show that
+	$$\mathbf{P}(X\geq t)\leq \frac{\mathbf{E}[X]}{t}.$$
+	You can assume that $X$ is a continuous random variable.
+\end{exercise}
+
+\begin{solution}
+
+\end{solution}
+
+\newpage
+
+\begin{exercise}[VC-dimension \textnormal{10pts}]
+	Assume that the instance space $X=\mathbb{R}^2$ and the hypothesis space $H$ be the set of all linear threshold functions defined on $\mathbb{R}^2$. Find $VC(H)$ and prove it.	
+\end{exercise}
+
+\begin{solution}
+
+\end{solution}
+
+\newpage
+
+\begin{exercise}[Learning intervals \textnormal{20pts}] 
+	Let the target concept class be $C=\{[a,b]:a<b, a,b\in\mathbb{R}\}$ and the hypotheses class $H=C$, and the version space be $VS_{H,D}$. Each $c\in C$ labels the points inside the interval positive and the others negative. A consistent learner will pick a consistent hypothesis---if any---$h\in H$ according to a set of i.i.d. samples $\{(x_1,c(x_1)),(x_2,c(x_2)),\ldots,(x_m,c(x_m))\}$ that obey an unknown absolute continuous distribution $\mathcal{D}$. $\mathcal{D}$'s p.d.f. is $p(x)$. Please find 
+	$$\mathbf{P}[\exists\, h\in VS_{H,D} \mbox{ and } error_{\mathcal{D}}(h)>\epsilon],$$
+	and the corresponding sample complexity.
+\end{exercise}
+
+
+\begin{solution}
+
+\end{solution}
+
+\newpage
+
+\begin{exercise}[Basic Matrix Manipulations  \textnormal{20pts}]
+    For an arbitrary matrix $M$, we denote its $i^{th}$ row, $j^{th}$ column, and $(i,j)^{th}$ entry by $\mathbf{m}_{i,*}$, $\mathbf{m}_{*,j}$, and $m_{i,j}$, respectively.
+    \begin{enumerate}
+        \item Suppose that $A\in\mathbb{R}^{m\times n}$, $B\in\mathbb{R}^{m\times d}$, $C\in\mathbb{R}^{d\times n}$, and $A=BC$. Show that
+            \begin{align*}
+                A=\sum_{\ell=1}^d\mathbf{b}_{*,\ell}\mathbf{c}_{\ell,*}.
+            \end{align*}
+        
+        \item Suppose that $A\in\mathbb{R}^{m\times n}$, $B\in\mathbb{R}^{m\times p}$, $C\in\mathbb{R}^{p\times q}$, $D\in\mathbb{R}^{q\times n}$, and $A=BCD$. Show that
+            \begin{align*}
+                A=\sum_{i=1}^p\sum_{j=1}^qc_{i,j}\mathbf{b}_{*,i}\mathbf{d}_{j,*}.
+            \end{align*}
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+	
+\end{solution}
+
+
+\newpage
+
+\begin{exercise}[Subspace  \textnormal{90pts}]
+    The column space of a matrix $A\in\mathbb{R}^{m\times n}$ is the set
+    \begin{align}\label{def:column-space}
+        \mathcal{C}(A)=\{\mathbf{y}\in\mathbb{R}^m: \mathbf{y}=A\mathbf{x}, \mathbf{x}\in\mathbb{R}^n\}.
+    \end{align}
+    
+    \begin{enumerate}
+        \item Let $A\in\mathbb{R}^{m\times n}$, $B\in\mathbb{R}^{n\times p}$, and $C=AB$.
+            \begin{enumerate}
+                \item Show that $\mathcal{C}(C)\subseteq\mathcal{C}(A)$.
+                
+                \item Suppose that $B$ is nonsingular, that is, $B$ is invertible. Show that $\mathcal{C}(C)=\mathcal{C}(AB)$.
+            \end{enumerate}
+        
+        \item\label{exercise:subspace-2} Suppose that $A\in\mathbb{R}^{m\times n}$ has full column rank, that is, the column vectors in $A$ are linearly independent. Let $\mathbf{x}\in\mathbb{R}^m$ and
+                \begin{align}\label{prob:proj-subspace}
+                    P_{\mathcal{C}(A)}(\mathbf{x}):=\argmin_{\mathbf{z}\in\mathbb{R}^m}\,\{\|\mathbf{x}-\mathbf{z}\|_2: \mathbf{z}\in\mathcal{C}(A)\}. 
+                \end{align}
+                    
+                \begin{enumerate}
+                   % \item Please find $P_{\mathcal{C}(A)}$, which is indeed the projection of $\mathbf{x}$ into the subspace $\mathcal{C}(A)$. 
+                        
+                    \item Is $P_{\mathcal{C}(A)}$ unique? If so, please justify your answer and find $P_{\mathcal{C}(A)}$; otherwise, please find all the projections.
+                        
+                    \item What are the coordinates of $P_{\mathcal{C}(A)}$ with respect to the column vectors in $A$? Are the coordinates unique?
+                \end{enumerate}
+            
+            
+        \item Suppose that the column vectors in $A\in\mathbb{R}^{m\times n}$ are orthonormal. 
+            \begin{enumerate}
+                \item Please answer the questions in \ref{exercise:subspace-2}.
+                
+                \item Suppose that the column vectors in $\widetilde{A}\in\mathbb{R}^{m\times n}$ are also orthonormal, and $\mathcal{C}(A)=\mathcal{C}(\widetilde{A})$. Show that $P_{\mathcal{C}(A)}(\mathbf{x})=P_{\mathcal{C}(\widetilde{A})}(\mathbf{x})$ for any $\mathbf{x}\in\mathbb{R}^m$.
+            \end{enumerate}
+            
+        \item Suppose that the column vectors in $A\in\mathbb{R}^{m\times n}$ are linearly dependent.
+            \begin{enumerate}
+                \item Is $P_{\mathcal{C}(A)}$ unique? If so, please justify your answer; otherwise, please find all the projections.
+                
+                \item Are the coordinates of $P_{\mathcal{C}(A)}$ with respect to the column vectors in $A$ unique? If so, please justify your answer; otherwise, please find all the possible coordinates.
+            \end{enumerate}
+            Hint: you may assume that the first $r$ column vectors with $r<n$ are a basis of $\mathcal{C}(A)$.
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+	
+\end{solution}
+
+\newpage
+
+\begin{exercise}[SVD  \textnormal{80pts}]
+    Let $A\in\mathbb{R}^{m\times n}$, $\rank{A}=r$, its SVD be $A=U\Sigma V^{\top}$, where we sort the diagonal entries of $\Sigma$ in the descending order $\sigma_1\geq\sigma_2\geq\ldots\geq\sigma_r>0$, and
+    \begin{align*}
+        &U_1=(\mathbf{u}_{*,1},\mathbf{u}_{*,2},\ldots,\mathbf{u}_{*,r}), U_2=(\mathbf{u}_{*,r+1},\ldots,\mathbf{u}_{*,m}),\\
+        &V_1=(\mathbf{v}_{*,1},\mathbf{v}_{*,2},\ldots,\mathbf{v}_{*,r}), V_2=(\mathbf{v}_{*,r+1},\ldots,\mathbf{u}_{*,n}).
+    \end{align*}
+    We define the column space of a matrix $A$ in (\ref{def:column-space}).
+    The null space of $A$ is the set
+    \begin{align}\label{def:column-space}
+        \mathcal{N}(A)=\{\mathbf{y}\in\mathbb{R}^n: A\mathbf{y}=0\}.
+    \end{align}
+    
+    \begin{enumerate}
+        \item Show that 
+            \begin{enumerate}
+                \item $P_{\mathcal{C}(A)}(\mathbf{x})=U_1U_1^{\top}\mathbf{x}$;
+                \item $P_{\mathcal{N}(A)}(\mathbf{x})=V_2V_2^{\top}\mathbf{x}$;
+                \item $P_{\mathcal{C}(A^{\top})}(\mathbf{x})=V_1V_1^{\top}\mathbf{x}$;
+                \item $P_{\mathcal{N}(A^{\top})}(\mathbf{x})=U_2U_2^{\top}\mathbf{x}$.
+            \end{enumerate}
+            
+        \item The Frobenius norm of $A$ is
+            \begin{align*}
+                \|A\|_F=\sqrt{\sum_{i=1}^m\sum_{j=1}^na_{i,j}^2}.
+            \end{align*}
+            \begin{enumerate}
+                \item Show that $\|A\|_F^2=\tr(A^{\top}A)$.
+                
+                \item Let $B\in\mathbb{R}^{m\times n}$. Suppose that $\mathcal{C}(A)\bot\mathcal{C}(B)$, that is, 
+                \begin{align*}
+                    \langle\mathbf{a},\mathbf{b}\rangle=0,\,\forall\,\mathbf{a}\in\mathcal{C}(A),\,\mathbf{b}\in\mathcal{C}(B).
+                \end{align*}
+                Show that
+                \begin{align*}
+                    \|A+B\|_F^2=\|A\|_F^2+\|B\|_F^2.
+                \end{align*}
+            \end{enumerate}
+            
+        \item Please solve the problem as follows.
+            \begin{align*}
+                \min_{X\in\mathbb{R}^{m\times n}}\{\|A-X\|_F:\rank{X}\leq K\}.
+            \end{align*}
+            For simplicity, you can assume that all singular values of $A$ are different.
+            
+        \item \textbf{Programming Exercise} We provide you a grayscale image (``Alan\_Turing.jpg''). Suppose that $A$ is the data matrix of the image. We have $A\in\mathbb{R}^{512\times 512}$ and $r=\rank A=512$. In this exercise, you are expected to implement an image compression algorithm following the steps below. You can use your favorite programming language.
+        \begin{enumerate}
+            \item Compute the SVD $A=U\Sigma V^\top=\sum_{i=1}^r\sigma_i\textbf{u}_i\textbf{v}_i^\top$, where $\sigma_1\ge \sigma_2\ge \dots\ge \sigma_r>0$ are the diagonal entries of $\Sigma$, $\textbf{u}_i$ is the $i$th column of $U$, and $\textbf{v}_i$ is the $i$th column of $V$.
+            \item Use the first $k$ $(k< r)$ terms of SVD to approximate the original image $A$. Then, we get the compressed images, of which the data matrices are $A_k=\sum_{i=1}^k\sigma_i\textbf{u}_i\textbf{v}_i^\top$. Compute $A_k$ for $k=2,4,8,16,32,64,128,256$.
+            \item Plot $A_k$ as images for all $k$. 
+        \end{enumerate}
+        Please put the compressed images and their corresponding $k$ in this file.
+        
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+	
+\end{solution}
+
+\newpage
+
+\begin{exercise}[PCA \textnormal{60pts}]
+    Suppose that we have a set of data instances $\{\mathbf{x}_i\}_{i=1}^n\subset\mathbb{R}^d$. Let $\widetilde{X}\in\mathbb{R}^{d\times n}$ be the matrix whose $i^{th}$ column is $\mathbf{x}_i-\Bar{\mathbf{x}}$, where $\Bar{\mathbf{x}}$ is the sample mean, and $S$ be the sample variance matrix.
+
+    \begin{enumerate}
+        \item For $G\in\mathbb{R}^{d\times K}$, let us define
+        \begin{align}\label{eqn:obj-PCA}
+            f(G) = \tr(G^{\top}SG).
+        \end{align}
+        Show that $f(GQ)=f(G)$ for any orthogonal matrix $Q\in\mathbb{R}^{K\times K}$.
+        
+        \item Please find $\mathbf{g}_1$ defined as follows by the Lagrange multiplier method.
+            \begin{align}\label{eqn:PC1}
+                \mathbf{g}_1:=\argmax_{\mathbf{g}\in\mathbb{R}^d}\{f(\mathbf{g}):\|\mathbf{g}\|_2=1\},
+            \end{align}
+            where $f$ is defined by (\ref{eqn:obj-PCA}). Notice that, the vector $\mathbf{g}_1$ is the first principle component vector of the data.
+            
+        \item Please find $\mathbf{g}_2$ defined as follows by the Lagrange multiplier method.
+            \begin{align*}
+                \mathbf{g}_2:=\argmax_{\mathbf{g}\in\mathbb{R}^d}\{f(\mathbf{g}):\|\mathbf{g}\|_2=1,\langle\mathbf{g},\mathbf{g}_1\rangle=0\},
+            \end{align*}
+            where $\mathbf{g}_1$ is given by (\ref{eqn:PC1}). Similar to $\mathbf{g}_1$, the vector $\mathbf{g}_2$ is the second principle component vector of the data.
+            
+        \item Please derive the first $K$ principle component vectors by repeating the above process.
+        
+        \item What is $f(\mathbf{g}_k)$, $k=1,\ldots,K$? What about their meaning?
+        
+        \item When the first $K$ principle component vectors are unique?
+    \end{enumerate}
+    
+\end{exercise}
+
+\begin{solution}
+    
+\end{solution}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
