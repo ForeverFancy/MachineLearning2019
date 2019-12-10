@@ -420,10 +420,10 @@ Let $(\lambda^*,\mu^*)$ be a geometric multiplier. Show that $\mathbf{x}^*$ is a
 		L(\mathbf{x}^*,\lambda^*,\mu^*) = \min_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*)
 	\end{align*}
 	所以 $\mathbf{x}^*\in\argmin_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*)$ 并且 $\lambda^* \mathbf{g}(\mathbf{x}^*) = 0$。\\
-	反之如果题中的条件成立，那么
+	反之如果题中的条件成立，由于 $(\lambda^*,\mu^*)$ 是 geometric multiplier，所以 $\inf L(\mathbf{x}, \lambda^*, \mu^*) = f^*$，那么
 	\begin{align*}
 		L(\mathbf{x}^*,\lambda^*,\mu^*) = f(\mathbf{x}^*) + \lambda^*\mathbf{g}(\mathbf{x}^*) + \mu^*\mathbf{h}(\mathbf{x}^*) = f(\mathbf{x}^*)\\
-		\Rightarrow f(\mathbf{x}^*) = L(\mathbf{x}^*,\lambda^*,\mu^*) = \min L(\mathbf{x},\lambda^*,\mu^*) = \min f(\mathbf{x}) = f^*
+		\Rightarrow f(\mathbf{x}^*) = L(\mathbf{x}^*,\lambda^*,\mu^*) = \min L(\mathbf{x},\lambda^*,\mu^*) = f^*
 	\end{align*}
 	所以 $\mathbf{x}^*$ 可以取到全局最小值，综上命题成立。
 \end{solution}
@@ -655,7 +655,7 @@ Notice that, for the last two parts, you need to find all the primal and dual op
 			\end{align*}
 			代入目标函数得：
 			\begin{align*}
-				\frac{1}{2}\| 1-\frac{\xi_1}{2}-\frac{\xi_2} \|^2 +C\xi_1 + C\xi_2
+				\frac{1}{2}\| 1-\frac{\xi_1}{2}-\frac{\xi_2}{2} \|^2 +C\xi_1 + C\xi_2
 			\end{align*}
 			函数分别对$\xi_1, \xi_2$求偏导数并令其等于 0，可得：
 			\begin{align*}
