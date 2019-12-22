@@ -16,10 +16,11 @@ class Convolution(object):
         self.kernel_size = kernel_size
         self.stride = stride
         self.out_channels = out_channels        # Filter num.
-        self.filters = np.random.normal(
+        self.filters = 0.01 * np.random.normal(
             0, size=(self.kernel_size, self.kernel_size, out_channels))
+        self.biases = np.zeros(self.out_channels)
 
-    def conv2d(self):
+    def conv_forward(self):
         # Padding.
         if (self.shape[0] - self.kernel_size) % self.stride != 0:
             self.img = np.lib.pad(self.img, ((0, self.kernel_size -
@@ -47,11 +48,15 @@ class Convolution(object):
                             self.filters[:, :, i], self.img[row: row + self.kernel_size, col: col + self.kernel_size, channel]))
                     col += self.stride
                 row += self.stride
-
+        feature_maps += self.biases
         print(feature_maps.shape)
         # Image.fromarray(np.uint8(feature_maps)).show()
         # TODO: implement im2col.
         return feature_maps
+
+    def backward(self):
+        # TODO: implement backward.
+        pass
 
 
 class Pooling(object):
@@ -61,8 +66,9 @@ class Pooling(object):
         self.out_channels = feature_maps.shape[-1]
         self.pool_size = pool_size
         self.stride = stride
+        self.index = []
 
-    def max_pooling(self):
+    def max_pooling_forward(self):
         # Drop out excess elements.
         pool_output = np.zeros(((self.shape[0] - self.pool_size) // self.stride + 1,
                                 (self.shape[1] - self.pool_size) // self.stride + 1, self.out_channels))
@@ -74,11 +80,21 @@ class Pooling(object):
                 for k in range((self.shape[1] - self.pool_size) // self.stride + 1):
                     pool_output[j, k, i] = np.max(
                         self.feature_maps[row: row + self.pool_size, col: col + self.pool_size, i])
+
+                    self.index.append([(j, k), np.argmax(
+                        self.feature_maps[row: row + self.pool_size, col: col + self.pool_size, i])])
                     col += self.stride
                 row += self.stride
         # Image.fromarray(np.uint8(pool_output)).show()
         print(pool_output.shape)
         return pool_output
+
+    def backward(self, eta):
+        self.gradient = np.zeros((self.shape[0], self.shape[1], out_channels))
+        for ind in self.index:
+            self.gradient[ind[1]] = eta[ind[0]]
+        return self.gradient
+        # TODO: Not check.
 
 
 class Relu(object):
@@ -86,11 +102,13 @@ class Relu(object):
         self.feature_maps = feature_maps
         self.shape = feature_maps.shape[:2]
         self.out_channels = feature_maps.shape[-1]
+        self.gradient = np.ones(
+            (self.shape[0], self.shape[1], self.out_channels))
 
     def forward(self):
         # Initialize relu function.
-        relu = np.zeros((self.shape[0],self.shape[1], self.out_channels))
-    
+        relu = np.zeros((self.shape[0], self.shape[1], self.out_channels))
+
         for i in range(self.out_channels):
             for j in range(self.shape[0]):
                 for k in range(self.shape[1]):
@@ -98,7 +116,9 @@ class Relu(object):
         return relu
 
     def backward(self):
-        pass
+        self.gradient[self.feature_maps < 0] = 0
+        return self.gradient
+        # TODO: Not check.
 
 
 if __name__ == "__main__":
@@ -107,8 +127,7 @@ if __name__ == "__main__":
     img = np.array(img, dtype=np.float)
     print(img.shape)
     Conv = Convolution(img, stride=2)
-    con1 = Conv.conv2d()
-    pooling = Pooling(con1).max_pooling()
+    con1 = Conv.conv_forward()
+    pooling = Pooling(con1).max_pooling_forward()
     relu = Relu(pooling).forward()
-    Image.fromarray(np.uint8(relu)).show()
-
+    # Image.fromarray(np.uint8(relu)).show()
