@@ -23,18 +23,21 @@ class Convolution(object):
             0, size=(self.kernel_size, self.kernel_size, in_channels, out_channels)).astype(np.float32)
         self.biases = np.zeros(self.out_channels)
         self.w_gradient = np.zeros(self.filters.shape)
+        self.eta_forward = np.zeros(self.img.shape)
         self.learning_rate = learning_rate
 
-    def conv_forward(self):
+    def conv_forward(self, img):
+        # Update img.
+        self.img = img
         # Padding.
         if (self.shape[0] - self.kernel_size) % self.stride != 0:
             self.padding_img = np.lib.pad(self.img, ((0, self.kernel_size -
-                                              (self.shape[0] - self.kernel_size) % self.stride), (0, 0), (0, 0)),
-                                  'constant')
+                                                      (self.shape[0] - self.kernel_size) % self.stride), (0, 0), (0, 0)),
+                                          'constant')
         if (self.shape[1] - self.kernel_size) % self.stride != 0:
             self.padding_img = np.lib.pad(self.img, ((0, 0), (0, self.kernel_size -
-                                                      (self.shape[0] - self.kernel_size) % self.stride), (0, 0)),
-                                  'constant')
+                                                              (self.shape[0] - self.kernel_size) % self.stride), (0, 0)),
+                                          'constant')
         self.shape = self.padding_img.shape[:2]
         # Initialize feature_maps, the num of feature_map is out_channels.
         feature_maps = np.zeros(
@@ -49,9 +52,9 @@ class Convolution(object):
                     # for channel in range(self.in_channels):
                         # Add each input channel.
                         # print(row,col)
-                    
+
                     feature_maps[j, k, i] = np.sum(
-                            self.filters[:, :, :, i]* self.padding_img[row: row + self.kernel_size, col: col + self.kernel_size, :])
+                        self.filters[:, :, :, i] * self.padding_img[row: row + self.kernel_size, col: col + self.kernel_size, :])
                     col += self.stride
                 row += self.stride
         feature_maps += self.biases
@@ -62,7 +65,7 @@ class Convolution(object):
 
     def gradient(self, eta):
         # TODO: implement backward.
-        
+
         for i in range(self.in_channels):
             for channel in range(self.out_channels):
                 row, col = 0, 0
@@ -74,14 +77,30 @@ class Convolution(object):
                         col += self.stride
                     row += self.stride
         # print(self.w_gradient)
-        self.b_gradient = np.array([np.sum(eta[:, :, i]) for i in range(self.out_channels)])
+        self.b_gradient = np.array([np.sum(eta[:, :, i])
+                                    for i in range(self.out_channels)])
         flip_filters = np.flip(self.filters, (0, 1))
-    
+        padding_eta = np.lib.pad(eta, ((self.kernel_size - 1, self.kernel_size - 1),
+                                       (self.kernel_size - 1, self.kernel_size - 1), (0, 0)), 'constant')
+
+        for i in range(self.out_channels):
+            row, col = 0, 0
+            for j in range((padding_eta.shape[0] - self.kernel_size) // self.stride + 1):
+                col = 0
+                for k in range((padding_eta.shape[1] - self.kernel_size) // self.stride + 1):
+                    # for channel in range(self.in_channels):
+                        # Add each input channel.
+                    # print(row,col)
+
+                    self.eta_forward[j, k, i] = np.sum(
+                        flip_filters[:, :, :, i] * padding_eta[row: row + self.kernel_size, col: col + self.kernel_size, :])
+                    col += self.stride
+                row += self.stride
+        return self.eta_forward
+
     def backward(self):
         self.filters -= self.learning_rate * self.w_gradient
         self.biases -= self.learning_rate * self.b_gradient
-        
-        
 
 
 class Pooling(object):
@@ -94,8 +113,8 @@ class Pooling(object):
         self.index = []
         self.gradient = np.zeros((self.shape[0], self.shape[1], out_channels))
 
-
-    def max_pooling_forward(self):
+    def max_pooling_forward(self, feature_maps):
+        self.feature_maps = feature_maps
         # Drop out excess elements.
         pool_output = np.zeros(((self.shape[0] - self.pool_size) // self.stride + 1,
                                 (self.shape[1] - self.pool_size) // self.stride + 1, self.out_channels))
@@ -131,7 +150,8 @@ class Relu(object):
         self.gradient = np.ones(
             (self.shape[0], self.shape[1], self.out_channels))
 
-    def forward(self):
+    def forward(self, feature_maps):
+        self.feature_maps = feature_maps
         # Initialize relu function.
         relu = np.zeros((self.shape[0], self.shape[1], self.out_channels))
 
@@ -152,16 +172,21 @@ if __name__ == "__main__":
     # print(img.size)
     img = np.array(img, dtype=np.float32)
     # print(img.shape)
-    z = np.random.rand(28, 28, 3).astype(np.float32)
+    z = np.random.rand(100, 100, 3).astype(np.float32)
     # print(z)
-    Conv = Convolution(z, kernel_size=2, stride=1)
-    # new = Conv.conv_forward()
-    # Image.fromarray(np.uint8(new)).show()
+    Conv1 = Convolution(z, kernel_size=2, stride=1, learning_rate=0.00001)
+    out1 = Conv1.conv_forward(z)
+    Conv2 = Convolution(out1, kernel_size=2, stride=1, learning_rate=0.00001)
+    y_pred = Conv2.conv_forward(out1)
+    # print(y_pred)
+    y_true = np.ones((98, 98, 3)).astype(np.float32)
     for i in range(10):
-        y_true = np.ones((27, 27, 3)).astype(np.float64)
-        y_pred = Conv.conv_forward()
         error, dy = losses.mean_squared_error(y_pred, y_true)
         print(error)
-        Conv.gradient(dy)
-        Conv.backward()
-    
+        print("------")
+        eta2to1 = Conv2.gradient(dy)
+        Conv2.backward()
+        _ = Conv1.gradient(eta2to1)
+        Conv1.backward()
+        out1 = Conv1.conv_forward(z)
+        y_pred = Conv2.conv_forward(out1)
