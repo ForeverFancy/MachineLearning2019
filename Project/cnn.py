@@ -44,6 +44,7 @@ class Convolution(object):
             ((self.shape[0] - self.kernel_size) // self.stride + 1, (self.shape[1] - self.kernel_size) // self.stride + 1, self.out_channels))
 
         # Do convolution.
+        # TODO: Check the loop order.
         for i in range(self.out_channels):
             row, col = 0, 0
             for j in range((self.shape[0] - self.kernel_size) // self.stride + 1):
@@ -64,7 +65,6 @@ class Convolution(object):
         return feature_maps
 
     def gradient(self, eta):
-        # TODO: implement backward.
 
         for i in range(self.in_channels):
             for channel in range(self.out_channels):
@@ -104,21 +104,21 @@ class Convolution(object):
 
 
 class Pooling(object):
-    def __init__(self, feature_maps, pool_size=2, stride=2):
+    def __init__(self, feature_maps, pool_size=3, stride=1):
         self.feature_maps = feature_maps
         self.shape = feature_maps.shape[:2]
         self.out_channels = feature_maps.shape[-1]
         self.pool_size = pool_size
         self.stride = stride
         self.index = []
-        self.gradient = np.zeros((self.shape[0], self.shape[1], out_channels))
+        self.gradient_out = np.zeros((self.shape[0], self.shape[1], self.out_channels))
 
     def max_pooling_forward(self, feature_maps):
         self.feature_maps = feature_maps
         # Drop out excess elements.
         pool_output = np.zeros(((self.shape[0] - self.pool_size) // self.stride + 1,
                                 (self.shape[1] - self.pool_size) // self.stride + 1, self.out_channels))
-        print(pool_output.shape)
+        # print(pool_output.shape)
         for i in range(self.out_channels):
             row = 0
             for j in range((self.shape[0] - self.pool_size) // self.stride + 1):
@@ -132,14 +132,13 @@ class Pooling(object):
                     col += self.stride
                 row += self.stride
         # Image.fromarray(np.uint8(pool_output)).show()
-        print(pool_output.shape)
+        # print(pool_output.shape)
         return pool_output
 
     def gradient(self, eta):
         for ind in self.index:
-            self.gradient[ind[1]] = eta[ind[0]]
-        return self.gradient
-        # TODO: Not check.
+            self.gradient_out[ind[1]] = eta[ind[0]]
+        return self.gradient_out
 
 
 class Relu(object):
@@ -172,21 +171,25 @@ if __name__ == "__main__":
     # print(img.size)
     img = np.array(img, dtype=np.float32)
     # print(img.shape)
-    z = np.random.rand(100, 100, 3).astype(np.float32)
+    z = np.random.rand(50, 50, 3).astype(np.float32)
     # print(z)
-    Conv1 = Convolution(z, kernel_size=2, stride=1, learning_rate=0.00001)
+    Conv1 = Convolution(z, kernel_size=3, stride=1, learning_rate=0.00001)
     out1 = Conv1.conv_forward(z)
-    Conv2 = Convolution(out1, kernel_size=2, stride=1, learning_rate=0.00001)
-    y_pred = Conv2.conv_forward(out1)
-    # print(y_pred)
-    y_true = np.ones((98, 98, 3)).astype(np.float32)
+    pooling1 = Pooling(out1)
+    out2 = pooling1.max_pooling_forward(out1)
+    Conv2 = Convolution(out2, kernel_size=3, stride=1, learning_rate=0.00001)
+    y_pred = Conv2.conv_forward(out2)
+    print(y_pred.shape)
+    y_true = np.ones((44, 44, 3)).astype(np.float32)
     for i in range(10):
         error, dy = losses.mean_squared_error(y_pred, y_true)
         print(error)
         print("------")
-        eta2to1 = Conv2.gradient(dy)
+        eta3to2 = Conv2.gradient(dy)
         Conv2.backward()
+        eta2to1 = pooling1.gradient(eta3to2)
         _ = Conv1.gradient(eta2to1)
         Conv1.backward()
         out1 = Conv1.conv_forward(z)
-        y_pred = Conv2.conv_forward(out1)
+        out2 = pooling1.max_pooling_forward(out1)
+        y_pred = Conv2.conv_forward(out2)
