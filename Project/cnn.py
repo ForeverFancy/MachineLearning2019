@@ -9,7 +9,7 @@ class CNN(object):
 
 
 class Convolution(object):
-    def __init__(self, img, in_channels=3, out_channels=3, kernel_size=3, stride=1, learning_rate=0.0001):
+    def __init__(self, img, in_channels=3, out_channels=3, kernel_size=3, stride=1, learning_rate=0.0006):
         self.img = img
         self.padding_img = img
         self.shape = img.shape[:2]
@@ -17,11 +17,12 @@ class Convolution(object):
         # Kernel total size = kernel_size * kernel_size.
         self.kernel_size = kernel_size
         self.stride = stride
-        self.out_channels = out_channels        # Filter num.
+        self.out_channels = out_channels  # Filter num.
+        # input channels -> output channels
         self.filters = 0.01 * np.random.normal(
-            0, size=(self.kernel_size, self.kernel_size, out_channels))
+            0, size=(self.kernel_size, self.kernel_size, in_channels, out_channels)).astype(np.float32)
         self.biases = np.zeros(self.out_channels)
-        self.w_gradient = np.zeros((self.kernel_size, self.kernel_size, in_channels))
+        self.w_gradient = np.zeros(self.filters.shape)
         self.learning_rate = learning_rate
 
     def conv_forward(self):
@@ -45,15 +46,16 @@ class Convolution(object):
             for j in range((self.shape[0] - self.kernel_size) // self.stride + 1):
                 col = 0
                 for k in range((self.shape[1] - self.kernel_size) // self.stride + 1):
-                    for channel in range(self.in_channels):
+                    # for channel in range(self.in_channels):
                         # Add each input channel.
                         # print(row,col)
-                        feature_maps[j, k, i] += np.sum(np.dot(
-                            self.filters[:, :, i], self.padding_img[row: row + self.kernel_size, col: col + self.kernel_size, channel]))
+                    
+                    feature_maps[j, k, i] = np.sum(
+                            self.filters[:, :, :, i]* self.padding_img[row: row + self.kernel_size, col: col + self.kernel_size, :])
                     col += self.stride
                 row += self.stride
         feature_maps += self.biases
-        print(feature_maps.shape)
+        # print(feature_maps.shape)
         # Image.fromarray(np.uint8(feature_maps)).show()
         # TODO: implement im2col.
         return feature_maps
@@ -62,24 +64,23 @@ class Convolution(object):
         # TODO: implement backward.
         
         for i in range(self.in_channels):
-            row, col = 0, 0
-            # print("------")
-            # print(eta[:, :, i])
-            # print(self.w_gradient[:,:,i])
-            for j in range((self.shape[0] - self.kernel_size) // self.stride + 1):
-                col = 0
-                for k in range((self.shape[1] - self.kernel_size) // self.stride + 1):
-                    for channel in range(self.out_channels):
-                        # Add each input channel.
-                        # print(row,col)
-                        self.w_gradient[j, k, i] += np.sum(np.dot(
-                            eta[:, :, i], self.img[row: row + self.kernel_size, col: col + self.kernel_size, channel]))
-                    col += self.stride
-                row += self.stride
+            for channel in range(self.out_channels):
+                row, col = 0, 0
+                for j in range((self.shape[0] - eta.shape[0]) // self.stride + 1):
+                    col = 0
+                    for k in range((self.shape[1] - eta.shape[1]) // self.stride + 1):
+                        self.w_gradient[j, k, i, channel] = np.sum(
+                            eta[:, :, channel] * self.img[row: row + eta.shape[0], col: col + eta.shape[1], i])
+                        col += self.stride
+                    row += self.stride
         # print(self.w_gradient)
+        self.b_gradient = np.array([np.sum(eta[:, :, i]) for i in range(self.out_channels)])
+        flip_filters = np.flip(self.filters, (0, 1))
     
     def backward(self):
-        self.filters -= self.learning_rate*self.w_gradient
+        self.filters -= self.learning_rate * self.w_gradient
+        self.biases -= self.learning_rate * self.b_gradient
+        
         
 
 
@@ -91,6 +92,8 @@ class Pooling(object):
         self.pool_size = pool_size
         self.stride = stride
         self.index = []
+        self.gradient = np.zeros((self.shape[0], self.shape[1], out_channels))
+
 
     def max_pooling_forward(self):
         # Drop out excess elements.
@@ -113,8 +116,7 @@ class Pooling(object):
         print(pool_output.shape)
         return pool_output
 
-    def backward(self, eta):
-        self.gradient = np.zeros((self.shape[0], self.shape[1], out_channels))
+    def gradient(self, eta):
         for ind in self.index:
             self.gradient[ind[1]] = eta[ind[0]]
         return self.gradient
@@ -139,22 +141,24 @@ class Relu(object):
                     relu[j, k, i] = np.max([self.feature_maps[j, k, i], 0])
         return relu
 
-    def backward(self):
+    def gradient(self):
         self.gradient[self.feature_maps < 0] = 0
         return self.gradient
         # TODO: Not check.
 
 
 if __name__ == "__main__":
-    # img = Image.open(b"../../LFW/match pairs/0001/Aaron_Peirsol_0001.jpg")
+    img = Image.open(b"../../LFW/match pairs/0001/Aaron_Peirsol_0001.jpg")
     # print(img.size)
-    # img = np.array(img, dtype=np.float)
+    img = np.array(img, dtype=np.float32)
     # print(img.shape)
-    z = np.random.rand(3, 3, 3).astype(np.float)
+    z = np.random.rand(28, 28, 3).astype(np.float32)
     # print(z)
-    Conv = Convolution(z,kernel_size=2 ,stride=1)
+    Conv = Convolution(z, kernel_size=2, stride=1)
+    # new = Conv.conv_forward()
+    # Image.fromarray(np.uint8(new)).show()
     for i in range(10):
-        y_true = np.ones((2, 2, 3)).astype(np.float)
+        y_true = np.ones((27, 27, 3)).astype(np.float64)
         y_pred = Conv.conv_forward()
         error, dy = losses.mean_squared_error(y_pred, y_true)
         print(error)
