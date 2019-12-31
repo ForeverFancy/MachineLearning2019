@@ -1,87 +1,104 @@
 import numpy as np
 from PIL import Image
 import losses
+import other
 
 
 class CNN(object):
     def __init__(self,):
         pass
 
+def im2col_enhanced(im: torch.Tensor, kernel_size, stride, inner_stride=(1, 1)) -> torch.Tensor:
+    kh, kw = kernel_size
+    sh, sw = stride
+    ish, isw = inner_stride
+    b, h, w, c = im.shape
+    assert (h - kh * re) % sh == 0
+    assert (w - kw * isw) % sw == 0
+    out_h = (h - kh * ish) // sh + 1
+    out_w = (w - kw * isw) // sw + 1
+    out_size = (b, out_h, out_w, kh, kw, c)
+    s = im.stride()
+    out_stride = (s[0], s[1] * sh, s[2] * sw, s[1] * ish, s[2] * isw, s[3])
+    col_img = im.as_strided(size=out_size, stride=out_stride)
+    return col_img
 
 class Convolution(object):
-    def __init__(self, input_shape, out_channels=3, kernel_size=3, stride=1, learning_rate=0.0006):
-        self.input_shape = input_shape      # (batch_size, h, w, c)
-        self.in_channels = input_shape[-1]  # Normally RGB.
-        self.batch_size = input_shape[0]
-        # Kernel total size = kernel_size * kernel_size.
-        self.kernel_size = kernel_size
-        self.stride = stride
-        self.out_channels = out_channels  # Filter num.
-        # input channels -> output channels
-        self.filters = 0.01 * np.random.normal(
-            0, size=(self.kernel_size, self.kernel_size, self.in_channels, out_channels)).astype(np.float32)
-        self.biases = np.zeros(self.out_channels)
-        self.w_gradient = np.zeros(self.filters.shape)
-        self.eta_forward = np.zeros(self.input_shape[1:])  # TODO: Check this.
+    def __init__(self, input_shape, out_channel, kernel_size, stride, learning_rate, activate_func: str = None):
+        self.in_h, self.in_w, self.in_channel = input_shape
         self.learning_rate = learning_rate
+        self.out_channel = out_channel
+        self.kernel_h, self.kernel_w = kernel_size
+        self.stride_h, self.stride_w = stride
+        # ignore padding
+        assert (self.in_h - self.kernel_h) % self.stride_h == 0
+        assert (self.in_w - self.kernel_w) % self.stride_w == 0
+        self.out_h = (self.in_h - self.kernel_h) // self.stride_h + 1
+        self.out_w = (self.in_w - self.kernel_w) // self.stride_w + 1
 
-    def forward(self, img):
-        # Update img.
-        self.img = img
-        self.padding_img = self.img
-        # Padding.
-        if (self.input_shape[2] - self.kernel_size) % self.stride != 0:
-            self.padding_img = np.lib.pad(self.img, ((0, 0), (0, self.kernel_size -
-                                                              (self.input_shape[2] - self.kernel_size) % self.stride), (0, 0), (0, 0)),
-                                          'constant')
-        if (self.input_shape[3] - self.kernel_size) % self.stride != 0:
-            self.padding_img = np.lib.pad(self.img, ((0, 0), (0, 0), (0, self.kernel_size -
-                                                                      (self.input_shape[3] - self.kernel_size) % self.stride), (0, 0)),
-                                          'constant')
-        print(self.padding_img.shape)
-        self.input_shape = self.padding_img.shape
-        # Initialize feature_maps, the num of feature_map is out_channels.
-        feature_maps = np.zeros(
-            (self.batch_size, (self.input_shape[1] - self.kernel_size) // self.stride + 1, (self.input_shape[2] - self.kernel_size) // self.stride + 1, self.out_channels))
+        self.filters = torch.randn(
+            (self.kernel_h, self.kernel_w, self.in_channel, out_channel),
+            dtype=floatX)
+        self.biases = torch.randn((self.out_channel,), dtype=floatX)
+        self.filters_gradient = torch.empty(
+            (self.kernel_h, self.kernel_w, self.in_channel, out_channel),
+            dtype=floatX)
 
-        # Do convolution.
-        col_img = self.im2col(self.padding_img.shape, self.kernel_size, self.padding_img)
-        feature_maps = np.tensordot(col_img, self.filters, axes=[(3, 4, 5), (0, 1, 2)]) + self.biases
+        if activate_func == 'relu':
+            self.activation = other.Relu()
+        elif activate_func == 'sigmoid':
+            self.activation = other.Sigmoid(100)
+        elif activate_func == 'tanh':
+            self.activation = other.Tanh(100)
+        else:
+            self.activation = None
+
+    # 已通过测试
+    def forward(self, in_data: torch.Tensor) -> torch.Tensor:
+        self.batch = in_data.shape[0]
+        assert in_data.shape == (self.batch, self.in_h, self.in_w, self.in_channel)
+        self.in_data = in_data
+        col_img = im2col_enhanced(in_data, (self.kernel_h, self.kernel_w), (self.stride_h, self.stride_w))
+        feature_maps = torch.tensordot(col_img, self.filters, dims=[(3, 4, 5), (0, 1, 2)]) \
+                       + self.biases.reshape((1, 1, 1, self.out_channel))
+        if self.activation is not None:
+            feature_maps = self.activation.forward(feature_maps)
         return feature_maps
 
-    def gradient(self, eta):
-        # eta shape = (n, h, w, c).
-        h,w = eta.shape[1], eta.shape[2]
-        for i in range(self.kernel_size):
-            for j in range(self.kernel_size):
-                self.w_gradient[i, j, :, :] = np.tensordot(self.padding_img[:, i: i + h, j: j + w, :], eta, axes=([0, 1, 2], [0, 1, 2]))
-
-        # print(self.w_gradient)
-        self.b_gradient = np.array([np.sum(eta[:, :, :, i])
-                                    for i in range(self.out_channels)])
-        flip_filters = np.flip(self.filters, (0, 1))
-        padding_eta = np.lib.pad(eta, ((0,0), (self.kernel_size - 1, self.kernel_size - 1),
-                                       (self.kernel_size - 1, self.kernel_size - 1), (0, 0)), 'constant')
-        col_eta = self.im2col(padding_eta.shape, self.kernel_size, padding_eta)
-
-        self.eta_forward = np.tensordot(
-            col_eta, flip_filters, axes=[(3, 4, 5), (0, 1, 3)])
-
-        
-        return self.eta_forward
-
-    def backward(self):
-        self.filters -= self.learning_rate * self.w_gradient
-        self.biases -= self.learning_rate * self.b_gradient
-
-    def im2col(self, shape, ks, image):
-        N, H, W, C = shape
-        out_h = (H - ks) // self.stride + 1
-        out_w = (W - ks) // self.stride + 1
-        out_shape = (N, out_h, out_w, ks, ks, C)
-        strides = (image.strides[0], image.strides[1]*self.stride, image.strides[2]*self.stride, *image.strides[1:])
-        col_img = np.lib.stride_tricks.as_strided(image, shape=out_shape, strides=strides)
-        return col_img
+    # 测试通过
+    def backward(self, eta: torch.Tensor) -> torch.Tensor:
+        assert eta.shape == (self.batch, self.out_h, self.out_w, self.out_channel)
+        if self.activation is not None:
+            eta = self.activation.backward(eta)
+        # filters 梯度
+        col_img = im2col_enhanced(self.in_data, (self.kernel_h, self.kernel_w), (self.stride_h, self.stride_w))
+        self.filters_gradient[:, :, :, :] = 0
+        for b in range(self.batch):
+            self.filters_gradient += torch.tensordot(
+                col_img[b], eta[b], dims=[(0, 1), (0, 1)]
+            )
+        # biases 梯度
+        biases_gradient = eta.sum(dim=(0, 1, 2))
+        # in_data 梯度
+        # 这部分的实现参照 PPT
+        padding_eta = torch.zeros(
+            (self.batch,
+             2 * (self.kernel_h - 1) + (self.out_h - 1) * self.stride_h + 1,
+             2 * (self.kernel_w - 1) + (self.out_w - 1) * self.stride_w + 1,
+             self.out_channel), dtype=floatX)
+        pad_h = self.kernel_h - 1
+        pad_w = self.kernel_w - 1
+        padding_eta[:, pad_h:-pad_h:self.stride_h, pad_w:-pad_w:self.stride_w, :] = eta  # padding_eta 其他部分为0
+        filters_flip = self.filters.flip(dims=(0, 1))
+        # 进行卷积运算
+        col_eta = im2col_enhanced(padding_eta, (self.kernel_h, self.kernel_w), (1, 1))
+        assert col_eta.shape == (self.batch, self.in_h, self.in_w, self.kernel_h, self.kernel_w, self.out_channel)
+        next_eta = torch.tensordot(col_eta, filters_flip, dims=[(3, 4, 5), (0, 1, 3)])
+        assert next_eta.shape == (self.batch, self.in_h, self.in_w, self.in_channel)
+        # 更新
+        self.filters -= self.learning_rate * self.filters_gradient
+        self.biases -= self.learning_rate * biases_gradient
+        return next_eta
 
 
 class Pooling(object):
